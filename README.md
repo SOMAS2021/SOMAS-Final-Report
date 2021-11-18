@@ -6,6 +6,7 @@ This repository includes the following elements:
 - A main file containing the used packages, the layout and the main document  itself, where every chapter is included using the command `\input{folder_name/name_of_the chapter}`
 - A folder for every chapter. The name of every folder begins with the chapter number. Inside every folder, a Tex file and another folder named "images"
 - The file "LaTex_guidelines.md", which contains additional guidelines regarding the use of LaTex (figures, notations, ...)
+- A .gitignore file
 - This document
 
 >TO DO: write "LaTex_guidelines.md" (MD working on it, any help is welcome)
