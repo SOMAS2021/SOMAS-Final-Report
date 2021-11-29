@@ -1,7 +1,14 @@
 name: Build LaTeX Document
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    tags: []
+  pull_request:
+
 jobs:
-  test:
+  build:
+    name: Build PDF
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
