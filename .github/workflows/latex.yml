@@ -1,0 +1,32 @@
+name: Build LaTeX Document
+on:
+  push:
+    branches:
+      - main
+    tags: []
+  pull_request:
+
+jobs:
+  build:
+    name: Build PDF
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Compiled PDF
+          path: main.pdf
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Compiled PDF successfully! You can view the PDF in the "Checks" tab of this PR under "Artifacts"'
+            })
