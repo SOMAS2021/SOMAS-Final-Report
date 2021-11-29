@@ -21,12 +21,3 @@ jobs:
         with:
           name: Compiled PDF
           path: main.pdf
-      - uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Compiled PDF successfully! You can view the PDF in the "Checks" tab of this PR under "Artifacts"'
-            })

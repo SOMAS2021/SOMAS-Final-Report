@@ -18,7 +18,8 @@ The following guidelines apply to this Github repository:
 - Each team has a separate branch and its team members first commit their changes to their branch.
 - Each branch can be merged to the master branch via a pull request.
 - The pull requests must be reviewed before approval by two members of the "editor team". The members of the "editor team" are owners of this repository, which allows them to approve the pull requests.
-- If you are a member of the "editor team", do not approve your own pull request. 
+- If you are a member of the "editor team", do not approve your own pull request.
+- Pull requests have a pipeline which compiles the PDF. You can see the compiled document in the PR by going to `Checks` and then `Artifacts`
 
 > TO DO: define the exact role of the "editor team" and choose its members
 
