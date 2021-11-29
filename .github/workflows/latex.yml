@@ -28,5 +28,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Compiled PDF successfully! You can view the PDF in the summary of the build check'
+              body: 'Compiled PDF successfully! You can view the PDF in the "Checks" tab of this PR under "Artifacts"'
             })
