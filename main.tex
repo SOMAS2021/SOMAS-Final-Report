@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                          Packages                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper, top=3cm, bottom=3cm, left=2.5cm, right=2.5cm, marginparwidth=2cm, headsep=1.2cm]{geometry} % layout
 \usepackage[bookmarks=true]{hyperref} % enables hyperlinks in the PDF
@@ -53,7 +53,7 @@
 % Supervisors
 % Use \\ to separate multiple supervisors (e.g. Robert\\Nathalie\\Mike)
 % Use full titles (e.g. Prof. Dr., Dr. )
-\newcommand{\supervisors}{Prof. Dr. Jeremy Pitt}
+\newcommand{\supervisors}{Prof. Jeremy Pitt}
 
 % ToDo Command
 \newcommand{\ToDo}[1]{\textcolor{red}{#1}}
@@ -62,64 +62,12 @@
 %                          Page Format                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Header & Footer (leave unchanged)
-\pagestyle{fancy}
-\fancyhf{}
-%\rhead{\includegraphics[height = 0.6cm]{}}
-\lhead{\includegraphics[height = 0.8cm]{template_figures/Logo_for_Imperial_College_London.svg.png}}
-\fancyfoot[C]{\thepage}
-\setlength{\headheight}{26.85pt}%
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0.5pt}
-
 % Paragraphs
 \setlength\parindent{0pt}
 \setlength{\parskip}{2mm}
 
 % Section Format
 \usepackage[explicit]{titlesec}
-
-\setlength{\titlewidth}{\linewidth}
-\newcommand{\sectionfont}{\Huge\bfseries}
-\newcommand{\subsectionfont}{\Huge\bfseries}
-
-\titlespacing*{\section}{0pt}{120pt}{70pt plus 2pt minus 2pt}{}
-\newcommand{\sectionbreak}{\clearpage}
-
-\titleformat{\section}[block]%
-    {\vspace*{80pt}
-      \setlength{\titlewidth}{1\titlewidth}
-      \titleline*[c]{\titlerule[0.5pt]}
-     \vspace{-28pt}%
-     \sectionfont\centering}
-    {\begin{center}
-        \thesection .~#1
-    \end{center}}{1em}
-    {\sectionfont}
-    [\vspace{-26pt}{\begingroup
-      \setlength{\titlewidth}{1\titlewidth}
-      \titleline*[c]{\titlerule[0.5pt]}
-    \endgroup}]
-    
-\titleformat{name=\section,numberless}[block]
-    {\vspace*{80pt}
-      \setlength{\titlewidth}{1\titlewidth}
-      \titleline*[c]{\titlerule[0.5pt]}
-     \vspace{-28pt}%
-     \centering
-     \sectionfont}
-    {\begin{center}
-         #1
-    \end{center}}{1em}
-    {\sectionfont}
-    [\vspace{-26pt}{\begingroup
-      \setlength{\titlewidth}{1\titlewidth}
-      \titleline*[c]{\titlerule[0.5pt]}
-    \endgroup}]
-    
-\titleformat{\subsection}
-{\normalfont\Large\bfseries}{\thesubsection~ #1}{1em}{}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        Title Page                             %
@@ -129,19 +77,22 @@
 \begin{titlepage}
 \newgeometry{top=2cm, bottom=4cm, right=1.5cm, left=1cm}
 
-\tikz[remember picture,overlay] \node[opacity=1,inner sep=0pt, anchor=west] (A) at (2cm,-1.5cm){\includegraphics[scale=0.05]{template_figures/Logo_for_Imperial_College_London.svg.png}};
+\tikz[remember picture,overlay] \node[opacity=1,inner sep=0pt, anchor=west] (A) at (2cm,-1.5cm){\includegraphics[scale=0.5]{template_figures/logo.eps}};
 
 \begin{center}
     \vspace*{6cm}
     \huge \textbf{\thesisType}\\
     \vspace*{0.75cm}
     \Huge \myTitle\\
+    \vspace{0.5cm}
+    \Large {Department of Electrical and Electronic Engineering}\\
+    \Large {Imperial College London}\\
     \vspace*{5cm}
     \huge \myName\\
     \vspace*{0.5cm}
     \LARGE \myDate\\
     \vfill
-    Supervision\\
+    Lecturer\\
     \vspace*{0.5cm}
     \huge \supervisors 
 \end{center}
@@ -175,12 +126,12 @@
 
 % Appendix
 \appendix
-\input{102_supplementay_material/102_supplementary_material}
+\input{102_supplementary_material/102_supplementary_material}
 
 % References
 \newpage
 \bibliography{references} 
-\bibliographystyle{apalike} % Sets the referencing style
+\bibliographystyle{IEEEtranN}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        Document End                           %
