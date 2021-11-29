@@ -19,5 +19,5 @@ jobs:
           root_file: main.tex
       - uses: actions/upload-artifact@v2
         with:
-          name: PDF
+          name: Compiled PDF
           path: main.pdf
