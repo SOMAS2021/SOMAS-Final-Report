@@ -3,31 +3,26 @@
 ## Structure
 
 This repository includes the following elements:
-- A main file containing the used packages, the layout and the main document  itself, where every chapter is included using the command `\input{folder_name/name_of_the chapter}`
-- A folder for every chapter. The name of every folder begins with the chapter number. Inside every folder, a Tex file and another folder named "images"
-- The file "LaTex_guidelines.md", which contains additional guidelines regarding the use of LaTex (figures, notations, ...)
-- A .gitignore file
-- This document
+- A main file containing the used packages, the layout and the main document  itself, where every chapter is included using the command `\input{folder_name/name_of_chapter}`
+- A folder for every chapter. The name of every folder begins with the chapter number. Inside every folder, a TeX file and another folder named "images"
+- The file "latex_guidelines.md", which contains additional guidelines regarding the use of LaTeX (figures, notations, ...)
+    - >TODO: Create latex_guidelines.md (see [Issue #7](https://github.com/SOMAS2021/SOMAS-Final-Report/issues/7))
 
->TO DO: write "LaTex_guidelines.md" (MD working on it, any help is welcome)
+## GitHub Guidelines
 
-## Github Guidelines
+The following guidelines apply to this GitHub repository:
 
-The following guidelines apply to this Github repository:
-
-- Each team has a separate branch and its team members first commit their changes to their branch.
-- Each branch can be merged to the master branch via a pull request.
-- The pull requests must be reviewed before approval by two members of the "editor team". The members of the "editor team" are owners of this repository, which allows them to approve the pull requests.
-- If you are a member of the "editor team", do not approve your own pull request.
+- Commits should be made to a separate branch and merged to main via a PR.
+- PRs must be reviewed by someone in the editor team.
+  - >TODO: Define who will be in the editor team.
+- Do not approve your own pull requests.
 - Pull requests have a pipeline which compiles the PDF. You can see the compiled document in the PR by going to `Checks` and then `Artifacts`
-
-> TO DO: define the exact role of the "editor team" and choose its members
-
-
 
 ## Writing Guidelines
 
-The separate file "LaTex_guidelines.md" gives you important guidelines and reminders to use LaTex, so that we can achieve consistency and correctness of the final report.
+The separate file "latex_guidelines.md" gives you important guidelines and reminders on how to use LaTeX, so that we can achieve consistency and correctness in the final report.
 
-The most important part of your writing is the content, its correctness and consitency. Secondly, you should review your writing for spelling, grammar and punctuation.
+It is important that your writing is correct and consistent.
+
+You should review your writing for correct spelling, grammar, and punctuation.
 
