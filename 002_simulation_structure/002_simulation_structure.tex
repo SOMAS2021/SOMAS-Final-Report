@@ -71,10 +71,7 @@ Agents in the critical state are treated differently. For these agents, HP is up
     \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w(1-e^{\frac{-\text{foodTaken}}{\tau}})\right\}
 \end{equation}
 
-%
-%%%%%%%% Costs of Living: hpDecay
-%
-\subsection{Costs of Living: \texttt{hpDecay}}\label{hpDecay}
+\subsection{Cost of Living: \lstinline$hpDecay()$}\label{hpDecay}
 At the end of each day, the HP value of the agents will be reduced by the cost of living. The cost of living is larger for an agent with larger HP value than for an agent with lower HP value. This fact is motivated by a simple observation: humans that have stronger bodies and immune systems also need more food to sustain their level of health. The exact relation between HP value, cost of living, and HP value after applying the cost of living is given by the following linear relation:
 
 \begin{equation}\label{hpDecay}
