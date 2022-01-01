@@ -68,7 +68,7 @@ Note that it is possible for an agent to achieve an HP value that is larger than
 Agents in the critical state are treated differently. For these agents, HP is updated according to this equation:
 
 \begin{equation}\label{updateHP_critical}
-    \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w\cdot(1-e^{-\text{foodTaken}/ \tau})\right\}
+    \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w(1-e^{\frac{-\text{foodTaken}}{\tau}})\right\}
 \end{equation}
 
 %
