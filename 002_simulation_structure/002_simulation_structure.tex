@@ -46,7 +46,7 @@ At the end of each day, agents are assigned an HP value based on how much food t
 To increase their HP, agents need to eat. However, the amount an agent's HP improves can saturate in a single day; eating more than a certain amount will provide an agent with no extra benefit to their HP. Moreover, eating more food will lead to diminishing returns in terms of HP change. Mathematically, the ideas of diminishing returns and saturation are well captured by the step response of a 1st-order system:
 
 \begin{equation}\label{updateHP_general}
-   \text{newHP}= \text{currentHP} +\underbrace{w\cdot(1-e^{-\text{foodTaken}/ \tau})}_{=\text{HPChange}}
+   \text{newHP}= \text{currentHP} +\underbrace{w(1-e^{\frac{-\text{foodTaken}}{\tau}})}_{\text{HPChange}}
 \end{equation}
 
 where the two parameters $w$ and $\tau$ are defined at the beginning of the simulation. The shape of this curve is given in \Cref{fig:updateHP} together with some important parameters.
