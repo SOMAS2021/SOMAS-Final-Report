@@ -60,7 +60,9 @@ where the two parameters $w$ and $\tau$ are defined at the beginning of the simu
     \label{fig:updateHP}%
 \end{figure}
 
-Note that it is not possible to gain more HP than $w$ over the duration of one day. Indeed, we want to prevent the agents health to change too quickly. As an example, we can think of an agent that starts from the weak level and wants to reach the maximum HP value. It would take several days for this agent to "recover" from this weak level and stabilizes its health to a large HP value. Also, it is possible for an agent to get an HP value that is larger than \texttt{maxHP} with this function. However, the obtained HP value will be reduced by the cost of living using the function \texttt{hpDecay} (see below). After this operation, the final HP value will be bounded by \texttt{maxHP}.
+It is not possible to gain more HP than $w$ over the duration of one day; this is an intentional limit to prevent an agent's health from improving too quickly. As an example, we can think of an agent that starts from the weak level and wants to reach the maximum HP value. It would take several days for this agent to ``recover'' from this weak level and stabilise its health to a high HP value. 
+
+Note that it is possible for an agent to achieve an HP value that is larger than \texttt{MaxHP} inside \lstinline$hpDecay()$. At the end of each day, the \lstinline$hpDecay()$ function will apply the cost of living and then bound the final HP value by \lstinline$MaxHP$.
 
 
 As a special case, an agent reaching the critical state will be treated differently. For these agents, the HP update rule is the following:
