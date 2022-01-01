@@ -90,7 +90,7 @@ To ensure that the HP value at the end of the day is bounded by \texttt{maxHP}, 
     \text{newHP} =\max\left\{\text{MaxHP}, \text{currentHP}-\left[b + (\text{currentHP-WeakLevel})\cdot s\right]\right\}
 \end{equation}
 
-Once again, the agents in the critical state are treated differently. If, by the end of the day, they achieved to gain \texttt{HPReqCToW} HP, meaning if their HP after eating is
+For agents in the critical state that gain \texttt{HPReqCToW} HP in a single day, i.e. their HP after eating is
 
 \begin{equation}\label{HPReqCToW}
     \text{currentHP} \geq \text{HPCritical}+\text{HPReqCToW},
