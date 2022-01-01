@@ -102,7 +102,7 @@ their HP will be set to \texttt{WeakLevel}:
     \text{newHP} = \text{WeakLevel}
 \end{equation}
 
-On the other hand, if they do not fulfill the above condition, They will be kept in the critical state by setting their HP to
+Agents in the critical state which do not manage to improve their HP by \lstinline$HPReqCToW$ will be kept in the critical state:
 
 \begin{equation}\label{hpDecay_critical_stay}
     \text{newHP} = \text{HPCritical}
