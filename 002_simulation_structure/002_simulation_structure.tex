@@ -65,7 +65,7 @@ It is not possible to gain more HP than $w$ over the duration of one day; this i
 Note that it is possible for an agent to achieve an HP value that is larger than \texttt{MaxHP} inside \lstinline$hpDecay()$. At the end of each day, the \lstinline$hpDecay()$ function will apply the cost of living and then bound the final HP value by \lstinline$MaxHP$.
 
 
-As a special case, an agent reaching the critical state will be treated differently. For these agents, the HP update rule is the following:
+Agents in the critical state are treated differently. For these agents, HP is updated according to this equation:
 
 \begin{equation}\label{updateHP_critical}
     \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w\cdot(1-e^{-\text{foodTaken}/ \tau})\right\}
