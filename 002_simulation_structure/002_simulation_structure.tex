@@ -108,4 +108,4 @@ Agents in the critical state which do not manage to improve their HP by \lstinli
     \text{newHP} = \text{HPCritical}
 \end{equation}
 
-and a counter named \texttt{daysAtCritical} will be increased by one. If \texttt{daysAtCritical} reaches \texttt{MaxDayCritical}, the agents die and are replaced. Note that the counter is reset to 0 if the agent exit the critical state.
+with the \texttt{daysAtCritical} counter incremented by 1. If \texttt{daysAtCritical} reaches \texttt{MaxDayCritical}, the agent dies and is replaced. This counter is reset to 0 if an agent exits the critical state.
