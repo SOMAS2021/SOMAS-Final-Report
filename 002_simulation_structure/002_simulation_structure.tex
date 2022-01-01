@@ -84,7 +84,7 @@ where $b$ is a (constant) base cost, and $s$ is the slope of the linear function
 To ensure that the HP value at the end of the day is bounded by \texttt{maxHP}, we slightly modify the above expression:
 
 \begin{equation}\label{hpDecay_bounded}
-    \text{newHP} =\max\left\{\text{MaxHP}, \text{currentHP}-\left[b + (\text{currentHP-WeakLevel})\cdot s\right]\right\}
+    \text{newHP} =\max\left\{\text{MaxHP}, \text{currentHP}-\left[b + s(\text{currentHP}-\text{WeakLevel})\right]\right\}
 \end{equation}
 
 For agents in the critical state that gain \texttt{HPReqCToW} HP in a single day, i.e. their HP after eating is
