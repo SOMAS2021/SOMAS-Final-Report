@@ -30,3 +30,37 @@ Agent 3 will act differently depending on three different variables that define 
     \item \texttt{mood int}: defines how likely the agent is to do things, it will affect its decision-making process.
 \end{enumerate}
 For the purpose of this agent, we will define personality as the individual differences in characteristic patterns of thinking, feeling, and behaving, as defined by the American Psychology Association. The traits that define an agent's personality are mutable, making our agent adapt its personality depending on the circumstances. 
+
+\subsection{Agent generation}
+\begin{center}
+\texttt{func New(baseAgent *infra.Base) (agent.Agent, error) {
+	// TODO: Remove this line. See Issue #60.
+	s1 := rand.NewSource(time.Now().UnixNano())
+	r1 := rand.New(s1)
+	return &CustomAgent3{
+		Base: baseAgent,
+		vars: team3Variables{
+			stubbornness: r1.Intn(75),
+			morality:     r1.Intn(100),
+			mood:         r1.Intn(100),
+		},
+		knowledge: team3Knowledge{
+			floors:     []int{},
+			lastHP:     100,
+			friends:    []string{},
+			friendship: []float64{},
+			floorBelow: "",
+			floorAbove: "",
+		},
+		decisions: team3Decisions{
+			foodToEat:   -1,
+			foodToLeave: -1,
+		},
+	}, nil
+}}
+end{center}
+The function generates a new agent by initializing its variables, knowledge and decisions. All knowledge and decisions are defined initially as empty except for our last HP, which is initialized as 100 (as all agents are). \par
+The variables of our agent, which define the personality it has, are randomly allocated to generate different agents. All three variables are defined to be in the range 0 to 100. Therefore morality and mood are randomly allocated to a value between 0 and 100. To ensure our agent is not completely deaf from the start we limit the initial stubbornness to 75. This does not limit the agent once it starts interacting and taking decisions. Which means it could possibly end up with a stubbornness value of 100 if the situations it goes through are auspicious for it.
+
+\subsection{Agent Strategy}
+%%Still have to write this section
