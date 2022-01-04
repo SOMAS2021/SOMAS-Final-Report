@@ -1,1 +1,32 @@
 \chapter{Team 3 Agent Design}\label{team_3_agent_design}
+
+\section{The Agent}\label{the_agent}
+%%Some general description of the agent
+
+\subsection{Agent knowledge}
+Agent 3 will be able to remember facts in order to make decisions. The variables in their memory are:
+\begin{enumerate}
+    \item \texttt{floors []int}: stores the floors the agent has been in before. This information is used on reshuffles to set our mood. 
+    \item \texttt{lastHp int}: stores the last recorded HP value. Currently used to check a new day has started.
+    \item \texttt{friends []string}: stores the ID of the agents they have met before. The agent is aware of the people they have met during their time in the tower. Their Id is stored in this slice. 
+    \item \texttt{friendship []float}: stores our affection for the agents we have met. Affection range is 0-1 (0 = dislike, 1 = like). The position at which an agent's id is stored in our \texttt{friends[]} slice corresponds to the position in which the affection we have for that agent is stored in the \texttt{friendship[]} slice.
+    \item \texttt{floorBellow string}: stores which agent is living on the floor below us until the next reshuffle.
+    \item \texttt{floorAbove string}: stores which agent is living on the floor above us until the next reshuffle. 
+  \end{enumerate}
+
+subsection{Agent decisions}
+Agent 3 will be able to take decisions when receiving messages or after signing treaties and store these until they eat. This information is used to symbolize a predetermined decision has been taken instead of “impulsively” eating food depending solely on our hunger and state of mind.
+\begin{enumerate}
+    \item \texttt{foodToEat int}: stores how much food we have decided to eat in the next eating period.
+    \item \textt{foodToLeave int}: how much food we have decided to leave. It is necessary in case we want to: E.g eat 6 food and leave at least 10 food but when the platform arrives we see that it has 13 food. Both statements cannot be fulfilled and so we must prioritise one.
+\end{enumerate}
+
+subsection{Agent variables}
+Agent Variables
+Agent 3 will act differently depending on three different variables that define them, which will give the agent different personalities.
+\begin{enumerate}
+    \item \texttt{stubbornness int}: defines the likelihood of the agent to read a message. E.g: Stubbornness = 20 means there is a 20\% chance that the agent will ignore the message.
+    \item \texttt{morality int}: defines  the willingness of the agent to help others, in other words, how much you care about other agents in the tower. 
+    \item \texttt{mood int}: defines how likely the agent is to do things, it will affect its decision-making process.
+\end{enumerate}
+For the purpose of this agent, we will define personality as the individual differences in characteristic patterns of thinking, feeling, and behaving, as defined by the American Psychology Association. The traits that define an agent's personality are mutable, making our agent adapt its personality depending on the circumstances. 
