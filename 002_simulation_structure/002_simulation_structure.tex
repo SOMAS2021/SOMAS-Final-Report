@@ -43,13 +43,13 @@ At the end of each day, agents are assigned an HP value based on how much food t
 \end{figure}
 
 \subsection{Food and Health: \texorpdfstring{\lstinline$updateHP$}{updateHP}}\label{updateHP}
-To increase their HP, agents need to eat. However, the amount an agent's HP improves can saturate in a single day; eating more than a certain amount will provide an agent with no extra benefit to their HP. Moreover, eating more food will lead to diminishing returns in terms of HP change. Mathematically, the ideas of diminishing returns and saturation are well captured by the step response of a 1st-order system:
+To increase their HP, agents need to eat. However, the amount an agent's HP improves can saturate in a single day; eating more than a certain amount will provide an agent with no extra benefit to their HP. Moreover, eating more food will lead to diminishing returns in terms of HP change. Mathematically, the ideas of diminishing returns and saturation are well captured by the step response of a 1st-order system \eqref{updateHP_general}:
 
 \begin{equation}\label{updateHP_general}
    \text{newHP}= \text{currentHP} +\underbrace{w(1-e^{\frac{-\text{foodTaken}}{\tau}})}_{\text{HPChange}}
 \end{equation}
 
-where the two parameters $w$ and $\tau$ are defined at the beginning of the simulation. The shape of this curve is given in \Cref{fig:updateHP} together with some important parameters.
+The two parameters $w$ and $\tau$ are defined at the beginning of the simulation. The shape of this curve is given in \Cref{fig:updateHP} together with some important parameters.
 
 \begin{figure}[htb]%
     \centering
@@ -65,23 +65,23 @@ It is not possible to gain more HP than $w$ over the duration of one day; this i
 Note that it is possible for an agent to achieve an HP value that is larger than \texttt{MaxHP} inside \lstinline$hpDecay()$. At the end of each day, the \lstinline$hpDecay()$ function will apply the cost of living and then bound the final HP value by \lstinline$MaxHP$.
 
 
-Agents in the critical state are treated differently. For these agents, HP is updated according to this equation:
+Agents in the critical state are treated differently. For these agents, HP is updated according to equation \eqref{updateHP_critical}:
 
 \begin{equation}\label{updateHP_critical}
     \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w(1-e^{\frac{-\text{foodTaken}}{\tau}})\right\}
 \end{equation}
 
 \subsection{Cost of Living: \texorpdfstring{\lstinline$hpDecay()$}{hpDecay}}\label{hpDecay}
-At the end of each day, the HP value of the agents will be reduced by the cost of living. The cost of living is larger for an agent with larger HP value than for an agent with lower HP value. This fact is motivated by a simple observation: humans that have stronger bodies and immune systems also need more food to sustain their level of health. The exact relation between HP value, cost of living, and HP value after applying the cost of living is given by the following linear relation:
+At the end of each day, the HP value of the agents will be reduced by the cost of living. The cost of living is larger for an agent with larger HP value than for an agent with lower HP value. This fact is motivated by a simple observation: humans that have stronger bodies and immune systems also need more food to sustain their level of health. The exact relation between HP value, cost of living, and HP value after applying the cost of living is given by the linear relation \eqref{hpDecay_equation}:
 
 \begin{equation}\label{hpDecay_equation}
     \text{newHP} = \text{currentHP}-\left[b + s(\text{currentHP}-\text{WeakLevel})\right]
 \end{equation}
 
 
-where $b$ is a (constant) base cost, and $s$ is the slope of the linear function. These parameters are initialised at the beginning of the simulation. \ToDo{Add a diagram for this?}
+The parameter $b$ is a (constant) base cost, and $s$ is the slope of the linear function. These parameters are initialised at the beginning of the simulation. \ToDo{Add a diagram for this?}
 
-To ensure that the HP value at the end of the day is bounded by \texttt{MaxHP}, we slightly modify the above expression:
+To ensure that the HP value at the end of the day is bounded by \texttt{MaxHP}, we slightly modify (\ref{hpDecay_equation}) to produce (\ref{hpDecay_bounded}):
 
 \begin{equation}\label{hpDecay_bounded}
     \text{newHP} =\max\left\{\text{MaxHP}, \text{currentHP}-\left[b + s(\text{currentHP}-\text{WeakLevel})\right]\right\}
