@@ -35,7 +35,7 @@ e.g.
 - Good - "as you can see in Figure 6"
 - Bad  - "as you can see in the figure below"
 
-Equations should be refered to using their equation number with parenthesis around the equation number.
+Equations should be refered to using their equation number with parenthesis around the equation number. Remember to add labels and use references when writing so you don't have to manually renumber things.
 e.g. 
 - Good - "as shown in (6)"
 - Bad  - "as shown in Equation 6"
