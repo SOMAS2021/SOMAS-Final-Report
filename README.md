@@ -26,3 +26,17 @@ It is important that your writing is correct and consistent.
 
 You should review your writing for correct spelling, grammar, and punctuation.
 
+## Figures, Tables and Equations
+
+Figures should add to the text. Redundant figures should be removed since they can confuse the reader and distract them from the important points in the text.
+
+Figures, tables and similar objects should always be talked about in the text. They also need to be refered to by figure number and not position.
+e.g. 
+- Good - "as you can see in Figure 6"
+- Bad  - "as you can see in the figure below"
+
+Equations should be refered to using their equation number with parenthesis around the equation number.
+e.g. 
+- Good - "as shown in (6)"
+- Bad  - "as shown in Equation 6"
+- Bad  - "as shown in the equation below"
