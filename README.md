@@ -28,7 +28,7 @@ You should review your writing for correct spelling, grammar, and punctuation.
 
 ## Figures, Tables and Equations
 
-Figures should add to the text. Redundant figures should be removed since they can confuse the reader and distract them from the important points in the text.
+Figures should add to the text. Do not add redundant figures since they can confuse the reader and distract them from the important points in the text.
 
 Figures, tables and similar objects should always be talked about in the text. They also need to be refered to by figure number and not position.
 e.g. 
