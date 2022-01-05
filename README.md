@@ -30,7 +30,7 @@ You should review your writing for correct spelling, grammar, and punctuation.
 
 Figures should add to the text. Do not add redundant figures since they can confuse the reader and distract them from the important points in the text.
 
-Figures, tables and similar objects should always be talked about in the text. They also need to be refered to by figure number and not position.
+Figures, tables and similar objects should always be talked about in the text. They also need to be referred to by figure number and not position. Add a label to your figure using `\label{fig:YOUR_LABEL_HERE}` and refer to it in text using `Figure \ref{fig:YOUR_LABEL_HERE}`.
 e.g. 
 - Good - "as you can see in Figure 6"
 - Bad  - "as you can see in the figure below"
