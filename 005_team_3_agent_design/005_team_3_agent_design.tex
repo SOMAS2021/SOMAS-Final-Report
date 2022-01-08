@@ -14,14 +14,14 @@ Agent 3 will be able to remember facts in order to make decisions. The variables
     \item \texttt{floorAbove string}: stores which agent is living on the floor above us until the next reshuffle. 
   \end{enumerate}
 
-subsection{Agent decisions}
+\subsection{Agent decisions}
 Agent 3 will be able to take decisions when receiving messages or after signing treaties and store these until they eat. This information is used to symbolize a predetermined decision has been taken instead of “impulsively” eating food depending solely on our hunger and state of mind.
 \begin{enumerate}
     \item \texttt{foodToEat int}: stores how much food we have decided to eat in the next eating period.
-    \item \textt{foodToLeave int}: how much food we have decided to leave. It is necessary in case we want to: E.g eat 6 food and leave at least 10 food but when the platform arrives we see that it has 13 food. Both statements cannot be fulfilled and so we must prioritise one.
+    \item \texttt{foodToLeave int}: how much food we have decided to leave. It is necessary in case we want to: E.g eat 6 food and leave at least 10 food but when the platform arrives we see that it has 13 food. Both statements cannot be fulfilled and so we must prioritise one.
 \end{enumerate}
 
-subsection{Agent variables}
+\subsection{Agent variables}
 Agent Variables
 Agent 3 will act differently depending on three different variables that define them, which will give the agent different personalities.
 \begin{enumerate}
@@ -32,35 +32,28 @@ Agent 3 will act differently depending on three different variables that define 
 For the purpose of this agent, we will define personality as the individual differences in characteristic patterns of thinking, feeling, and behaving, as defined by the American Psychology Association. The traits that define an agent's personality are mutable, making our agent adapt its personality depending on the circumstances. 
 
 \subsection{Agent generation}
-\begin{center}
-\texttt{func New(baseAgent *infra.Base) (agent.Agent, error) {
-	// TODO: Remove this line. See Issue #60.
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
-	return &CustomAgent3{
-		Base: baseAgent,
-		vars: team3Variables{
-			stubbornness: r1.Intn(75),
-			morality:     r1.Intn(100),
-			mood:         r1.Intn(100),
-		},
-		knowledge: team3Knowledge{
-			floors:     []int{},
-			lastHP:     100,
-			friends:    []string{},
-			friendship: []float64{},
-			floorBelow: "",
-			floorAbove: "",
-		},
-		decisions: team3Decisions{
-			foodToEat:   -1,
-			foodToLeave: -1,
-		},
-	}, nil
-}}
-end{center}
+%%TODO: have to add the code snippet
 The function generates a new agent by initializing its variables, knowledge and decisions. All knowledge and decisions are defined initially as empty except for our last HP, which is initialized as 100 (as all agents are). \par
 The variables of our agent, which define the personality it has, are randomly allocated to generate different agents. All three variables are defined to be in the range 0 to 100. Therefore morality and mood are randomly allocated to a value between 0 and 100. To ensure our agent is not completely deaf from the start we limit the initial stubbornness to 75. This does not limit the agent once it starts interacting and taking decisions. Which means it could possibly end up with a stubbornness value of 100 if the situations it goes through are auspicious for it.
 
 \subsection{Agent Strategy}
 %%Still have to write this section
+
+\section{Agents emotions}\label{agents_emotions}
+
+\subsection{Read function}
+\texttt{func read(a *CustomAgent3) bool}: our agent's stubbornness will limit the amount of messages it might read and react to. Each time we receive a message we call the read() function. This function will take into account the current stubbornness of the agent and return if the message must be read, and reacted to, or just discarded. 
+This function works by randomly generating a number between 0 and 100. If this number is higher to the current stubbornness the message is read, if not it will be discarded. 
+
+\subsection{Friendship Functions}
+\texttt{func addFriend(a *CustomAgent3, friend string)}: friendship functions help with all the operations our agent might encounter that might involve friends. For this we have two knowledge areas that interest us, our friends []string and friendship []float. For each friend we have a friendship level between 0 and 1.
+Each time we meet a new agent in the tower we record this new ‘friendship’ in our memory. From the start we have an initial opinion on the agent we have just met. As for now we just know about its existence, we predefine a friendship level depending on our current morality. To ensure we don’t create a huge predisposition of the agent to others we limit this range on initial impression to be between 0.4 and 0.6. \par
+
+\texttt{func friendshipLevel(a *CustomAgent3, friend string) (float64,int)}: returns the friendship level of the specific agent  and the index in the slices (friendship level, index in array). \par
+
+\texttt{func friendshipChange(a *CustomAgent3, friend string, change float64)}: changes the value of the friendships using Q-Learning.Change is either -1 or 1. \par
+
+\subsection{Mood and Morality helper functions}
+\texttt{func changeInMood(a *CustomAgent3, pointsMin, pointsMax, direction int)}: helper function to change the mood. There is aspect of randomisation and the mood changes between pointsMin and pointsMax. \par
+
+\texttt{func changeInMorality(a *CustomAgent3, pointsMin, pointsMax, direction int)}: same as before but changes morality
