@@ -1,17 +1,31 @@
 \chapter{Team 3 Agent Design}\label{team_3_agent_design}
 
 \section{The Agent}\label{the_agent}
-%%Some general description of the agent
+The agent is designed to show different combinations of behaviour depending on three variables we have used to define any agent: stubbornness,  morality and mood. These three variables, defined in a range of 0 to 100 will change as the agent encounters a series of scenarios, with its personality shifting as events unravel.  The value of the different variables will affect how the agent takes decisions and acts, all of which will be explained in the following pages. \par
+%%ADD THE MAIN CODE!!!
+As the main function from which all the functionality of the agent is bases we have the \texttt{func (a *CustomAgent3) Run()}. The agent follows then next steps:
+\begin{enumerate}
+    \item The agent starts by updating its personality variables at the beginning of each day calling the necessary function. 
+    \item If the agent was just ‘born’ it will learn an initial value for the average food consumed. 
+    \item In the case the agent has changed floors the personality variables are changed depending on the characteristics of the change. 
+    \item In the case the platform is not empty the agent will eat, the quantity depending on \texttt{a.takeFoodCalculation()}.
+    \item Finally the agent will read and send any messages it considers.
+\end{enumerate}
 
 \subsection{Agent knowledge}
 Agent 3 will be able to remember facts in order to make decisions. The variables in their memory are:
 \begin{enumerate}
     \item \texttt{floors []int}: stores the floors the agent has been in before. This information is used on reshuffles to set our mood. 
     \item \texttt{lastHp int}: stores the last recorded HP value. Currently used to check a new day has started.
-    \item \texttt{friends []string}: stores the ID of the agents they have met before. The agent is aware of the people they have met during their time in the tower. Their Id is stored in this slice. 
-    \item \texttt{friendship []float}: stores our affection for the agents we have met. Affection range is 0-1 (0 = dislike, 1 = like). The position at which an agent's id is stored in our \texttt{friends[]} slice corresponds to the position in which the affection we have for that agent is stored in the \texttt{friendship[]} slice.
-    \item \texttt{floorBellow string}: stores which agent is living on the floor below us until the next reshuffle.
-    \item \texttt{floorAbove string}: stores which agent is living on the floor above us until the next reshuffle. 
+    \item \texttt{friends map[uuid.UUID]float64}: the agent is aware of the people they have met during their time in the tower. We assigned the agents uuid with our affection for them. Affection range is 0-1 (0 = dislike, 1 = like). 
+    \item \texttt{foodLastEaten food.FoodType}: stores food last eaten.
+    \item \texttt{foodLastSeen food.FoodType}: stores food last seen in the platform
+    \item \texttt{foodMovingAvg float64}: stores moving average of food consumed
+    \item \texttt{agentAge int}: stores how old (in days) the agent is.
+    \item \texttt{treatyProposed messages.Treaty}: stores whether we already have a treaty with the person above
+    \item \texttt{reshuffleEst int}: stores our estimation of reshuffle
+    \item \texttt{hpAbove int}: stores the HP our neighbour above last told us they had
+    \item \texttt{hpBelow int}: stores the HP our neighbour below last told us they had
   \end{enumerate}
 
 \subsection{Agent decisions}
@@ -22,7 +36,6 @@ Agent 3 will be able to take decisions when receiving messages or after signing 
 \end{enumerate}
 
 \subsection{Agent variables}
-Agent Variables
 Agent 3 will act differently depending on three different variables that define them, which will give the agent different personalities.
 \begin{enumerate}
     \item \texttt{stubbornness int}: defines the likelihood of the agent to read a message. E.g: Stubbornness = 20 means there is a 20\% chance that the agent will ignore the message.
@@ -37,23 +50,48 @@ The function generates a new agent by initializing its variables, knowledge and 
 The variables of our agent, which define the personality it has, are randomly allocated to generate different agents. All three variables are defined to be in the range 0 to 100. Therefore morality and mood are randomly allocated to a value between 0 and 100. To ensure our agent is not completely deaf from the start we limit the initial stubbornness to 75. This does not limit the agent once it starts interacting and taking decisions. Which means it could possibly end up with a stubbornness value of 100 if the situations it goes through are auspicious for it.
 
 \subsection{Agent Strategy}
-%%Still have to write this section
+Our agent follows the following strategy depending on the three agent variables:
+\begin{enumerate}
+    \item When morality is high, agents are more willing to listen and obey other agents.
+    \item When morality is low, agents are less willing to listen and choose to eat more than they would when they have high morality.
+    \item When stubbornness is high, agents will be “deaf” to most messages and not react to them.
+    \item When stubbornness is high, agents are more willing to listen to messages.
+    \item When mood is high, the actions taken are beneficial for more people.
+    \item When mood is low, the actions taken are more beneficial for ourselves.
+\end{enumerate}
 
 \section{Agents emotions}\label{agents_emotions}
+The following functions act as helpers for the rest of the agent code, enabling changes in the agents variables and reactions due to the value of these variables, as well as reactions to friendships. 
 
 \subsection{Read function}
-\texttt{func read(a *CustomAgent3) bool}: our agent's stubbornness will limit the amount of messages it might read and react to. Each time we receive a message we call the read() function. This function will take into account the current stubbornness of the agent and return if the message must be read, and reacted to, or just discarded. 
+\texttt{func (a *CustomAgent3) read() bool}: our agent's stubbornness will limit the amount of messages it might read and react to. Each time we receive a message we call the \texttt{read()} function. This function will take into account the current stubbornness of the agent and return if the message must be read, and reacted to, or just discarded. 
 This function works by randomly generating a number between 0 and 100. If this number is higher to the current stubbornness the message is read, if not it will be discarded. 
 
-\subsection{Friendship Functions}
-\texttt{func addFriend(a *CustomAgent3, friend string)}: friendship functions help with all the operations our agent might encounter that might involve friends. For this we have two knowledge areas that interest us, our friends []string and friendship []float. For each friend we have a friendship level between 0 and 1.
-Each time we meet a new agent in the tower we record this new ‘friendship’ in our memory. From the start we have an initial opinion on the agent we have just met. As for now we just know about its existence, we predefine a friendship level depending on our current morality. To ensure we don’t create a huge predisposition of the agent to others we limit this range on initial impression to be between 0.4 and 0.6. \par
+\subsection{Friendship Function}
+\begin{sloppypar} %%Gives style warning so this sloppypar solves it
+\texttt{func (a *CustomAgent3) updateFriendship(friend uuid.UUID, change int)}: changes the value of the friendships using Q-Learning. Change is either -1 or 1. \par
+\end{sloppypar}
+In the case we encounter a new agent we record this new ‘friendship’ in our memory. From the start we have an initial opinion on the agent we have just met. As for now we just know about its existence, we predefine a friendship level depending on our current morality. To ensure we don’t create a huge predisposition of the agent to others we limit this range on initial impression to be between 0.4 and 0.6
 
-\texttt{func friendshipLevel(a *CustomAgent3, friend string) (float64,int)}: returns the friendship level of the specific agent  and the index in the slices (friendship level, index in array). \par
+\subsection{Mood, Morality and Stubbornness helper functions }
+\texttt{func (a *CustomAgent3) changeInMood(pointsMin, pointsMax, direction int)}: Helper function to change the mood. There is an aspect of randomisation and the mood changes between pointsMin and pointsMax. Depending on the direction, 1 or -1, the mood will change in a positive or negative sense, increased or reduced. \par
+\begin{sloppypar} %%Gives style warning so this sloppypar solves it
+\texttt{func (a *CustomAgent3) changeInMorality(pointsMin, pointsMax, direction int)}: same as before but changes morality. \par
+\end{sloppypar}
+\texttt{func (a *CustomAgent3) changeInStubbornness(change, direction int)}: same as before but changes stubbornness. \par
 
-\texttt{func friendshipChange(a *CustomAgent3, friend string, change float64)}: changes the value of the friendships using Q-Learning.Change is either -1 or 1. \par
-
-\subsection{Mood and Morality helper functions}
-\texttt{func changeInMood(a *CustomAgent3, pointsMin, pointsMax, direction int)}: helper function to change the mood. There is aspect of randomisation and the mood changes between pointsMin and pointsMax. \par
-
-\texttt{func changeInMorality(a *CustomAgent3, pointsMin, pointsMax, direction int)}: same as before but changes morality
+\subsection{Changes to environment}
+Changes to the environment will change the variables our agent is defined by. We have defined two possible environmental changes our agent will be affected by:
+\begin{enumerate}
+    \item A new day \texttt{func (a *CustomAgent3) changeNewDay()}: changes our morality and mood depending on our HP that morning. Changes depend on our current HP, which we have divided in four possible situations: 0-19, 20-39, 40-74 and 75-100.
+    \item A change in the floor we are located (reshuffle) \texttt{func (a *CustomAgent3) changeNewFloor()}: a change in the floor we are at will make the mood of our agent to change accordingly. We have designed for 4 possible scenarios to happen: 
+    \begin{enumerate}
+        \item We arrive at the highest floor we have ever been to: we get a boost of moodas we should be able to eat more than any other time, our mood can change positively between 5 and 10 points.
+        \item We arrive at a higher floor than before, but not the highest we have ever been: We are higher than before which is positive for us. As we could have done better our mood increases but less than in the previous scenario, our mood can change positively between 0 and 5 points.
+        \item We have arrived at a lower floor than before, but we have been lower: Our situation is worse than before but it could have been even worse. We lose mood points, our mood can change negatively between 0 and 5 points.
+        \item We have arrived at the lowest floor ever: We have never been in a worse situation and our agent will suffer a blow from this change. Our mood can be specially affected in this scenario, our morale can change negatively between 5 and 15 points.
+    \end{enumerate}
+    Each scenario can affect our agent in a different way. To make the scenario as realistic as possible we have added an element of randomness to the change in mood, depending on the range given on each of the scenarios. \par
+    Inside the function we store our new floor in our knowledge, we restart the HP of our neighbors, we don’t know who they are, and call \texttt{a.reshuffleEstimator()}. \par
+    \texttt{func (a *CustomAgent3) reshuffleEstimator()}: ensures we do not accept treaties longer than two times the reshuffle period so there are less chances a treaty kills us 
+\end{enumerate}
