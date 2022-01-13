@@ -1,1 +1,6 @@
 \chapter{Team 5 Agent Design}\label{team_5_agent_design}
+
+This agent operates on the bases that upon entering the tower, the need to ensure their own survival is their only aim and therefore the agent should maximise its own HP whenever given the opportunity to do so. When there is not enough food to fully satisfy all agents, the agent alters their behaviour to best increase their long-term survival.
+
+This situation can be thought of as a `hawk-dove' game, where it is beneficial for all agents to take less food but any single agent who does so is worse off if no other agents follow suit. Communication is key to breaking out of this situation. This agent will attempt to establish relationships with surrounding agents -- the agent has parameters to judge other agents and also attempts to learn about the tower -- and encourage behaviours that benefit the overall tower utility.
+
