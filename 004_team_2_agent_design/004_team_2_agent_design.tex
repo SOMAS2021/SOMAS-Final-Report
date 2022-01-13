@@ -1,1 +1,147 @@
 \chapter{Team 2 Agent Design}\label{team_2_agent_design}
+\section{Core Idea and Overall Strategy}
+The objective of this agent design was to implement a form of reinforcement learning to allow for an increase in performance and thus utility over time. This must be met without compromising on the overall goal of the simulations, whereby the agent must strike a balance between prioritising individual utility or prioritising collective utility, the latter involving a level of cooperation with the other agent types. Certain parallels can be drawn to evolutionary ecology, as the Tower with the Resident agents can represent a closed ecosystem, with the Platform providing a limited food source. 
+\subsection{Competitive Exclusion Principle}
+Competing and cooperating with the other agents may seem to contradict the Competitive Exclusion Principle. The Competitive Exclusion Principle states that two or more species competing for the same limited resource will not be able to exist at constant populations and will inevitably lead to either the weaker competitor’s extinction, or a distinct change in its behaviour. The superior competitor generally will have an aggressive competitive advantage which leads to this. This principle aligns with our context, as our agents must satisfy their hunger with limited food being delivered on the Platform, while other team agents will do the same. Conversely, we must not cause the deaths of other agents by taking too much food for ourselves since all agents must also strive to achieve the highest collective utility possible. In order to balance these objectives, we have implemented functions unique to our agents to ensure the survival of our agent without leading to the demise of others.  
+\subsection{Utility Considerations}
+It is not possible to maximise both individual and collective utility simultaneously. Maximising only individual utility would result in taking more resources than required to satisfy an agent’s needs to ensure that it can survive on floors with less food. This action is contradictory to maximising collective utility as it would unnecessarily reduce the resource pool for the other agents. As a result, collective utility is prioritised to enhance the survival rates of all the agents in the Tower. 
+\subsection{Dynamic Adaptation}
+Our goal is to create a unique advantage by allowing for the agent to experiment with different actions to different situations, until the most appropriate actions can be dynamically chosen for the future. A reward system is utilised, whereby a suitable action will be rewarded, and a detrimental action will be penalised. Given enough iterations, the agent should be sufficiently trained to consistently choose the most correct actions. This is achievable as most other agents have fixed behaviours which can be predicted by our agent; however, we also experiment with random agents to understand and quantify the change in performance and utility. Relying on a stochastic method to execute learning can result in vastly different outcomes, but it is expected that in general the agents will perform better with time.  
+\subsection{Education and Reincarnation}
+The knowledge gained over time is stored in the agent’s memory. In order to provide a more realistic simulation of the Tower scenario, each individual agent’s memory will be erased upon death. This presents a limit to the effectiveness of the learning method, as the agent’s learning rate cannot be so high that it only takes higher risk choices to learn faster, it must consider its survival. However, a separate setting was made where “reincarnation” was implemented. In this setting, upon the agent’s death, it is respawned with all the knowledge it had gained in previous lives. We use this as a comparison metric to qualitatively assess any difference in overall utility and test the model with maximum iterations to learn as opposed to just its lifespan.
+\section{Strategies and Algorithms}
+\subsection{Q-Learning}
+Instead of using a deterministic method, we apply Q-Learning to dynamically learn a strategy for our agent based on the environment given by the game settings. The Q-Learning method we use is an extension of the classic Temporal-Difference (TD) learning. 
+\subsubsection{One-Step Temporal-Difference Learning}
+Temporal-Difference (TD) Learning combines the attributes of Monte Carlo methods and Dynamic Programming. Similar to Monte Carlo, TD has the ability of on-line learning from the specific feedback that the agent receives without the need to construct a model of the environment. In addition, TD is equipped with the advantage of Dynamic Programming. It is able to update the estimates of the current state based on other estimations of future states, which means that it is not necessary for TD learning to wait for the final outcome when updating the strategies \cite{alma991000179099701591}.
+
+In one-step TD learning, the value of one state will be updated only in relation to the estimation of value for the next state. The update step is performed with the following function  
+\begin{equation}
+    V(S_t) \leftarrow V(S_t)+\alpha[R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]
+\end{equation}
+where $V$ is the value of states and $R$ is the reward for transferring to some state.
+
+The $R_{t+1} + \gamma V(S_{t+1})$ term is the reward for transferring to the next state plus the time-decayed value of the next states. This is the approximation of the Markov Reward Process if we keep iterating this step until reaching the final state. Thus, $R_{t+1} + \gamma V(S_{t+1})$ can be considered as a better estimation of the value for the current state. In this case, it can be easily observed that $R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$ is the error between our estimated current state value and its better approximation. Finally, the value of the current state is re-estimated with this error plus its previous estimated value.  
+
+\subsubsection{Q-Learning Algorithm}
+Q-Learning is an off-policy version of the Temporal-Difference method.
+Instead of only considering the transition between states, policies and actions are introduced in Q-Learning. An action is a behaviour that the agent can perform under some situation. A policy is the behaviour for an agent at a given time, which can be interpreted as the mapping from a given state to a given action corresponding to that state. For an off-policy algorithm, the policy that is evaluated and improved can differ from the policy that the agent will take to introduce the action. In other words, we may update our strategy under the assumption that the agent will take one action in the next state, but the agent may eventually take another action. 
+
+In Q-Learning, the transition between state-action pairs is involved. The state-action pairs also belong to the Markov Reward Process as in TD method. Q value measures the value of a state-action pair which means that Q value tells the quality of taking one action under given state. Moreover, a Q table is a combination of all the Q values which includes all the possible states and corresponding actions along with their Q values \cite{alma991000179099701591}. 
+
+In terms of the actual policy of an agent in Q-Learning, we combine the exploration policy and greedy policy. In greedy methods, the agent selects an action which has the highest quality under the current state. In other words, the agent will select the action with the highest Q value in that state. The exploration policy introduces a probability $\delta$, which is the probability that the agent will ignore past experience (i.e., the Q table) and take random actions to explore potentially better results. In summary, the agent will have a probability of $\delta$ to take a random action and a probability of $1-\delta$ to follow the greedy policy. 
+
+The Q table is updated with the following function
+\begin{equation}
+    Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_{t+1} + \gamma\max_{\alpha}Q(S_{t+1},a)-Q(S_t,A_t)\right]
+\end{equation}
+The updating function is nearly the same as that in TD learning except that we now measure the value of a state-action pair. The error between the estimated Q value and the better estimated Q value of the current state is also utilized in the updating process. Although the agent has a probability to take the random policy, we assume that the agent acts according to the greedy policy for updating which is expressed in the term $\max_{\alpha}Q(S_{t+1},a)$. This ensures a stable but exploratory learning process and that is why Q-Learning belongs to the off-policy category.
+
+\subsection{Hill Climbing}
+To better enable the mixed strategy play for our agent we implement the Policy Hill-Climbing (PHC) algorithm, which is a simple extension of Q-learning. PHC is a simple adaptation that performs the hill-climbing algorithm in the space of mixed strategies.  Here, the starting point of the policy space is initialized so that all policies have a uniform probability unlike the more common random initialization of probabilities. The PHC algorithm can be formulated as follows:
+\begin{enumerate}
+    \item We let $\alpha\in(0,1]$ and $\beta\in(0,1]$ be two learning rates and initialise the Q and policy tables with the following values
+    \begin{equation}
+        Q(s,a)\leftarrow0,\quad \pi(s,a)\leftarrow\frac{1}{\left|A_i\right|}
+    \end{equation}
+    \item Repeat for each iteration
+    \begin{enumerate}
+        \item According to the mixed strategy $\pi(s)$ with suitable exploration select action $a$ from a given state $s$
+        \item Observing next state $s'$ and reward $r$ update the Q table
+        \begin{equation}
+            Q(s,a)\leftarrow (1-\alpha)Q(s,a)+\alpha\left(r+\gamma\max_{\alpha}Q\left(s',a'\right)\right)
+        \end{equation}
+        \item Update the policy table $\pi(s,a)$ and constrain it to a legal probability distribution
+        \begin{equation}
+            \pi(s,a)\leftarrow\pi(s,a)+\begin{cases}
+            \beta &\textrm{if } a=\operatorname{argmax}_{a'}Q(s,a)\\
+            \frac{-\beta}{|A_i|-1} &\textrm{otherwise}
+            \end{cases}
+        \end{equation}
+    \end{enumerate}
+\end{enumerate}
+
+PHC keeps the Q-values as normal Q-learning would, but additionally also retains the present mixed policy. The algorithm performs non-gradient based rational optimisation by increasing the probability of selecting the action that gave the highest Q-value according to some given learning rate $\alpha$. The algorithm improves the policy by increasing the probability for selecting action with the highest Q-value according to the learning rate $\beta\in(0,1]$. It should be noted that for a learning rate $\beta=1$ the algorithm performs homogeneously to Q-learning as with each iteration, or step, the algorithm executes the highest Q-valued action which is precisely the greedy policy as explained earlier in Q-learning.
+
+The PHC algorithm is only able to locate an optimal policy against stationary strategy opponents and has never been proven to converge if pitted against non-stationary strategy opponents \cite{BowlingMichael2002Mlua}. As according to $Q$, that converges at some $Q'$, the mixed strategy $\pi$ is greedy and will therefore converge to the best possible policy in response to the environment the agent is placed in. 
+
+\section{Agent Design}
+\subsection{Design of states and actions}
+As the learning involves interaction with the environment, it is essential to define the state space and the action space. A state space is a set of states, represented by vectors of observations, that an agent could possibly experience throughout its life. An action space is a set of actions that an agent could possibly perform in the game. The design of the state space and action space is tailored to the task assigned, namely maximising both individual and collective utilities. 
+\subsubsection{Design of state space}
+Firstly, we identified what observations are needed to determine the condition of the agent and the environment which is represented by the Tower and other agents. Considering the given task, we chose to observe four variables: 
+\begin{enumerate}
+    \item Our agent's HP
+    \item Amount of food currently on the platform
+    \item The number of days in critical condition
+    \item The HP of the neighbour that is on the floor below our agent
+\end{enumerate}
+
+The first three observations served to fulfil the first aim of the task, as they could effectively reflect the health condition of our agent. The last observation was used to assess the impact of the action of our agent on the neighbouring agent, which is useful for the second aim of the task. Subsequently, we found the resolution of each observation by trial and error. Having a high resolution, the agent would be able to perceive tiny changes within the environment at the cost of increased number of states, and thus slowing the learning process. Having a low resolution, the agent would not be able to adapt to changes in the environment effectively and promptly. Finally, the state space of our agent is defined by ten state intervals for agent’s HP (0 – 9, 10 – 19, …, 80 – 89, 90 – Max HP), ten state intervals for the food on platform (0 – 9, 10 – 19, …, 80 – 89, 90 – Max food), four states for Days at critical (0, 1, 2, 3), and eleven state intervals for neighbouring agent’s HP (-1, 0 – 9, …, 80 – 89, 90 – Max HP), with an additional unknown state represented by –1, as the neighbouring agent might refuse to share such information. Table \ref{state-table} illustrates the state space definition.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}
+\label{state-table}
+\centering
+\caption{State space defintion}
+\begin{adjustbox}{width=\columnwidth,center}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+State Number & HP          & Food on platform & Days at critical & Neighbour’s HP \\ \midrule
+0            & 0 – 9       & 0 – 9            & 0                & -1             \\
+1            & 0 – 9       & 0 – 9            & 0                & 0 – 9          \\
+2            & 0 – 9       & 0 – 9            & 0                & 10 – 19        \\
+...          &             &                  &                  &                \\
+11           & 0 – 9       & 0 – 9            & 1                & -1             \\
+12           & 0 – 9       & 0 – 9            & 1                & 0 – 9          \\
+...          &             &                  &                  &                \\
+44           & 0 – 9       & 10 – 19          & 0                & -1             \\
+45           & 0 – 9       & 10 – 19          & 0                & 0 – 9          \\
+...          &             &                  &                  &                \\
+440          & 10 – 19     & 0 – 9            & 0                & -1             \\
+441          & 10 – 19     & 0 – 9            & 0                & 0 – 9          \\
+...          &             &                  &                  &                \\
+4399         & 90 – Max HP & 90 – Max Food    & 3                & 90 – Max HP    \\ \bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+\subsubsection{Design of action space}
+In the game, taking food is the main interaction with the Tower, which provides feedback according to the amount of food taken. Thus, we divided the action of taking food into six distinct actions with different number of intended food intake, as shown in the table \ref{action-space}.
+\begin{table}
+\label{action-space}
+\centering
+\caption{Action space definition}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Action number & Intended food intake \\ \midrule
+0             & 5                    \\
+1             & 10                   \\
+2             & 15                   \\
+3             & 20                   \\
+4             & 25                   \\
+5             & 30                   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+We excluded the possibility of taking more than 30 food units, as eating above this level will only bring punishment to our agent according to our reward design. Note that the intended food intakes are multiple of 5, as we would like the agent to have less actions to learn, resulting in faster convergence. 
+
+\subsubsection{Design of reward function}
+The reward function provides a way for us to set the desired behaviour of our agent. The reward function will assess the quality of a particular action under a specific state and provide feedback, either reward or punishment, to the agent. We have designed four assessment criteria, namely surviving bonus, eating bonus, wasting bonus and saving bonus. We encourage our agent to survive: if the agent survives without entering critical state, it will be rewarded, otherwise punished; we encourage our agent to eat less: if the agent eats below a certain level of HP, it will be rewarded, otherwise punished; we encourage our agent to not waste food: if the actual HP increment is lower than expected, the agent will be punished; we also encourage our agent to save neighbour: if the neighbouring agent is in critical state after our action, the agent will be punished. During the experiments, depending on what behaviour we want to observe, the reward function will be tuned accordingly.
+
+Based on the health decay model defined in \ref{health-modelling}, the agent reward was designed to encourage the agent to reward a health above critical and punish dropping to critical health as well as punish overeating using a reward point value for each day. The reward function with its tuned hyperparameters is as such:
+\begin{itemize}
+    \item Set reward to zero for each new day
+    \item If HP is 80-100 (Punish)
+    \begin{itemize}
+        \item $\textrm{Reward} = =0.2\times\textrm{food taken that day}$
+    \end{itemize}
+    \item If HP is 4-79 (Reward)
+    \begin{itemize}
+        \item $\textrm{Reward} = 3$
+    \end{itemize}
+    \item If hp is critical (Punish)
+    \begin{itemize}
+        \item $\textrm{Reward=10}\times\textrm{Consecutive days agent has stayed at critical}$
+    \end{itemize}
+\end{itemize}
+
