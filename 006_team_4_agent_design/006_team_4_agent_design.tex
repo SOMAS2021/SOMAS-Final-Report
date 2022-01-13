@@ -1,1 +1,37 @@
 \chapter{Team 4 Agent Design}\label{team_4_agent_design}
+
+\section{Strategy Overview}
+Our overall agent strategy is determined by an evolutionary algorithm which allows our agent to preemptively adapt to an unknown environment. 
+The evolutionary algorithm is further complemented by a trust score, which is a measure of our agent's perception of a global community score.
+Additionally, the agent is also given a cravings element which simulates real-life humane hunger.
+
+\section{Evolutionary Algorithm}
+Our agent strategy began by the developing an evolutionary algorithm which allowed our agent to alternate between various configurations. These 
+configurations were determined by an overall trust factor. The agent was trained to determine three configurations: selfish, neutral and selfless.
+The selfish nature of the agent was designed for self-prioritisation over community welfare. The selfless configuration was trained to optimise
+the global life expectancy whereby, our agent would try to reduce global deaths per iteration. The neutral configuration strikes a balance between
+the two previous configurations to try and optimise overall life expectancy inclusive of itself.
+
+\subsection{FoodtoEat}
+[Placeholder for FoodtoEat]
+
+\subsection{WaitProbability}
+[Placeholder for WaitProbability]
+
+\subsection{Cravings}
+[Placeholder for Cravings]
+
+\section{Message Passing}
+[Placeholder for Message Passing]
+
+\section{Trust Score}
+The trust score was a parameter implemented to try and allow a more dynamic approach built on top of our relatively static evolutionary algorithm.
+The trust score meant that our agent was able to build a global trust network based on local interactions. These interactions involve asking other
+agents to leave a certain amount of food when we are in the critical state. Another interaction involves our agent evaluating the food that another
+agent may be taking.
+
+\section{Treaties}
+[Placeholder for Treaties]
+
+\section{Experiments}
+[Placeholder for Experiments]
