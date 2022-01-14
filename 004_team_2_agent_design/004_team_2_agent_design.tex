@@ -1,4 +1,7 @@
 \chapter{Team 2 Agent Design}\label{team_2_agent_design}
+
+\SetKwComment{Comment}{$\triangleright$\ }{}
+
 \section{Core Idea and Overall Strategy}
 The objective of this agent design was to implement a form of reinforcement learning to allow for an increase in performance and thus utility over time. This must be met without compromising on the overall goal of the simulations, whereby the agent must strike a balance between prioritising individual utility or prioritising collective utility, the latter involving a level of cooperation with the other agent types. Certain parallels can be drawn to evolutionary ecology, as the Tower with the Resident agents can represent a closed ecosystem, with the Platform providing a limited food source. 
 \subsection{Competitive Exclusion Principle}
@@ -38,28 +41,24 @@ The Q table is updated with the following function
 The updating function is nearly the same as that in TD learning except that we now measure the value of a state-action pair. The error between the estimated Q value and the better estimated Q value of the current state is also utilized in the updating process. Although the agent has a probability to take the random policy, we assume that the agent acts according to the greedy policy for updating which is expressed in the term $\max_{\alpha}Q(S_{t+1},a)$. This ensures a stable but exploratory learning process and that is why Q-Learning belongs to the off-policy category.
 
 \subsection{Hill Climbing}
-To better enable the mixed strategy play for our agent we implement the Policy Hill-Climbing (PHC) algorithm, which is a simple extension of Q-learning. PHC is a simple adaptation that performs the hill-climbing algorithm in the space of mixed strategies.  Here, the starting point of the policy space is initialized so that all policies have a uniform probability unlike the more common random initialization of probabilities. The PHC algorithm can be formulated as follows:
-\begin{enumerate}
-    \item We let $\alpha\in(0,1]$ and $\beta\in(0,1]$ be two learning rates and initialise the Q and policy tables with the following values
-    \begin{equation}
-        Q(s,a)\leftarrow0,\quad \pi(s,a)\leftarrow\frac{1}{\left|A_i\right|}
-    \end{equation}
-    \item Repeat for each iteration
-    \begin{enumerate}
-        \item According to the mixed strategy $\pi(s)$ with suitable exploration select action $a$ from a given state $s$
-        \item Observing next state $s'$ and reward $r$ update the Q table
-        \begin{equation}
-            Q(s,a)\leftarrow (1-\alpha)Q(s,a)+\alpha\left(r+\gamma\max_{\alpha}Q\left(s',a'\right)\right)
-        \end{equation}
-        \item Update the policy table $\pi(s,a)$ and constrain it to a legal probability distribution
-        \begin{equation}
-            \pi(s,a)\leftarrow\pi(s,a)+\begin{cases}
+To better enable the mixed strategy play for our agent we implement the Policy Hill-Climbing (PHC) algorithm, which is a simple extension of Q-learning. PHC is a simple adaptation that performs the hill-climbing algorithm in the space of mixed strategies.  Here, the starting point of the policy space is initialized so that all policies have a uniform probability unlike the more common random initialization of probabilities. The PHC algorithm is formulated in Algorithm \ref{phc-algorithm}.
+
+\begin{algorithm}
+\caption{PHC Algorithm}
+\label{phc-algorithm}
+$\alpha\in(0,1]$\Comment*[r]{Learning rate}
+$\beta\in(0,1]$\Comment*[r]{Learning rate}
+$Q(s,a)\leftarrow0$\;
+$\pi(s,a)\leftarrow\frac{1}{\left|A_i\right|}$\;
+\Begin(\Comment*[h]{Perform each iteration}){
+	$a\gets\pi(s)$\;
+	$Q(s,a)\leftarrow (1-\alpha)Q(s,a)+\alpha\left(r+\gamma\max_{\alpha}Q\left(s',a'\right)\right)$\;
+	$ \pi(s,a)\leftarrow\pi(s,a)+\begin{cases}
             \beta &\textrm{if } a=\operatorname{argmax}_{a'}Q(s,a)\\
             \frac{-\beta}{|A_i|-1} &\textrm{otherwise}
-            \end{cases}
-        \end{equation}
-    \end{enumerate}
-\end{enumerate}
+            \end{cases}$\;
+}
+\end{algorithm}
 
 PHC keeps the Q-values as normal Q-learning would, but additionally also retains the present mixed policy. The algorithm performs non-gradient based rational optimisation by increasing the probability of selecting the action that gave the highest Q-value according to some given learning rate $\alpha$. The algorithm improves the policy by increasing the probability for selecting action with the highest Q-value according to the learning rate $\beta\in(0,1]$. It should be noted that for a learning rate $\beta=1$ the algorithm performs homogeneously to Q-learning as with each iteration, or step, the algorithm executes the highest Q-valued action which is precisely the greedy policy as explained earlier in Q-learning.
 
