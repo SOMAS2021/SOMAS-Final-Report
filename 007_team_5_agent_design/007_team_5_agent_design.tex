@@ -8,8 +8,12 @@ However, the agent will also be influneced by the behaviour of agents around it:
 
 An agent will maintain a low HP only if it is confident that other agents will allow it to survive by leaving enough food, through the signing of treaties to build trust. A tower that consists solely of Team 5 agents would require those at the top to be willing to decrease their own short-term satisfaction in order to give the best chance of survival for all agents, and trust others to do the same upon reshuffling.
 
+Section \ref{sec:team5-overview} provides an overview of the agent's parameters and strategy, Section \ref{sec:team5-messaging} describes the agent's communication strategy, Section \ref{sec:team5-memory} describes how the agent stores its social network and how it judges other agents, and Section \ref{sec:team5-treaties} describes how the Team 5 agent utilises treaties. Finally, Section \ref{sec:team5-experimentation} contains analysis of this agent and how it performs in a Tower consisting of itself alone and together with other agent types and Section \ref{sec:team5-conclusion} provides summarising remarks regarding the implementation of this agent type.
+
 \section{Agent Overview}
 \label{sec:team5-overview}
+
+\ToDo{Give better description of Run function}
 
 The strategy employed by this agent aims to maximise its chances of survival while also considering those who have helped the agent in the past.
 
@@ -51,7 +55,7 @@ At the beginning of each day, the agent's `personality' is updated using various
 \label{tab:team5-personality}
 \end{table}
 
-At the start of each tick, the agent checks to see if it has received any messages and if so, will respond to these \footnote{Note that an agent can receive and respond to only one message per tick.}. The agent then sends out messages to other agents. The mechanism for messaging is described in Section \ref{sec:team5-messaging}.
+At the start of each tick, the agent checks to see if it has received any messages and if so, will respond to these\footnote{Note that an agent can receive and respond to only one message per tick.}. The agent then sends out messages to other agents. The mechanism for messaging is described in Section \ref{sec:team5-messaging}.
 
 \section{Messaging}\label{sec:team5-messaging}
 Collaboration between different agents operating in a system requires communication. The motivation for messaging is to improve the agent's understanding of its surroundings, enable building of mutually beneficial relationships, and introduce collaboration and argeement between parties.
@@ -171,3 +175,7 @@ The proposed treaty is always that agents whose HP is greater than or equal to a
     \texttt{hpThreshold} = \texttt{aimHP} - \frac{\texttt{aimHP} - \texttt{WeakLevel}}{10}\times\left(\texttt{leadership} - \texttt{leadershipThreshold}\right)
 \end{equation}
 
+\section{Experimentation}\label{sec:team5-experimentation}
+This section focuses on how the agent's performance varies with changes in its environment.
+
+\section{Conclusion}\label{sec:team5-conclusion}
