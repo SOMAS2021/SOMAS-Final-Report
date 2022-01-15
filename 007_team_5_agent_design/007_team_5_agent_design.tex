@@ -123,11 +123,51 @@ For agents which have low favour, the Team 5 agent maintains its passiveness and
 
 It should also be noted that while the Team 5 agent computes favour for agents both above and below its floor, a positive favour value for agents above is helpful to that agent only if they are moved to a floor below the Team 5 agent following a reshuffle: this is because there is no way to reward the behaviour of an agent above you in the tower.
 
+\section{Treaties}\label{sec:team5-treaties}
+The Team 5 agent's treaty strategy consists of three main parts:
+\begin{enumerate}
+    \item Deciding whether to accept or reject proposed treaties
+    \item When to propose a treaty
+    \item What to propose as a treaty
+\end{enumerate}
 
+\subsection*{Responding to Proposed Treaties}\label{sec:team5-treaties-response}
+A proposed treaty is always rejected if:
+\begin{itemize}
+    \item It conflicts with any other active treaties. A treaty is considered to conflict with another treaty if they could ever cause the agent to incompatible actions (for example, an agent cannot leave more than five units of food and fewer than four units of food at the same time).
+    \item It is badly formed. For example, a treaty which requires the agent to leave more than 100\% of the food on the platform is badly formed.
+    \item \ToDo{Check this one} It requires agents to leave less than a certain amount of food on the platform, as this is never advantageous to the tower as a whole.
+    \item \ToDo{Check this one} It requires the agent to leave an exact amount of food on the platform, as this would result ina ll but one of the agents signed up to the treaty to take no food each day.
+    \item It makes a request based on low HP, low amounts of food on the platform, or a low floor, as in these conditions the agent will already be desperate for survival, so will not want to be further constrained by a treaty.
+    \item \ToDo{Check this one} It makes a request based on HP where the threshold is within the ``weak'' or ``critical'' HP bands, as this means the agent could become critical or die as a result of following the treaty.
+    \item \ToDo{Check this one} It would require the agent to take less food than is required to avoid entering the ``critical'' HP band.
+\end{itemize}
+If the treaty does not meet any of the above conditions, the \texttt{decision} value is then computed as:
+\[\texttt{decision} = 6 - \texttt{selfishness} + \texttt{proposerFavour} - \frac{\texttt{treatyDuration}}{3}\]
 
+This calculation is based on the following considerations:
+\begin{itemize}
+    \item Selfish agents will always be less likely to sign treaties
+    \item The proposing agent is more likely to be trusted if the receiving agent views them more favourably
+    \item Longer treaties are viewed more negatively because factors such as the receiving agent's opinion of the proposer and the agent's selfishness can change over time, meaning the same treaty could be viewed less favourably in future. Therefore, the agent should avoid constraining its actions to satisfy an agent of which it has a negative opinion.
+\end{itemize}
 
+If the \texttt{decision} value is positive, the treaty is accepted.
 
+\subsection*{Proposing Treaties}\label{sec:team5-treaties-proposal}
+At the start of each day, the agent checks whether it has become a `leader': if it has, then the agent proposes a treaty. Whether an agent becomes a leader or not is based on:
+\begin{itemize}
+    \item The agent's selfishness: a selfish agent is less likely to propose treaties
+    \item The agent's floor: agents higher up in the tower are more likely to propose treaties. This is because agents higher up in the tower have more access to food and therefore have more control over the food available to those below them. This control means these agents are in a better position to affect change.
+    \item The agent's \texttt{leadership} threshold: this is randomly set during the agent's initialisation and those with a lower leadership threshold are more likely to become leaders.
+\end{itemize}
+The leadership value is calculated by:
+\[ \texttt{leadership} = x - \texttt{selfishness} - \texttt{agentFloor}\]
+The variable $x$ is a random number between 3 and 12, inclusive. If $leadership$ is greater than the agent's leadership threshold, then the agent becomes a leader and proposes a treaty.
 
+The proposed treaty is always that agents whose HP is greater than or equal to a certain value should always leave 100\% of the food on the platform, and always lasts for five days. The threshold value for HP is calculated using Equation \ref{eq:team5-treaty-hp-threshold}. Note that in this equation, \texttt{WeakLevel} refers to the threshold between the ``critical'' and ``weak'' HP states.
 
-
+\begin{equation}\label{eq:team5-treaty-hp-threshold}
+    \texttt{hpThreshold} = \texttt{aimHP} - \frac{\texttt{aimHP} - \texttt{WeakLevel}}{10}\times\left(\texttt{leadership} - \texttt{leadershipThreshold}\right)
+\end{equation}
 
