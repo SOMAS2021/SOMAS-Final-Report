@@ -1,6 +1,133 @@
 \chapter{Team 5 Agent Design}\label{team_5_agent_design}
 
-This agent operates on the bases that upon entering the tower, the need to ensure their own survival is their only aim and therefore the agent should maximise its own HP whenever given the opportunity to do so. When there is not enough food to fully satisfy all agents, the agent alters their behaviour to best increase their long-term survival.
+The Team 5 agent operates on the basis that upon entering the tower, the need to ensure its own survival is its only aim and therefore the agent should maximise its own HP whenever given the opportunity to do so. When there is not enough food to fully satisfy all agents, the agent alters its behaviour to best increase its long-term survival.
 
-This situation can be thought of as a `hawk-dove' game, where it is beneficial for all agents to take less food but any single agent who does so is worse off if no other agents follow suit. Communication is key to breaking out of this situation. This agent will attempt to establish relationships with surrounding agents -- the agent has parameters to judge other agents and also attempts to learn about the tower -- and encourage behaviours that benefit the overall tower utility.
+This situation can be thought of as a `hawk-dove' game where it is beneficial for all agents to take less food but any single agent who does so is worse off if no other agents follow suit. Communication is key to breaking out of this situation. This agent will attempt to establish relationships with surrounding agents -- the agent has parameters to judge other agents and also attempts to learn about the tower -- and encourage behaviours that benefit the overall tower utility.
+
+However, the agent will also be influneced by the behaviour of agents around it: if other agents are selfish then it will also be selfish. This can be thought of as a `tit-for-tat' strategy, but with enough HP, agents will be willing to `make the first move', with the insurance that if others do not follow then they have some buffer time to re-establish their own selfish behaviour.
+
+An agent will maintain a low HP only if it is confident that other agents will allow it to survive by leaving enough food, through the signing of treaties to build trust. A tower that consists solely of Team 5 agents would require those at the top to be willing to decrease their own short-term satisfaction in order to give the best chance of survival for all agents, and trust others to do the same upon reshuffling.
+
+\section{Agent Overview}
+\label{sec:team5-overview}
+
+The strategy employed by this agent aims to maximise its chances of survival while also considering those who have helped the agent in the past.
+
+At the beginning of each day, the agent's `personality' is updated using various parameters stored from previous days. These personality parameters are shown in Table \ref{tab:team5-personality}.
+
+\begin{table}
+    \centering
+\begin{tabular}%
+    {| >{\raggedleft\arraybackslash}p{0.25\linewidth} | %
+    >{\raggedright\arraybackslash}p{0.65\linewidth} | %
+    }
+    \hline
+    Selfishness          & Ranges from 0 to 10. Determines how much the agent will act for their own survival as opposed to the best interests of the surrounding agents\\
+    \hline
+    Last Meal            & How much the agent ate in their last meal\\
+    \hline
+    Days Since Last Meal & How many days since the agent last ate\\
+    \hline
+    % HP After Eating      & \\
+    % \hline
+    Aim HP               & Defines the goal HP the agent would like to reach at the end of the day\\
+    \hline
+    Attempt Food         & The amount of food the agent will attempt to take from the platform\\
+    \hline
+    Messaging Counter    & Determines which message type to send to which floor \\
+    % \hline
+    % Treaty Send Counter  & \\
+    % \hline
+    % Attempt To Eat       & \\
+    % \hline
+    Leadership           & A threshold value required for the agent to propose treaties\\
+    \hline
+    Social Memory        & Stores the information the agent learns about other agents, as well as its opinion of them (see Table \ref{tab:team5-memory})\\
+    \hline
+    Surrounding Agents   & A list of the agent's neighbours\\
+    \hline
+\end{tabular}
+\caption{The personality parameters of Team 5's agent}
+\label{tab:team5-personality}
+\end{table}
+
+At the start of each tick, the agent checks to see if it has received any messages and if so, will respond to these \footnote{Note that an agent can receive and respond to only one message per tick.}. The agent then sends out messages to other agents. The mechanism for messaging is described in Section \ref{sec:team5-messaging}.
+
+\section{Messaging}\label{sec:team5-messaging}
+Collaboration between different agents operating in a system requires communication. The motivation for messaging is to improve the agent's understanding of its surroundings, enable building of mutually beneficial relationships, and introduce collaboration and argeement between parties.
+
+\subsection*{Strategy}\label{sec:team5-messaging-strategy}
+The agent's approach to messaging is to adopt a ``passive observer'' role focussed on gathering information about other agents to organise itself with these agents in the tower. With more information at its disposal, the agent can make more informed decisions to balance its own individual utility with the collective utility of the agents in the tower.
+
+\ToDo{choose whether to say 12 or 8 ticks to send all messages}
+The agent sends three types of messages targeting each of the agents two floors above and below its own floor; it therefore takes 12 ticks to send all of its messages. These messages ask for the HP, intended food intake, and actual food intake of other agents. The decision of which message type to send to which floor is controlled by the Messaging Counter described in Table \ref{tab:team5-personality}. This counter is incremented each tick, and reset either every 25 ticks or at the end of each day, whichever comes first. This ensures that the agent is requesting up-to-date information regularly for use in its decision making.
+
+The order of sent messages is:
+\begin{enumerate}
+    \item Ask for an agent's HP
+    \item Ask for an agent's previous food intake
+    % \item Ask for an agent's intended food intake
+\end{enumerate}
+The Team 5 agent first targets the agent immediately below it, then the agent immediately above, then two floors below, and finally the agent two floors above.
+
+\section{Social Memory}\label{sec:team5-memory}
+The agent stores the information gained from communication in its `memory': the information stored by this data structure is shown in Table \ref{tab:team5-memory}.
+
+\begin{table}
+    \centering
+    \begin{tabular}%
+        {| >{\raggedleft\arraybackslash}p{0.25\linewidth} | %
+        >{\raggedright\arraybackslash}p{0.65\linewidth} | %
+        }
+        \hline
+        Agent ID & An agent's unique ID\\
+        \hline
+        Agent HP & The agent's HP level\\
+        \hline
+        Food Taken & The amount of food the agent last took\\
+        % \hline
+        % Intended Food Intake & The amount of food the agent intends to take\\
+        \hline
+        Favour & The Team 5 agent's opinion of this agent\\
+        \hline
+        Days Since Last Seen & The number of days since the last message from this agent\\
+        \hline
+    \end{tabular}
+    \caption{Team 5 Agent Memory}
+    \label{tab:team5-memory}
+\end{table}
+
+This memory allows the agent to construct a social network of agents in the tower and evaluate others based on these parameters. This consequently leads to the idea of favour, a metric the Team 5 agent uses to judge other agents. If more than five days have passed since the agent's last interaction with someone, then the memory of that agent is reset. This prevents the agent from using out-of-date information in its calculation and also allows for the removal of dead agents from its memory.
+
+\subsection*{Favour}\label{sec:team5-favour}
+The favour metric quantifies the agent's opinion of others in the tower. It is bounded between 0 and 10, and in a single tick can either increase by 1, decrease by 3, or stay the same:
+
+\begin{align*}
+    \texttt{hpScoreOther} &= -1 \times \frac{\texttt{otherHP}^{1.7} \times \texttt{foodTaken}^{1.3}}{\texttt{maxHP}^3}\\
+    \texttt{hpScoreSelf} &= \frac{\texttt{ownHP}^{1.7}\times\texttt{ownAttemptFood}^{1.3}}{\texttt{maxHP}^3}\\
+    \texttt{judgement} &= 100 \times (\texttt{hpScoreOther} + \texttt{hpScoreSelf})\\
+    \texttt{unboundedFavour} &= \begin{cases}
+        \texttt{originalFavour} + 1, \hfill \texttt{judgement} > 0.075\\
+        \texttt{originalFavour} + \max{\left(\frac{\texttt{judgement}}{2}, -3\right)}, \hfill\texttt{judgement} < -2
+    \end{cases}\\
+    \texttt{favour} &= \begin{cases}
+        0, \hfill\texttt{unboundedFavour} < 0\\
+        \texttt{unboundedFavour}, \quad\hfill 0 <= \texttt{unboundedFavour} <= 10\\
+        10, \hfill\texttt{unboundedFavour} > 10
+    \end{cases}\\
+\end{align*}
+
+Measuring favour allows the agent to act accordingly to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
+
+For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.\\
+
+It should also be noted that while the Team 5 agent computes favour for agents both above and below its floor, a positive favour value for agents above is helpful to that agent only if they are moved to a floor below the Team 5 agent following a reshuffle: this is because there is no way to reward the behaviour of an agent above you in the tower.
+
+
+
+
+
+
+
+
 
