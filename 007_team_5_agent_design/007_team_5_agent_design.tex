@@ -178,4 +178,110 @@ The proposed treaty is always that agents whose HP is greater than or equal to a
 \section{Experimentation}\label{sec:team5-experimentation}
 This section focuses on how the agent's performance varies with changes in its environment.
 
+\subsection*{Homogeneous Tower Experiments}
+To evaluate the self-organisation abilities of the Team 5 agent, simulations were run with the agent in variations of a homogeneous tower (i.e. a tower that contains agents of only one type). The agent has been evaluated on three main metrics:
+\begin{enumerate}
+    \item The number of deaths
+    \item The average utility
+    \item Whether self-organisation was achieved.
+\end{enumerate}
+We have defined self-organisation as when all agents take only what they need to survive and there are little to no deaths beyond a certain point in time.
+
+\subsubsection*{Food Per Agent On Platform}
+The baseline experiment for testing was to vary the amount of food per agent available on the platform; we expect that more food being available will result in fewer deaths. In this experiment, simulations were run for 100 simulation days, with a reshuffle period of 7 days and 50 agents in the tower and repeated three times, with the average of these runs taken. Figure \ref{fig:team5-deaths-utility-food-per-agent} shows that the number of deaths decreases and average utility increases as we increase the amount of food available.
+
+When the ratio of food to agent is greater than 9, the agents are able to self-organise within 100 days, and typically do so within 70 days. When food availability is less than this, the agents did not achieve self-organisation, however interestingly, it was observed that more treaties were accepted than rejected. This shows that the agents recognise theneed to self-organise and are willing to make attemps to do so. It is possible that they did not achieve self-organisation because agents died too quickly to reach agreements among enough agents for this to be successful.
+
+\begin{figure} % Number of Deaths and Average Utility vs Available Food Per Agent
+    \centering
+    \begin{minipage}{0.6\textwidth}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=\textwidth,
+                axis y line*=left,
+                ymin=0,
+                xmin=0,
+                xlabel=Available Food Per Agent,
+                ylabel=Number of Deaths,
+                ymajorgrids=true,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[smooth,mark=*,blue]
+                coordinates{
+                    (15, 0)
+                    (14, 0)
+                    (13, 2)
+                    (12, 10)
+                    (11, 8)
+                    (10, 23)
+                    (9, 30)
+                    (8, 49)
+                    (7, 63)
+                    (6, 117)
+                    (5, 124)
+                    (4, 199)
+                    (3, 234)
+                    (2, 305)
+                    (1, 362)
+                };
+            \end{axis}
+            
+            \begin{axis}[
+                width=\textwidth,
+              axis y line*=right,
+              axis x line=none,
+              ymin=0,
+              ylabel=Average Utility,
+              ymajorgrids=true,
+              xmajorgrids=true,
+              grid style=dashed,
+            ]
+            \addplot[smooth,mark=*,red]
+                coordinates{
+                    (15, 0.077)
+                    (14, 0.074)
+                    (13, 0.072)
+                    (12, 0.066)
+                    (11, 0.067)
+                    (10, 0.061)
+                    (9, 0.057)
+                    (8, 0.054)
+                    (7, 0.049)
+                    (6, 0.04)
+                    (5, 0.039)
+                    (4, 0.026)
+                    (3, 0.022)
+                    (2, 0.013)
+                    (1, 0.003)
+                };
+            \end{axis}
+            \end{tikzpicture}
+    \end{minipage}
+    \caption{Number of Deaths and Average Utility vs Available Food Per Agent}
+    \label{fig:team5-deaths-utility-food-per-agent}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Conclusion}\label{sec:team5-conclusion}
+
+
+
+
+
