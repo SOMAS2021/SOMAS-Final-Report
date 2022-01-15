@@ -107,19 +107,19 @@ The favour metric quantifies the agent's opinion of others in the tower. It is b
     \texttt{hpScoreSelf} &= \frac{\texttt{ownHP}^{1.7}\times\texttt{ownAttemptFood}^{1.3}}{\texttt{maxHP}^3}\\
     \texttt{judgement} &= 100 \times (\texttt{hpScoreOther} + \texttt{hpScoreSelf})\\
     \texttt{unboundedFavour} &= \begin{cases}
-        \texttt{originalFavour} + 1, \hfill \texttt{judgement} > 0.075\\
-        \texttt{originalFavour} + \max{\left(\frac{\texttt{judgement}}{2}, -3\right)}, \hfill\texttt{judgement} < -2
+        \texttt{originalFavour} + 1, \quad\hfill \texttt{judgement} &> 0.075\\
+        \texttt{originalFavour} + \max{\left(\frac{\texttt{judgement}}{2}, -3\right)}, \quad\hfill\texttt{judgement} &< -2
     \end{cases}\\
     \texttt{favour} &= \begin{cases}
-        0, \hfill\texttt{unboundedFavour} < 0\\
-        \texttt{unboundedFavour}, \quad\hfill 0 <= \texttt{unboundedFavour} <= 10\\
-        10, \hfill\texttt{unboundedFavour} > 10
+        0, \quad\hfill \texttt{unboundedFavour} &< 0\\
+        \texttt{unboundedFavour}, \quad 0 \leq \texttt{unboundedFavour} &\leq 10\\
+        10, \quad\hfill \texttt{unboundedFavour} &> 10
     \end{cases}\\
 \end{align*}
 
 Measuring favour allows the agent to act accordingly to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
 
-For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.\\
+For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.
 
 It should also be noted that while the Team 5 agent computes favour for agents both above and below its floor, a positive favour value for agents above is helpful to that agent only if they are moved to a floor below the Team 5 agent following a reshuffle: this is because there is no way to reward the behaviour of an agent above you in the tower.
 
