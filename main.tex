@@ -4,7 +4,7 @@
 \documentclass[a4paper,11pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper, top=3cm, bottom=3cm, left=2.5cm, right=2.5cm, marginparwidth=2cm, headsep=1.2cm]{geometry} % layout
-\usepackage[bookmarks=true]{hyperref} % enables hyperlinks in the PDF
+\usepackage[pdfencoding=auto]{hyperref} % enables hyperlinks in the PDF
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black} \urlstyle{same}
 \usepackage{amsmath}
 \usepackage{cleveref} \Crefformat{figure}{#2Fig.~#1#3} % makes referencing customizable (e.g. \Cref{}). See: https://texblog.org/2013/05/06/cleveref-a-clever-way-to-reference-in-latex/)
@@ -26,6 +26,23 @@
 \usepackage{amsfonts} 
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{listings}
+\usepackage{listings-golang}
+\usepackage{adjustbox}
+
+\lstset{
+  language=golang,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{mygray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{mygreen},
+  stringstyle=\color{mymauve},
+  breakatwhitespace=true,
+  tabsize=4
+}
 
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{siunitx}
@@ -38,7 +55,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Author
 % Use \\ to separate multiple authors (e.g. Robert\\Nathalie\\Mike)
-\newcommand{\myName}{SOMAS Class 2021-2022}
+\newcommand{\myName}{SOMAS Class 2021--2022}
 
 % Title
 % Introduce line breaks with \\
@@ -53,7 +70,7 @@
 % Supervisors
 % Use \\ to separate multiple supervisors (e.g. Robert\\Nathalie\\Mike)
 % Use full titles (e.g. Prof. Dr., Dr. )
-\newcommand{\supervisors}{Prof. Jeremy Pitt}
+\newcommand{\supervisors}{Prof.\ Jeremy Pitt}
 
 % ToDo Command
 \newcommand{\ToDo}[1]{\textcolor{red}{#1}}
@@ -79,23 +96,22 @@
 
 \tikz[remember picture,overlay] \node[opacity=1,inner sep=0pt, anchor=west] (A) at (2cm,-1.5cm){\includegraphics[scale=0.5]{template_figures/logo.eps}};
 
-\begin{center}
-    \vspace*{6cm}
-    \huge \textbf{\thesisType}\\
-    \vspace*{0.75cm}
-    \Huge \myTitle\\
-    \vspace{0.5cm}
-    \Large {Department of Electrical and Electronic Engineering}\\
-    \Large {Imperial College London}\\
-    \vspace*{5cm}
-    \huge \myName\\
-    \vspace*{0.5cm}
-    \LARGE \myDate\\
-    \vfill
-    Lecturer\\
-    \vspace*{0.5cm}
-    \huge \supervisors 
-\end{center}
+    \begin{center}
+        \vspace*{6cm}
+        \huge \textbf{\thesisType}\\
+        \vspace*{0.75cm}
+        \Huge \myTitle\\
+        \vspace{0.5cm}
+        \Large {Department of Electrical and Electronic Engineering}\\
+        \Large {Imperial College London}\\
+        \vspace*{5cm}
+        \huge \myName\\
+        \vspace*{0.5cm}
+        \LARGE \myDate\\
+        \vfill
+        Lecturer\\
+        \vspace*{0.5cm}
+        \huge \supervisors\end{center}
 
 \end{titlepage}
 
@@ -140,6 +156,7 @@
 
 % References
 \newpage
+\nocite{*}
 \bibliography{references} 
 \bibliographystyle{IEEEtranN}
 

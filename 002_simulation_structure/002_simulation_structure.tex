@@ -1,14 +1,108 @@
 \chapter{Simulation Structure}\label{simulation_structure}
 
-\section{Simulation Environment}
+%%%%%%%%
+%%%%%%%% Simulation Environment
+%%%%%%%%
+\section{Simulation Environment}\label{simulation_environment}
 Goes over the backend design
 
-\section{Simulation Flow}
+%%%%%%%%
+%%%%%%%% Simulation Flow
+%%%%%%%%
+\section{Simulation Flow}\label{simulation_flow}
 The order in which events happen
 Need a nice diagram for this
 
-\section{Message Passing}
+%%%%%%%%
+%%%%%%%% Message Passing
+%%%%%%%%
+\section{Message Passing}\label{message_passing}
 Need a nice diagram for this
 
-\section{Health Decay System}
-Need a nice diagram for this
+%%%%%%%%
+%%%%%%%% Health Modeling
+%%%%%%%%
+\section{Health Modeling}\label{health_modeling}
+
+\ToDo{Add diagram with a possible scenario of several days in a row?}
+
+%
+%%%%%%%% Global Description
+%
+\subsection{Global Description}
+
+The health of the agents living in the tower is represented by Health Points (HP). Two mechanisms affect an agent's HP: how much food they eat, and their ``cost of living''. The cost of living represents how many calories a human needs to eat each day to stay healthy. These two mechanisms are implemented using the functions \lstinline$updateHP$ and \lstinline$hpDecay$, respectively. These two functions are described below.
+
+At the end of each day, agents are assigned an HP value based on how much food they have eaten and their cost of living. This HP value is an integer and has a maximum value of \lstinline$MaxHP$, and a minimum value of \lstinline$HPCritical$. As its name suggests, \lstinline$HPCritical$ is a critical HP value for the agents: they can only survive a certain number of days (\lstinline$MaxDayCritical$) at this level. When in the critical state, if agents can increase their HP by \lstinline$HPReqCToW$ (``HP Required to move from Critical To Weak''), then they move into the ``weak state'' (\Cref{fig:health_system}), and their HP takes the value of \lstinline$WeakLevel$. The amount that an agent's HP increases from eating is determined by the function \lstinline$updateHP()$.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.3\linewidth]{002_simulation_structure/images/health_global.pdf}
+    \caption{The health of the agents is represented by a HP value between \lstinline$HPCritical$ and \lstinline$MaxHP$. All HP values which are below \lstinline$WeakLevel$ are classed as critical. The diagram is not drawn to scale.}
+    \label{fig:health_system}
+\end{figure}
+
+\subsection{Food and Health: \texorpdfstring{\lstinline$updateHP$}{updateHP}}\label{updateHP}
+To increase their HP, agents need to eat. However, the amount an agent's HP improves can saturate in a single day; eating more than a certain amount will provide an agent with no extra benefit to their HP. Moreover, eating more food will lead to diminishing returns in terms of HP change. Mathematically, the ideas of diminishing returns and saturation are well captured by the step response of a 1st-order system \eqref{updateHP_general}:
+
+\begin{equation}\label{updateHP_general}
+   \text{newHP}= \text{currentHP} +\underbrace{w(1-e^{\frac{-\text{foodTaken}}{\tau}})}_{\text{HPChange}}
+\end{equation}
+
+The two parameters $w$ and $\tau$ are defined at the beginning of the simulation. The shape of this curve is given in \Cref{fig:updateHP} together with some important parameters.
+
+\begin{figure}[htb]%
+    \centering
+    \subfloat[\centering Overview]{{\includegraphics[width=0.36\linewidth]{002_simulation_structure/images/health_updateHP_overview.pdf}}}%
+    \qquad
+    \subfloat[\centering Detailed representation]{{\includegraphics[width=0.36\linewidth]{002_simulation_structure/images/health_updateHP_detailed.pdf}}}%
+    \caption{\texttt{updateHP} as a function of the amount of food eaten (``FoodTaken'').}%
+    \label{fig:updateHP}%
+\end{figure}
+
+It is not possible to gain more HP than $w$ over the duration of one day; this is an intentional limit to prevent an agent's health from improving too quickly. As an example, we can think of an agent that starts from the weak level and wants to reach the maximum HP value. It would take several days for this agent to ``recover'' from this weak level and stabilise its health to a high HP value. 
+
+Note that it is possible for an agent to achieve an HP value that is larger than \texttt{MaxHP} inside \lstinline$hpDecay()$. At the end of each day, the \lstinline$hpDecay()$ function will apply the cost of living and then bound the final HP value by \lstinline$MaxHP$.
+
+
+Agents in the critical state are treated differently. For these agents, HP is updated according to equation \eqref{updateHP_critical}:
+
+\begin{equation}\label{updateHP_critical}
+    \text{newHP} = \min\left\{\text{HPCritical}+\text{HPReqCToW}, \text{currentHP} +w(1-e^{\frac{-\text{foodTaken}}{\tau}})\right\}
+\end{equation}
+
+\subsection{Cost of Living: \texorpdfstring{\lstinline$hpDecay()$}{hpDecay}}\label{hpDecay}
+At the end of each day, the HP value of the agents will be reduced by the cost of living. The cost of living is larger for an agent with larger HP value than for an agent with lower HP value. This fact is motivated by a simple observation: humans that have stronger bodies and immune systems also need more food to sustain their level of health. The exact relation between HP value, cost of living, and HP value after applying the cost of living is given by the linear relation \eqref{hpDecay_equation}:
+
+\begin{equation}\label{hpDecay_equation}
+    \text{newHP} = \text{currentHP}-\left[b + s(\text{currentHP}-\text{WeakLevel})\right]
+\end{equation}
+
+
+The parameter $b$ is a (constant) base cost, and $s$ is the slope of the linear function. These parameters are initialised at the beginning of the simulation. \ToDo{Add a diagram for this?}
+
+To ensure that the HP value at the end of the day is bounded by \texttt{MaxHP}, we slightly modify (\ref{hpDecay_equation}) to produce (\ref{hpDecay_bounded}):
+
+\begin{equation}\label{hpDecay_bounded}
+    \text{newHP} =\max\left\{\text{MaxHP}, \text{currentHP}-\left[b + s(\text{currentHP}-\text{WeakLevel})\right]\right\}
+\end{equation}
+
+For agents in the critical state that gain \texttt{HPReqCToW} HP in a single day, i.e. their HP after eating is
+
+\begin{equation}\label{HPReqCToW}
+    \text{currentHP} \geq \text{HPCritical}+\text{HPReqCToW},
+\end{equation}
+
+their HP will be set to \texttt{WeakLevel}:
+
+\begin{equation}\label{hpDecay_critical_upgrade}
+    \text{newHP} = \text{WeakLevel}
+\end{equation}
+
+Agents in the critical state which do not manage to improve their HP by \lstinline$HPReqCToW$ will be kept in the critical state:
+
+\begin{equation}\label{hpDecay_critical_stay}
+    \text{newHP} = \text{HPCritical}
+\end{equation}
+
+with the \texttt{daysAtCritical} counter incremented by 1. If \texttt{daysAtCritical} reaches \texttt{MaxDayCritical}, the agent dies and is replaced. This counter is reset to 0 if an agent exits the critical state.
