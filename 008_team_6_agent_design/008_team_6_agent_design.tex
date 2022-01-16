@@ -109,7 +109,7 @@ The process of changing an agent’s social motive based on certain factors can 
 
 \subsubsection{Feature Transformations} \label{sec:featTran}
 
-Instead of using the values of \textit{currentHP} and \textit{currentFloor} directly, we use transformation functions to map them into an output domain between 0 and 1. These transformations additionally allow us to associate a non-linear importance to a given factor. We refer to the resulting factors as \textit{hpScore} and \textit{floorScore} respectively.
+Instead of using the values of \texttt{currentHP} and \texttt{currentFloor} directly, we use transformation functions to map them into an output domain between 0 and 1. These transformations additionally allow us to associate a non-linear importance to a given factor. We refer to the resulting factors as \texttt{hpScore} and \texttt{floorScore} respectively.
 
 The $hpScore$ is calculated as
 
@@ -117,15 +117,15 @@ The $hpScore$ is calculated as
     \mathit{hpScore} = 1 - \frac{\mathit{currentHP}}{\mathit{maxHP}}
 \end{equation}
 
-yielding a simple linear mapping (\textit{HP} $\in$ [0,100] $\rightarrow$ [1,0]), where a higher \textit{currentHP} maps to a lower \textit{hpScore}, resulting in a tendency for the agent to behave more altruistically.
+yielding a simple linear mapping (\texttt{HP} $\in$ [0,100] $\rightarrow$ [1,0]), where a higher \texttt{currentHP} maps to a lower \texttt{hpScore}, resulting in a tendency for the agent to behave more altruistically.
 
-Calculating the \textit{floorScore} requires knowledge of the maximum floor in the tower. As this information is not available to the agent, it will use its memory of the past floors it has been on to forecast this value. Furthermore, the mapping is non-linear, with lower floors (higher number) being `punished' more; how much more is determined by the parameter $\lambda$, where a greater $\lambda$ weights lower floors disproportionately more. This gives:
+Calculating the \texttt{floorScore} requires knowledge of the maximum floor in the tower. As this information is not available to the agent, it will use its memory of the past floors it has been on to forecast this value. Furthermore, the mapping is non-linear, with lower floors (higher number) being `punished' more; how much more is determined by the parameter $\lambda$, where a greater $\lambda$ weights lower floors disproportionately more. This gives:
 
 \begin{equation}
     \mathit{floorScore} = \frac{e^{\frac{\lambda\cdot \mathit{currentFloor}}{\mathit{maxFloor}}}}{e^{\lambda}}
 \end{equation}
 
-A lower floor (higher floor number) leads to a higher \textit{floorScore} resulting in a tendency of the agent towards narcissism.
+A lower floor (higher floor number) leads to a higher \texttt{floorScore} resulting in a tendency of the agent towards narcissism.
 
 \subsubsection{Dynamic Weights}
 
@@ -136,13 +136,13 @@ To achieve this, we update the behavioural weights as follows:
 \begin{itemize}
     \item If the agent's health is less than 20:
     \begin{enumerate}
-        \item \textit{weightHP} $\leftarrow$ \textit{weightHP} + 0.05
-        \item \textit{weightFloor} $\leftarrow$ \textit{weightFloor} $-$ 0.05
+        \item \texttt{weightHP} $\leftarrow$ \texttt{weightHP} + 0.05
+        \item \texttt{weightFloor} $\leftarrow$ \texttt{weightFloor} $-$ 0.05
     \end{enumerate}
     \item If the agent's average food intake is less than 1:
     \begin{enumerate}
-        \item \textit{weightHP} $\leftarrow$ \textit{weightHP} $-$ 0.1
-        \item \textit{weightFloor} $\leftarrow$ \textit{weightFloor} + 0.1
+        \item \texttt{weightHP} $\leftarrow$ \texttt{weightHP} $-$ 0.1
+        \item \texttt{weightFloor} $\leftarrow$ \texttt{weightFloor} + 0.1
     \end{enumerate}
 \end{itemize}
 
@@ -152,19 +152,19 @@ In addition, we use sufficient boundary conditions to ensure that the individual
 
 Based on the mapping of social motives from 0.0 to 10.0, a lower floor (i.e., greater floor number) and a lower HP push the social motive variable to be higher. The weights are hence chosen to reflect these correlations (initialised as 0.3 resp. 0.7), along with the relevant feature transformations (\Cref{sec:featTran}) applied to these factors.
 
-This weighted sum represents the prediction of the agent's next social motive, titled \textit{nextBehaviourPrediction} in \Cref{fig:socialMotives}. We therefore calculate:
+This weighted sum represents the prediction of the agent's next social motive, titled \texttt{nextBehaviourPrediction} in \Cref{fig:socialMotives}. We therefore calculate:
 
 \begin{equation}
     \mathit{behaviourUpdate = nextBehaviourPrediction - currentBehaviour}
 \end{equation}
 
 
-For the first iteration, \textit{currentBehaviour} = \textit{baseBehaviour} as presented in \Cref{fig:socialMotives}.
+For the first iteration, \texttt{currentBehaviour} = \texttt{baseBehaviour} as presented in \Cref{fig:socialMotives}.
 
 \subsection{Willingness to Change}
 Although the above encapsulates an essential human characteristic, the ability to change, another important element, the willingness to change, is missing. Through this next layer of complexity, we attempt to quantify how resistant an agent is to altering its behaviour. This concept brings forth more freedom for modelling different human characteristics and realistic situations. For example, it is now possible to distinguish between an agent that is initially an altruist, but may then become selfish as the supply of food diminishes, and an agent that is a “true altruist”, which retains the same social motive throughout. Similarly, this is extended to the distinction between a true narcissist agent that never changes, and a narcissist agent that may, during the game, witness others' suffering whilst itself has an abundance of food and therefore steer towards a more collectivist behaviour.
 
-To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \textit{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number is used to scale the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \textit{scaledUpdate} and \textit{newBehaviour} as shown below.
+To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \texttt{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number is used to scale the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \texttt{scaledUpdate} and \texttt{newBehaviour} as shown below.
 
 
 \begin{equation}
@@ -175,12 +175,12 @@ To represent the willingness of an agent to change its social motive, an additio
 \end{equation}
 
 
-Again, \textit{currentBehaviour} = \textit{baseBehaviour} for the first iteration.
+Again, \texttt{currentBehaviour} = \texttt{baseBehaviour} for the first iteration.
 
 \subsection{Bounding Change}
 The agent we propose is currently assigned an initial social motive and is then able to change throughout the duration of the game. The ease with which it changes is also quantified through its willingness to change. This brought forth the possibility that even though an agent might be stubborn/resistant to change, it is still, given a long enough period, able to go from a narcissist to an altruist. This, considered to be unrealistic, lead to the final addition of complexity concerning the prevention of extreme changes in social motive. Prior to the start of the game, we define how far an agent can steer away from their `genetic' or `natural' initial state.
 
-Bounding social motive change is modelled through the addition of the parameter \textit{maxBehaviourSwing}. This parameter allows for the definition of the maximum and minimum values of the allowed social motive for an agent, thus defining a range:
+Bounding social motive change is modelled through the addition of the parameter \texttt{maxBehaviourSwing}. This parameter allows for the definition of the maximum and minimum values of the allowed social motive for an agent, thus defining a range:
 
 \vspace{0.2cm}
 \begin{equation}
@@ -191,7 +191,7 @@ Bounding social motive change is modelled through the addition of the parameter 
 \end{equation}
 \vspace{0.2cm}
 
-If the change as defined in Step 3 results in a \textit{newBehaviour} outside this range, then this is automatically capped off at the edges. Naturally, this also holds for the spectrum edges $[0,10]$.
+If the change as defined in Step 3 results in a \texttt{newBehaviour} outside this range, then this is automatically capped off at the edges. Naturally, this also holds for the spectrum edges $[0,10]$.
 
 
 
