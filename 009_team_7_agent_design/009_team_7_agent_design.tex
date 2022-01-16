@@ -384,49 +384,51 @@ A tower housing agents with high greediness and enforceable (unbreakable) treati
 
 A high kindness score sees double the deaths of a low kindness score. A high kindness score does not achieve stability however a low kindness score allows for the tower to reach in less than 200. The most likely explanation for this is that agents with a high kindness are potentially too selfless. It is likely that they consume in small quantities when food is available and thus do not have sufficient health when food isn't available. Thus, making them more vulnerable.
 
-\newpage
 \subsubsection{Inter-team Comparison}
-The following table shows the total number of deaths for simulations of various combinations of agent teams. All simulations are run with a simulation period of 500 days, shuffle period of 7 days and 10 team 7 agents with 10 agents of one other team type. The table is further broken down into food available per agent (5, 10 and 15).
+\Cref{tab: Inter-team data} shows the total number of deaths for simulations of various combinations of agent teams. All simulations are run with a simulation period of 500 days, shuffle period of 7 days and 10 team 7 agents with 10 agents of one other team type. The table is further broken down into food available per agent (5, 10 and 15).
+
 \begin{table}
     \begin{center}
     \begin{tabular} { | m{4em} | m{6em} | m{4em} | m{4em} | m{4em} | }
-        \hline
-            \textbf{Agent Team} & \textbf{Food/Agent} & \textbf{Total Deaths} & \textbf{Team 7 Deaths} & \textbf{Other Deaths} \\
-        \hline
+      \hline
+        \textbf{Agent Team} & \textbf{Food/Agent} & \textbf{Total Deaths} & \textbf{Team 7 Deaths} & \textbf{Other Deaths} \\
+      \hline
         2 & 5 & 463 & 273 & 190 \\
-        \hline
+      \hline
         2 & 10 & 149 & 80 & 49 \\
-        \hline
+      \hline
         2 & 15 & 0 & 0 & 0 \\
-        \hline
+      \hline
         3 & 5 & 347 & 183 & 164\\
-        \hline
+      \hline
         3 & 10 & 73 & 53 & 20\\
-        \hline
+      \hline
         3 & 15 & 0 & 0 & 0 \\
-        \hline
+      \hline
         4 & 5 & 217 & 92 & 125\\
-        \hline
+      \hline
         4 & 10 & 0 & 0 & 0 \\
-        \hline
+      \hline
         4 & 15 & 0 & 0 & 0 \\
-        \hline
+      \hline
         5 & 5 & 213 & 107 & 106 \\
-        \hline
+      \hline
         5 & 10 & 5 & 5 & 0 \\
-        \hline
+      \hline
         5 & 15 &  0 & 0 & 0 \\ 
-        \hline
+      \hline
         6 & 5 & 459 & 136 & 323\\
-        \hline
+      \hline
         6 & 10 & 273 & 48 & 225\\
-        \hline
+      \hline
         6 & 15 & 126 & 24 & 102\\
-        \hline
+      \hline
     \end{tabular}
     \end{center}
-    \caption{Comparison between agent teams and team 7.}
+    \caption{Comparison between agent teams and team 7}
+    \label{tab: Inter-team data}
 \end{table}
+
 All team agents, bar team 6, were able to coexist with team 7 and achieve zero deaths for a food availability of 15 per agent, indicating that Team 6 agent was the most incompatible with our agent. Team 4 achieved zero deaths for food availability of 10 demonstrating a greater compatibility with team 7 and team 5's results are not too dissimilar.  
 
 \subsubsection{Conclusion}
