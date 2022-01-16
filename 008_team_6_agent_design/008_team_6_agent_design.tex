@@ -29,15 +29,15 @@ All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such
       \textbf{Parameter} & \textbf{Range}\\
       \hline
       BaseBehaviour & \textit{N} $\in$ [0,10]\\
-      Stubbornness & \textit{N} $\in$ [0,1]\\
-      MaxBehaviourSwing & \textit{N} $\in$ [0,10]\\
-      ParamWeights & \{ HPWeight:\textit{N}, FloorWeight:\textit{N} \} \\
-      FloorDiscount & \textit{N} $\in$ [0,1]\\
-      MaxBehaviour & \textit{N} = 10\\
-      PrevFoodDiscount & \textit{N} $\in$ [0,1]\\
-      MaxTrust & \textit{N} = 25\\
+     texttt{Stubbornness} & \textit{N} $\in$ [0,1]\\
+      texttt{MaxBehaviourSwing} & \textit{N} $\in$ [0,10]\\
+      texttt{ParamWeights} & \{ HPWeight:\textit{N}, FloorWeight:\textit{N} \} \\
+      texttt{FloorDiscount} & \textit{N} $\in$ [0,1]\\
+      texttt{MaxBehaviour} & \textit{N} = 10\\
+      texttt{PrevFoodDiscount} & \textit{N} $\in$ [0,1]\\
+      texttt{MaxTrust} & \textit{N} = 25\\
     \end{tabular}
-    \caption{Parameters held in the \textit{Config} data structure}
+    \caption{Parameters held in the \texttt{Config} data structure}
     \label{tab:agentConfig}
 \end{center}   
 \end{table}
@@ -48,18 +48,18 @@ All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such
     \begin{tabular}{c|c}
       \textbf{Parameter} & \textbf{Range}\\
       \hline
-      BaseAgentRef & *baseAgent\\
-      Config & config\{\} (see \Cref{tab:agentConfig})\\
-      CurrBehaviour & \textit{N}\\
-      MaxFloorGuess & \textit{N}\\
-      AverageFoodIntake & \textit{N}\\
-      ShortTermMemory & [\textit{N}]\\
-      LongTermMemory & [\textit{N}]\\
-      ProposedTreaties & [\textit{Treaty}] \\
-      TrustTeams & map\{ \textit{UUID}, \textit{N} \} \\
-      Neighbours & \{ above:\textit{UUID}, below:\textit{UUID} \} \\
+      texttt{BaseAgentRef} & texttt{*baseAgent}\\
+      texttt{Config} & texttt{config}\{\} (see \Cref{tab:agentConfig})\\
+      texttt{CurrBehaviour} & \textit{N}\\
+      texttt{MaxFloorGuess} & \textit{N}\\
+      texttt{AverageFoodIntake} & \textit{N}\\
+      texttt{ShortTermMemory} & [\textit{N}]\\
+      texttt{LongTermMemory} & [\textit{N}]\\
+      texttt{ProposedTreaties} & [\textit{Treaty}] \\
+      texttt{TrustTeams} & map\{ \textit{UUID}, \textit{N} \} \\
+      texttt{Neighbours} & \{ above:\textit{UUID}, below:\textit{UUID} \} \\
     \end{tabular}
-    \caption{Parameters held in the \textit{Agent} data structure}
+    \caption{Parameters held in the \texttt{Agent} data structure}
     \label{tab:agentStruct}
 \end{center}   
 \end{table}
