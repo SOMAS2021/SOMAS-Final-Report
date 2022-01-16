@@ -448,17 +448,77 @@ Figure \ref{fig:team5-exp-food-per-agent} shows the effect of increasing the amo
     \label{fig:team5-exp-reshuffle-period}
 \end{figure}
 
-\subsubsection*{Long Simulations Against Single Teams}
+% \subsection*{Comparing Team 5 with Other Agent Teams: Friend or Foe?}
+% The next batch of experiments involved simulations with 10 Team 5 agents and 10 agents from another team to measure performance with other teams individually. Each of these experiments were run for 100 days, with the food per agent ratio varied to see how each agent type works together with varying food supply.
 
+% We have highlighted those agents that work well with the Team 5 agent (``friends'') and those that do not (``foes''), given that one of the aims is to minimise the number of deaths in the tower. The chosen performance metrics are therefore the number of deaths and the average age upon death.
 
+% \subsubsection*{Friends}
+% Team 5 has the best survival rate when sharing the Tower with Team 4; simulations showed that with a food per agent ratio of 7 or 8, no deaths occurred within 100 days. Even when this ratio was 6 food per agent, there were only five deaths: three from Team 5 and two from Team 4, with average ages of 11.6 and 12.5 days upon death, respectively.
 
+% Team 5 also performs well with Team 7 and Team 3; these results are shown in Tables \ref{tab:team5-team5-team7} and \ref{tab:team5-team5-team3}, respectively.
 
+% \begin{table}
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         \textbf{Food per agent ratio} & \textbf{6} & \textbf{7} & \textbf{8}\\
+%         \hline
+%         Team 5 deaths and average age upon death       & 4, 46 & 0, 0 & 0, 0\\
+%         \hline
+%         Team 7 deaths and average age upon death       & 4, 19.5 & 3, 25 & 1, 22\\
+%         \hline
+%     \end{tabular}
+%     \caption{Results of a Tower consisting of Team 5 and Team 7 agents}
+%     \label{tab:team5-team5-team7}
+% \end{table}
 
+% \begin{table}
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         \textbf{Food per agent ratio} & \textbf{6} & \textbf{7} & \textbf{8}\\
+%         \hline
+%         Team 5 deaths and average age upon death       & 11, 41 & 7, 63 & 1, 15\\
+%         \hline
+%         Team 3 deaths and average age upon death       & 8, 45 & 0, 0 & 0, 0 \\
+%         \hline
+%     \end{tabular}
+%     \caption{Results of a Tower consisting of Team 5 and Team 3 agents}
+%     \label{tab:team5-team5-team3}
+% \end{table}
 
+% \subsubsection*{Foes}
+% Team 5 does not perform well with either Team 6 or Team 2. When paired with Team 6, the Team 6 agents die often and have less than half the lifespan of the Team 5 agents. This issue persists with increased amount of food on the platform.
 
+% When paired with Team 2, the Team 2 agent has significantly fewer deaths than the Team 5 agent and also has a longer lifespan. These results suggest that this agent pairing is unable to self-organise, with the potentially more selfless Team 5 agents left to starve by the Team 2 agents. This is because the Team 2 agents do not communicate except to ask for the HP of other agents.
+
+% The Team 5 agent is least compatible with random agents (i.e. agents which take a random amount of food). The total number of deaths is highest and average age upon death is lowest with this pairing. The life expectancy also does not improve with more food on the platform.
+
+\subsection*{Self-Organisation With Other Agents}
+The overall aim within the tower is for agents to self-organise and create a stable society. Tests were run to investigate how compatible the Team 5 agent is with each of the agents designed by each of the other teams. Simulations were run with a tower consisting of Team 5 agents and one other agent type, with seven agents each and five food available per agent, to see whether they could self-organise within 100 days. These results are shown in Table \ref{tab:team5-self-org-agents}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{Agent type} & \textbf{Team 2} & \textbf{Team 3}& \textbf{Team 4} & \textbf{Team 6} & \textbf{Team 7}\\
+        \hline
+        Team 5 deaths & 25 & 5 & 0 & 25 & 12 \\
+        \hline
+        Other agent deaths & 19 & 5 & 0 & 35 & 8 \\
+        \hline
+        Organisation? & NO & 67 days & 0 days & NO & 62 days \\
+        \hline
+    \end{tabular}
+    \caption{Team 5 interactions with other agents}
+    \label{tab:team5-self-org-agents}
+\end{table}
 
 \section{Conclusion}\label{sec:team5-conclusion}
+The Team 5 agent is capable of achieving self-organisation within the tower provided the simulation parmaeters are not too strict. A large number of agents within the tower greatly inhibits the agent's ability to self-organise, but they are capable of organising when there is the food per agent ratio is at least 2, for low agent numbers. This demonstrates the reliance on communication and sharing of knowledge in order to solve the problem of long-term survival in the tower.
 
+During the presentation for this coursework, Professor Pitt compared the Team 5 agent's strategy to theory from Ober, who stated that ``alignment is an epistemic process, predicated on the right people having and using the right information in the right context'' \cite{ober_athens}. We had not considered this theory when designing our agent, however in a sort-of convergent evolution we observed this in the randomeness and large variation in the Team 5 agent's ability to self-organise, and the events that need to take place for this to be successful.
 
 
 
