@@ -262,11 +262,55 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
     \label{fig:team5-deaths-utility-food-per-agent}
 \end{figure}
 
+\subsubsection*{Number of Agents}
+Through experimenting with the Team 5 agent, it was found that the variable with the largest effect on the likelihood of self-organisation being achieved was the number of agents present in the tower. This is likely an effect of the agent strategy relying heavily on communicating and establishing relationships with other agents. Having more agents in the tower means that it takes longer to form opinions of every other agent, and the likelihood of being reshuffled next to other agents that you have already seen decreases as the number of agents increases.
 
+After making this observation, it was decided that it would be interesting to investigate how long it takes for varying numbers of Team 5 agents to self-organise for a given amount of food available. Table \ref{tab:team5-exp-num-agents} shows the results of varying the number of agents in the tower, with the food per agent ratio set to 2.
 
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Number of agents} & \textbf{Days to organise} & \textbf{Deaths before self-organisation}\\
+        \hline
+        $<$10 & 0 & 0 \\
+        \hline
+        15 & 80 & 46 \\
+        \hline
+        15 & 0 & 0 \\
+        \hline
+        17 & 0 & 0 \\
+        \hline
+        18 & 45 & 22\\
+        \hline
+        18 & 95 & 79 \\
+        \hline
+        20 & \multicolumn{2}{c|}{No organisation in 500 days}\\
+        \hline
+        20 & 242 & 226 \\
+        \hline
+        25 & \multicolumn{2}{c|}{No organisation in 700 days}\\
+        \hline
+        
+    \end{tabular}
+    \caption{The number of deaths and number of days required for Team 5 agents to self-organise}
+    \label{tab:team5-exp-num-agents}
+\end{table}
 
+The results show that the length of time it takes for the agents to organise is very variable: randomness plays a large factor due to the many random variables present in the simulation, such as an agent's floor and its leadership threshold. For organisation to occur, agents who are more likely to become leaders need to become less selfish and be reshuffled high up in the tower. This will enable them to send treaties to surrounding agents. The surrounding agnets must view them favourably enoguh to accept the treaties they receive.
 
+It was found that, with the food per agent ratio set to 2, there appeared to be a threshold value of approximately 18 agents were organisation was far less likely to occur within the early days of the tower. Further testing showed that this threshold increases with the amount of food available per agent. Figure \ref{fig:team5-20agents-2food} shows the results of a simulation where 20 agents managed to organised themselves.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{007_team_5_agent_design/20-agent-2-food.png}
+    \caption{Cumulative deaths per day for a 500 day simulation of 20 Team 5 agents with 2 food per agent}
+    \label{fig:team5-20agents-2food}
+\end{figure}
+
+Given these results, we considered whether a homogeneous tower of Team 5 agents would achieve organisation given an infinite amount of time regardless of the number of agents provided at least two food per agent was available. We predict that this is not possible: every time an agent is replaced in the tower, they are initialised with maximum selfishness and have no social network. It takes time for agents to build trust with each other but deaths occur too quickly for this happen if the settings of the tower are too strict.
+
+\subsection*{Heterogeneous Tower Experiments}
 
 
 
