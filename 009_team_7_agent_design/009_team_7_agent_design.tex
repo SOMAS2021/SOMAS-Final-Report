@@ -216,7 +216,7 @@ All accepted treaties are stored in the active treaties field of the Base Agent 
 \label{subsec: Treaty Usage}
 All treaties accepted are stored in the active treaties field of the base agent. Since treaties that could negatively impact the agent are rejected, ones that are signed can be followed, without further checking. 
 
-Before an agent takes its share of food, The condition statements pertaining to active treaties are extensively checked to make sure that a Treaty is being considered only when its respective conditions are upheld. Subsequently, the agent must check the request type, value and operator. If the request type is \textit{LeavePercentFood}, it is converted to an \textit{amount} for easy comparison. 
+Before an agent takes its share of food, The condition statements pertaining to active treaties are extensively checked to make sure that a treaty is being considered only when its respective conditions are upheld. Subsequently, the agent must check the request type, value, and operator. If the request type is \textit{LeavePercentFood}, it is converted to an \textit{amount} for easy comparison. 
 The amount of food being taken is checked for compatibility with the amount of food that is to be left. If this is not the case then the \textit{foodtotake} variable for the agent is updated accordingly.
 This will repeatedly happen until the expiration date of the treaty.
 
