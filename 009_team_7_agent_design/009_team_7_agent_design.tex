@@ -26,16 +26,23 @@ The use of personality traits to attribute human characteristics to our agents i
 
 The five personality dimensions consist of: 
 \begin{itemize}
-\item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change.
+\item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change. 
 \item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking.
 \item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. 
 \item  \textbf{Agreeableness}: An individual with high agreeableness will  exhibit greater degrees of kindness, trust and altruism. Whereas an individual with low agreeableness will demonstrate a lack of sympathy and may be spiteful or manipulative of others. 
-\item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. 
+\item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. Therefore, an agent that is high in Neuroticism will commit actions that may seem unreasonable or illogical.
 \end{itemize}
 
 Any time a new agent is deployed it is initialised with a value for these traits ranging from 20-80. We did this in order to exclude extreme personality traits on either end. The personality traits assigned to an agent are innate and unchanged for the duration of the simulation. This is done in order to emulate how traits remains fairly constant over a person's life.
 
 
+% \begin{itemize}
+%     \item \textbf{Openness}: 
+%     \item \textbf{Conscientiousness}:
+%     \item \textbf{Extraversion}:
+%     \item \textbf{Agreeableness}:
+%     \item \textbf{Neuroticism}:
+% \end{itemize}
 
 \subsection{Behavioural Traits}
 \label{subsec: Behaviour}
@@ -75,7 +82,6 @@ The behaviour characteristics are described below:
 \subsection{Operational Memory}
 \label{subsec: Operational Memory}
 The memory structure of the agent behaves analogously to human memory. It serves to store experiences and data acquired across the lifespan of the agent. These experiences and data serve to influence the agent's behaviour, inform it's decisions, and enhance its survival and organisation capabilities. 
-%Below is a description of the key pieces of information stored in the agent's memory:
 Below is a description of all the elements of information stored in the agent's memory:
 
 \begin{itemize}
@@ -260,7 +266,7 @@ This demonstrates that the agents perform better collectively when treaties are 
 \subsubsection{Openness}
 \label{subsubsec: Openness}
 
-\Cref{fig: High Openness} and \Cref{fig: Low Openness} detail how our agents adapt to situations/scenarios differently based on varying levels of openness. In figure \ref{fig: High Openness}, all the agents are spawned with openness values greater than 70 and in figure \ref{fig: Low Openness}, the agents are spawned with openness values less than 30. All other personality traits are distributed as in the default case.
+\Cref{fig: High Openness} and \Cref{fig: Low Openness} detail how our agents adapt to situations/scenarios differently based on varying levels of openness. In \Cref{fig: High Openness}, all the agents are spawned with openness values greater than 70 and in \Cref{fig: Low Openness}, the agents are spawned with openness values less than 30. All other personality traits are distributed as in the default case.
 
 \begin{figure}[H]
     \begin{center}
@@ -308,7 +314,7 @@ It can be seen that higher levels of neuroticism result in a greater number of a
 \subsubsection{Conscientiousness}
 \label{subsubsec: Conscientiousness}
 
-\Cref{fig: High Conscientiousness} and \cref{fig: Low Conscientiousness} illustrate the results from simulations with agents with high conscientiousness ($>$70) and low conscientiousness ($<$30) respectively. All other traits are left as default.
+\Cref{fig: High Conscientiousness} and \Cref{fig: Low Conscientiousness} illustrate the results from simulations with agents with high conscientiousness ($>$70) and low conscientiousness ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
@@ -404,6 +410,7 @@ A high kindness score sees double the deaths of a low kindness score. A high kin
 \newpage
 \subsubsection{Inter-team Comparison}
 The following table shows the total number of deaths for simulations of various combinations of agent teams. All simulations are run with a simulation period of 500 days, shuffle period of 7 days and 10 team 7 agents with 10 agents of one other team type. The table is further broken down into food available per agent (5, 10 and 15).
+\begin{table}
 \begin{center}
 \begin{tabular} { | m{5em} | m{5em} | m{5em} | m{5em} | m{5em} | }
   \hline
