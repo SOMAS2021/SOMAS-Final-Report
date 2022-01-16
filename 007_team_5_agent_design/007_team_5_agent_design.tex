@@ -8,7 +8,7 @@ However, the agent will also be influneced by the behaviour of agents around it:
 
 An agent will maintain a low HP only if it is confident that other agents will allow it to survive by leaving enough food, through the signing of treaties to build trust. A tower that consists solely of Team 5 agents would require those at the top to be willing to decrease their own short-term satisfaction in order to give the best chance of survival for all agents, and trust others to do the same upon reshuffling.
 
-Section \ref{sec:team5-overview} provides an overview of the agent's parameters and strategy, Section \ref{sec:team5-messaging} describes the agent's communication strategy, Section \ref{sec:team5-memory} describes how the agent stores its social network and how it judges other agents, and Section \ref{sec:team5-treaties} describes how the Team 5 agent utilises treaties. Finally, Section \ref{sec:team5-experimentation} contains analysis of this agent including how it performs in a Tower consisting of itself alone as well as together with other agent types and Section \ref{sec:team5-conclusion} provides summarising remarks regarding the implementation of this agent type.
+Section \ref{sec:team5-overview} provides an overview of the agent's parameters and strategy, Section \ref{sec:team5-messaging} describes the agent's communication strategy, Section \ref{sec:team5-memory} describes how the agent stores its social network and how it judges other agents, and Section \ref{sec:team5-treaties} describes how the Team 5 agent utilises treaties. Finally, Section \ref{sec:team5-experimentation} contains analysis of this agent including how it performs in a tower consisting of itself alone as well as together with other agent types and Section \ref{sec:team5-conclusion} provides summarising remarks regarding the implementation of this agent type.
 
 \section{Agent Overview}
 \label{sec:team5-overview}
@@ -102,7 +102,7 @@ The agent stores the information gained from communication in its `memory': the 
     \label{tab:team5-memory}
 \end{table}
 
-This memory allows the agent to construct a social network of agents in the tower and evaluate others based on these parameters. This consequently leads to the idea of favour, a metric the Team 5 agent uses to judge other agents. If more than five days have passed since the agent's last interaction with another agent, then the memory of that agent is reset. This prevents the agent from using out-of-date information in its calculation and also allows for the removal of dead agents from its memory.
+This memory allows the agent to construct a social network of agents in the tower and evaluate others based on these parameters. This consequently leads to the idea of favour, a metric the Team 5 agent uses to judge other agents. If more than five days have passed since the agent's last interaction with another agent, then the knowledge gained of that agent is reset, with the favour value being kept. This prevents the agent from using out-of-date information in its calculation while still allowing the opinion formed of the agent to be retained indefinitely.
 
 \subsection*{Favour}\label{sec:team5-favour}
 The favour metric quantifies the agent's opinion of others in the tower. It is bounded between 0 and 10, and in a single tick can either increase by 1, decrease by 3, or stay the same:
@@ -122,7 +122,7 @@ The favour metric quantifies the agent's opinion of others in the tower. It is b
     \end{cases}\\
 \end{align*}
 
-Measuring favour allows the agent to act accordingly to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
+Measuring favour allows the agent to act according to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
 
 For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.
 
@@ -191,7 +191,7 @@ Self-organisation has been defined in this case to be when all agents take only 
 \subsubsection*{Food Per Agent On Platform}
 The baseline experiment for testing was to vary the amount of food per agent available on the platform; it was expected that having more food available would result in fewer deaths. In this experiment, simulations were run for 100 simulation days, with a reshuffle period of 7 days and 50 agents in the tower and repeated three times, with the average of these runs taken. Figure \ref{fig:team5-deaths-utility-food-per-agent} shows that the number of deaths decreases and average utility increases as we increase the amount of food available.
 
-When the ratio of food to agent is greater than 9, the agents are able to self-organise within 100 days, and typically do so within 70 days. When food availability was less than this, the agents did not achieve self-organisation. However it was interesting to observe that more treaties were accepted than rejected. This shows that the agents recognise the need to self-organise and are willing to make attempts to do so. It is possible that they did not achieve self-organisation because agents died too quickly to reach agreements among enough agents for this to be successful.
+When the ratio of food to agent is greater than 9, the agents are able to self-organise within 100 days, and typically do so within 70 days. When food availability was less than this, the agents did not achieve self-organisation. However it was interesting to observe that more treaties were accepted than rejected. This shows that the agents recognise the need to self-organise and are willing to make attempts to do so. It is possible that they did not achieve self-organisation in this case because agents died too quickly to reach agreements among enough agents for this to be successful.
 
 \begin{figure} % Number of Deaths and Average Utility vs Available Food Per Agent
     \centering
@@ -266,7 +266,7 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
 \end{figure}
 
 \subsubsection*{Number of Agents}
-Through experimenting with the Team 5 agent, it was found that the variable with the largest effect on the likelihood of self-organisation being achieved was the number of agents present in the tower. This is likely an effect of the agent strategy relying heavily on communicating and establishing relationships with other agents. Having more agents in the tower means that it takes longer to form opinions of every other agent, and the likelihood of being reshuffled next to other agents that you have already seen decreases as the number of agents increases.
+Through experimenting with the Team 5 agent, it was found that the variable with the largest effect on the likelihood of self-organisation was the number of agents present in the tower. This is likely an effect of the agent strategy relying heavily on communicating and establishing relationships with other agents. Having more agents in the tower means that it takes longer to form opinions of every other agent, and the likelihood of being reshuffled next to other agents that you have already seen decreases as the number of agents increases.
 
 After making this observation, it was decided that it would be interesting to investigate how long it takes for varying numbers of Team 5 agents to self-organise for a given amount of food available. Table \ref{tab:team5-exp-num-agents} shows the results of varying the number of agents in the tower, with the food per agent ratio set to 2.
 
@@ -302,7 +302,7 @@ After making this observation, it was decided that it would be interesting to in
 
 The results show that the length of time it takes for the agents to organise is very variable: randomness plays a large factor due to the many random variables present in the simulation, such as an agent's floor and its leadership threshold. For organisation to occur, agents who are more likely to become leaders need to become less selfish and be reshuffled high up in the tower. This will enable them to send treaties to surrounding agents. The surrounding agnets must view them favourably enoguh to accept the treaties they receive.
 
-It was found that, with the food per agent ratio set to 2, there appeared to be a threshold value of approximately 18 agents were organisation was far less likely to occur within the early days of the tower. Further testing showed that this threshold increases with the amount of food available per agent. Figure \ref{fig:team5-20agents-2food} shows the results of a simulation where 20 agents managed to organised themselves.
+It was found that, with the food per agent ratio set to 2, there appeared to be a threshold value of approximately 18 agents where organisation was far less likely to occur within the early days of the tower. Further testing showed that this threshold increases with the amount of food available per agent. Figure \ref{fig:team5-20agents-2food} shows the results of a simulation where 20 agents managed to organise themselves.
 
 \begin{figure}
     \centering
@@ -517,6 +517,6 @@ The overall aim within the tower is for agents to self-organise and create a sta
 \end{table}
 
 \section{Conclusion}\label{sec:team5-conclusion}
-The Team 5 agent is capable of achieving self-organisation within the tower provided the simulation parmaeters are not too strict. A large number of agents within the tower greatly inhibits the agent's ability to self-organise, but they are capable of organising when there is the food per agent ratio is at least 2, for low agent numbers. This demonstrates the reliance on communication and sharing of knowledge in order to solve the problem of long-term survival in the tower.
+The Team 5 agent is capable of achieving self-organisation within the tower provided the simulation parameters are not too strict. A large number of agents within the tower greatly inhibits the agent's ability to self-organise, but for low agent numbers, they are capable of organising when the food per agent ratio is at least 2. This demonstrates the reliance on communication and sharing of knowledge in order to solve the problem of long-term survival in the tower.
 
-During the presentation for this coursework, Professor Pitt compared the Team 5 agent's strategy to theory from Ober, who stated that ``alignment is an epistemic process, predicated on the right people having and using the right information in the right context'' \cite{ober_athens}. We had not considered this theory when designing our agent, however in a sort-of convergent evolution we observed this in the randomeness and large variation in the Team 5 agent's ability to self-organise, and the events that need to take place for this to be successful.
+During the presentation for this coursework, Professor Pitt compared the Team 5 agent's strategy to theory from Ober, who stated that ``alignment is an epistemic process, predicated on the right people having and using the right information in the right context'' \cite{ober_athens}. We had not considered this theory when designing our agent, however in a sort of convergent evolution we observed this in the randomeness and large variation in the Team 5 agent's ability to self-organise, and the conditions required for this to be successful.
