@@ -13,7 +13,6 @@ Section \ref{sec:team5-overview} provides an overview of the agent's parameters 
 \section{Agent Overview}
 \label{sec:team5-overview}
 
-\ToDo{Give better description of Run function}
 
 The strategy employed by this agent aims to maximise its chances of survival while also considering those who have helped the agent in the past.
 
@@ -76,7 +75,7 @@ The Team 5 agent first targets the agent immediately below it, then the agent im
 In addition to sending out requests for information, the agent also accepts any state messages it receives even if it did not ask for them, so that it can gain the largest amount of knowledge that it can. This includes messages where the agent is not the intended recipient: in this case the Team 5 agent will read the information contained in the message before passing it on.
 
 \section{Social Memory}\label{sec:team5-memory}
-The agent stores the information gained from communication in its `memory': the information stored by this data structure is shown in Table \ref{tab:team5-memory}.
+The agent stores the information gained from communication in its `memory': the information stored in this data structure is shown in Table \ref{tab:team5-memory}.
 
 \begin{table}
     \centering
