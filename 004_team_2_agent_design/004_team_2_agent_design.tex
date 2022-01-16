@@ -178,7 +178,6 @@ surviveBonus $\gets$ surviveBonus $-(3.0\times\textrm{daysAtCriticalHealth})$\;
 \If{Agent was in critical state before action}{
 surviveBonus $\gets$ surviveBonus $+(5.0\times\textrm{daysAtCriticalHealth})$\;
 }
-}
 \end{algorithm}
 
 The first condition encourages actions that keep the agent in a non-critical HP state. The second condition encourages actions that take the agent out of a critical HP state (if it was in one).
