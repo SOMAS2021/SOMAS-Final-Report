@@ -85,9 +85,9 @@ Firstly, we identified what observations are needed to determine the condition o
 The first three observations served to fulfil the first aim of the task, as they could effectively reflect the health condition of our agent. The last observation was used to assess the impact of the action of our agent on the neighbouring agent, which is useful for the second aim of the task. Subsequently, we found the resolution of each observation by trial and error. Having a high resolution, the agent would be able to perceive tiny changes within the environment at the cost of increased number of states, and thus slowing the learning process. Having a low resolution, the agent would not be able to adapt to changes in the environment effectively and promptly. Finally, the state space of our agent is defined by ten state intervals for agent’s HP (0 – 9, 10 – 19, …, 80 – 89, 90 – Max HP), ten state intervals for the food on platform (0 – 9, 10 – 19, …, 80 – 89, 90 – Max food), four states for Days at critical (0, 1, 2, 3), and eleven state intervals for neighbouring agent’s HP (-1, 0 – 9, …, 80 – 89, 90 – Max HP), with an additional unknown state represented by –1, as the neighbouring agent might refuse to share such information. Table below illustrates the state space definition.
 
 \begin{table}
-\label{state-table}
 \centering
 \caption{State space defintion}
+\label{state-table}
 \begin{adjustbox}{width=\columnwidth,center}
 \begin{tabular}{@{}lllll@{}}
 \toprule
@@ -123,9 +123,9 @@ func (a *CustomAgent2) CheckState() int {
 \subsubsection{Design of action space}
 In the game, taking food is the main interaction with the Tower, which provides feedback according to the amount of food taken. Thus, we divided the action of taking food into six distinct actions with different number of intended food intake, as shown in Table \ref{action-space}.
 \begin{table}
-\label{action-space}
 \centering
 \caption{Action space definition}
+\label{action-space}
 \begin{tabular}{@{}ll@{}}
 \toprule
 Action number & Intended food intake \\ \midrule
@@ -150,7 +150,6 @@ for i := 1; i < actionDim; i++ {
 The reward function provides a way for us to set the desired behaviour of our agent. The reward function will assess the quality of a particular action under a specific state and provide feedback, either reward or punishment, to the agent. Initially, we have designed four desired behaviours. We encourage our agent to survive, not to overeat, and to save neighbour: if the neighbouring agent is in critical state, the agent will be punished. However, the last desired behaviour was only enforced by the simple communication of "Ask HP" with the agent that is one floor below. Indeed, as shown in Table \ref{cum-death}, implementing a simple communication did not improve the agent’s performance on saving other agent, i.e., the overall death count remained the same after adding the simple communication and tuned reward function accordingly. A potential reason might be that the agent cannot learn to save with such limited information. As such, in our subsequent experiments, the simple communication was not considered, and the primary focus was placed on the first two desired behaviours.
 
 \begin{table}
-\label{cum-death}
 \begin{adjustbox}{width=\columnwidth,center}
 \begin{tabular}{@{}llll@{}}
 \toprule
@@ -159,6 +158,8 @@ The reward function provides a way for us to set the desired behaviour of our ag
                                               & \begin{tabular}[c]{@{}l@{}}Heterogeneous\\ Tower (2 agents per team)\end{tabular} & 133                   & 139                                                                 \\ \cmidrule(l){2-4} 
 \end{tabular}
 \end{adjustbox}
+\caption{Effect of simple communication on cumulative death count in 500 days }
+\label{cum-death}
 \end{table}
 
 \subsubsection{Implementation of reward function}
@@ -216,7 +217,7 @@ savingBonus $\gets$ savingBonus $+1$\;
 
 \subsection{Simple reward function}
 
-Based on the health decay model defined in \ref{health-modelling}, the agent reward was designed to encourage the agent to reward a health above critical and punish dropping to critical health as well as punish overeating using a reward point value for each day. The reward function with its tuned hyperparameters is as such:
+Based on the health decay model defined in \ref{health_modeling}, the agent reward was designed to encourage the agent to reward a health above critical and punish dropping to critical health as well as punish overeating using a reward point value for each day. The reward function with its tuned hyperparameters is as such:
 \begin{itemize}
     \item Set reward to zero for each new day
     \item If HP is 80-100 (Punish)
@@ -272,15 +273,15 @@ As mentioned, the performance of our agent will be measured with metrics involvi
 \begin{figure}
 \centering
 \includegraphics{004_team_2_agent_design/rewardperday}
-\label{rewday-team2}
 \caption{Reward per day}
+\label{rewday-team2}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics{004_team_2_agent_design/cumrewardbydays}
-\label{cumday-team2}
 \caption{Cumulative reward against days}
+\label{cumday-team2}
 \end{figure}
 
 Figure \ref{rewday-team2} is the result of a simulation for 5000 days without random agents. Reincarnation is allowed in this simulation. 
@@ -297,30 +298,30 @@ The verification of convergence is fundamental to the presentation of our result
 The effect of having random agents in the Tower to our agent is discussed in the following. The random agent takes food randomly with the range between 1 till max food available on the platform. This strategy can result in the random agent overeating, which will reduce collective utility. This is due to total food allocation equal to $(\textrm{FoodPerAgentRatio}) * (\textrm{number of agent})$ while the random agent will intend to eat between 1 and total food allocation.
 \begin{figure}
 \centering
-\label{team2av}
 \includegraphics{004_team_2_agent_design/team2avage}
 \caption{The average age of Team 2 Agent}
+\label{team2av}
 \end{figure}
 \begin{figure}
 \centering
-\label{cumreward-team2}
 \includegraphics{004_team_2_agent_design/cumrewardbydays}
 \caption{Cumulative reward by days}
+\label{cumreward-team2}
 \end{figure}
 \begin{figure}
 \centering
-\label{dayreward-team2}
 \includegraphics{004_team_2_agent_design/rewardbydays}
 \caption{Reward by days}
+\label{dayreward-team2}
 \end{figure}
 \begin{figure}
 \centering
-\label{hpchange-team2}
 \includegraphics{004_team_2_agent_design/hpchange}
 \caption{The change of agent HP by days}
+\label{hpchange-team2}
 \end{figure}
 
-With the inclusion of the random agent(s) in the Tower, the average age of our agent is observably decreased from 556 days to 172 days in Figure \ref{team2avage}. This demonstrates the direct implication of collective utility on an individual agent; regardless of individual strategies, a rogue agent which does not keep the macro-level goal of collective utility will hamper the individual utilities of the other agents. 
+With the inclusion of the random agent(s) in the Tower, the average age of our agent is observably decreased from 556 days to 172 days in Figure \ref{team2av}. This demonstrates the direct implication of collective utility on an individual agent; regardless of individual strategies, a rogue agent which does not keep the macro-level goal of collective utility will hamper the individual utilities of the other agents. 
 
 The results in Figure \ref{cumreward-team2} and Figure \ref{dayreward-team2} are from a reincarnation-allowed simulation with only one agent of our team. In figure x.2, our agent with 2 random agents performs better than without random agent before 2500 days. However, when comparing with the plot of reward by days (figure x.3), our agent with 2 random agents has a greater total reward penalty. This is due to the randomness introduced by the random agent, causing the learning process of our agent is unsufficient. On the other hand, without implementing the random agent in the Tower, our agent able to learn after being deployed.
 
@@ -331,9 +332,9 @@ To conclude, the random strategy of the random agent detriments the learning pro
 \subsection{Average HP}
 \begin{figure}
 \centering
-\label{avhp-team2}
 \includegraphics{004_team_2_agent_design/avhpdays}
 \caption{Average HP against days}
+\label{avhp-team2}
 \end{figure}
 
 The results in Figure \ref{avhp-team2} are from an experiment without random agents. Only one agent of our team is included, and reincarnation is allowed. 
@@ -373,9 +374,9 @@ In addition, the loss of reincarnation still casts some instability. From Figure
 
 \begin{figure}
 \centering
-\label{hpdaysteam2}
 \includegraphics{004_team_2_agent_design/hpdaysteam2}
 \caption{The change of HP by days with and without reincarnation}
+\label{hpdaysteam2}
 \end{figure}
 
 Enabling reincarnation can let the agent pass its learnt knowledge to its child, while disabling the reincarnation will lead to a tumultuous relearning process for every generation. Enabling the reincarnation of our agent is important as it let our agent learn from the reward and inherit the experience from its predecessor. 
@@ -389,16 +390,16 @@ The results in Figure X \ref{251team2} shows that the Team 2 agent does indeed h
 
 \begin{figure}
 \centering
-\label{251team2}
 \includegraphics{004_team_2_agent_design/251team2}
 \caption{1 Shows the cumulative deaths of a Towers with varying percentage of total agents being Team 2 agents. Total agent count is 18 agents.}
+\label{251team2}
 \end{figure}
 
 \begin{figure}
 \centering
-\label{252team2}
 \includegraphics{004_team_2_agent_design/252team2}
 \caption{Tower of only Team 2 agents reaches a point where all agents stays alive}
+\label{252team2}
 \end{figure}
 
 \subsection{Learnt policies}
@@ -416,8 +417,8 @@ Table \ref{lowhp-team2} shows that when the HP of agent is low, the agent tends 
 
 \begin{table}[]
 \centering
-\label{midhp-team2}
 \caption{Policy of agent when HP is 10-20}
+\label{midhp-team2}
 \begin{tabular}{@{}lll@{}}
 \toprule
 HP    & Food on the Platform & Food decided to take \\ \midrule
@@ -434,8 +435,8 @@ When the food is abundant on the platform at this HP level, the agent takes in m
 
 \begin{table}[]
 \centering
-\label{2030-team2}
 \caption{Policy of agent when HP is 20-30}
+\label{2030-team2}
 \begin{tabular}{@{}lll@{}}
 \toprule
 HP    & Food on the Platform & Food decided to take \\ \midrule
