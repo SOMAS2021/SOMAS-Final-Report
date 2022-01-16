@@ -11,7 +11,7 @@ Competing and cooperating with the other agents may seem to contradict the Compe
 
 \subsection{Dynamic Adaptation}
 Our goal is to create a unique advantage by allowing for the agent to experiment with different actions to different situations, until the most appropriate actions can be dynamically chosen for the future. A reward system is utilised, whereby a suitable action will be rewarded, and a detrimental action will be penalised. Given enough iterations, the agent should be sufficiently trained to consistently choose the most correct actions. This is achievable as most other agents have fixed behaviours which can be predicted by our agent; however, we also experiment with random agents to understand and quantify the change in performance and utility. Relying on a stochastic method to execute learning can result in vastly different outcomes, but it is expected that in general the agents will perform better with time.
-\subsection{In the pursuit of organisation}\label{team2-organisation}
+\subsection{In the Pursuit of Organisation}\label{team2-organisation}
 Under ideal circumstances, the agents will unite into an organisation where they can collectively decide the resource division strategy for that iteration. This would also allow for a pseudo-democratic justice system, whereby the agents can vote upon the reward or punishment of each other, if one respects or violates the values of the organisation. More generally, organisations can be defined as “collectivities oriented to the pursuit of relatively specific goals and exhibiting relatively highly formalized social structures” \cite{WhettenDavidA1983ORNa}. At first, there may seem to be a straightforward solution in forming an organisation, given the benefits mentioned, but formation of such a society requires great risk on the part of the agent. There are significant constraints preventing this strategy from being conveniently utilised; trust is risky and difficult to build amongst agents given the strong random nature of the environment, the food resources are too limiting to allow for the privilege of altruistic risk-taking, and the number of actions able to be taken per day are also highly limiting. These factors will result in agents somewhat selfishly prioritising survival over anything else, thus complete self-organisation will be a difficult, if not impossible to achieve within this environment. A mechanic available to agents is the “treaty”, which are formal agreements upheld by the participating agents to dictate behaviours for a set period of time. For a non-dynamic agent, this is beneficial, as it can use the knowledge of other agents to switch to a superior set of behaviours. For a dynamic agent such as ours, treaties will override any and all learning developed up to that point in the simulation and will prevent any significant learning for the duration of the treaty. Thus, it is in the best interests of a learning agent such as ours to reject all treaties, which unfortunately comes at a cost of preventing any progress to Tower-wide agent organisation. 
 \subsection{Utility Considerations and Pareto Optimality}
 It is not possible to maximise both individual and collective utility simultaneously. Maximising only individual utility would result in taking more resources than required to satisfy an agent’s needs to ensure that it can survive on floors with less food. This action is contradictory to maximising collective utility as it would unnecessarily reduce the resource pool for the other agents. As a result, collective utility is prioritised to enhance the survival rates of all the agents in the Tower. In principle, the consistent maximisation of the collective utility will lead to a Pareto optimal outcome, whereby there will be “no other outcome that makes one player better off without making another player worse off”. In actuality, due to the Competitive Exclusion Principle, the agents can only achieve this if they all converge their behaviours to form a single new agent type. This is the only method to ensure the collective survival of all the agents whilst also removing the competition which prevents them from maximising the collective utility (and thus achieving the Pareto optimal scenario). 
@@ -71,9 +71,9 @@ PHC keeps the Q-values as normal Q-learning would, but additionally also retains
 The PHC algorithm is only able to locate an optimal policy against stationary strategy opponents and has never been proven to converge if pitted against non-stationary strategy opponents \cite{BowlingMichael2002Mlua}. As according to $Q$, that converges at some $Q'$, the mixed strategy $\pi$ is greedy and will therefore converge to the best possible policy in response to the environment the agent is placed in. 
 
 \section{Agent Design and Implementation}
-\subsection{Design of states and actions}
+\subsection{Design of States and Actions}
 As the learning involves interaction with the environment, it is essential to define the state space and the action space. A state space is a set of states, represented by vectors of observations, that an agent could possibly experience throughout its life. An action space is a set of actions that an agent could possibly perform in the game. The design of the state space and action space is tailored to the task assigned, namely maximising both individual and collective utilities. 
-\subsubsection{Design of state space}
+\subsubsection{Design of State Space}
 Firstly, we identified what observations are needed to determine the condition of the agent and the environment which is represented by the Tower and other agents. Considering the given task, we chose to observe four variables: 
 \begin{enumerate}
     \item Our agent's HP
@@ -86,7 +86,7 @@ The first three observations served to fulfil the first aim of the task, as they
 
 \begin{table}
 \centering
-\caption{State space defintion}
+\caption{State space defintion.}
 \begin{adjustbox}{width=\columnwidth,center}
 \begin{tabular}{@{}lllll@{}}
 \toprule
@@ -109,7 +109,7 @@ State Number & HP          & Food on platform & Days at critical & Neighbour’s
 \end{adjustbox}
 \label{state-table}
 \end{table}
-\subsubsection{Implementation of state space}
+\subsubsection{Implementation of State Space}
 The state space is implemented as a 4D slice, with each dimension corresponding to columns 2-4 in Table 1. The 4D slice is then iterated through with each state being assigned an incrementing number. The state number of the agent can then be checked by accessing the 4D slice with the corresponding indices.
 \begin{lstlisting}
 func (a *CustomAgent2) CheckState() int {
@@ -120,11 +120,11 @@ func (a *CustomAgent2) CheckState() int {
 	return a.stateSpace[hp][currFood][critDays][nHP]
 }
 \end{lstlisting}
-\subsubsection{Design of action space}
+\subsubsection{Design of Action Space}
 In the game, taking food is the main interaction with the Tower, which provides feedback according to the amount of food taken. Thus, we divided the action of taking food into six distinct actions with different number of intended food intake, as shown in Table \ref{action-space}.
 \begin{table}
 \centering
-\caption{Action space definition}
+\caption{Action space definition.}
 \begin{tabular}{@{}ll@{}}
 \toprule
 Action number & Intended food intake \\ \midrule
@@ -139,14 +139,14 @@ Action number & Intended food intake \\ \midrule
 \end{table}
 
 We excluded the possibility of taking more than 30 food units, as eating above this level will only bring punishment to our agent according to our reward design. Note that the intended food intakes are multiple of 5, as we would like the agent to have less actions to learn, resulting in faster convergence. 
-\subsubsection{Implementation of action space}
+\subsubsection{Implementation of Action Space}
 The action space is implemented as a 2D slice. It is iterated through and assigned the appropriate food intake according to Table \ref{action-space}.
 \begin{lstlisting}
 for i := 1; i < actionDim; i++ {
 	actionSpace[i] = actionSpace[i-1] + 5
 }
 \end{lstlisting} 
-\subsubsection{Design of reward function}
+\subsubsection{Design of Reward Function}
 The reward function provides a way for us to set the desired behaviour of our agent. The reward function will assess the quality of a particular action under a specific state and provide feedback, either reward or punishment, to the agent. Initially, we have designed four desired behaviours. We encourage our agent to survive, not to overeat, and to save neighbour: if the neighbouring agent is in critical state, the agent will be punished. However, the last desired behaviour was only enforced by the simple communication of "Ask HP" with the agent that is one floor below. Indeed, as shown in Table \ref{cum-death}, implementing a simple communication did not improve the agent’s performance on saving other agent, i.e., the overall death count remained the same after adding the simple communication and tuned reward function accordingly. A potential reason might be that the agent cannot learn to save with such limited information. As such, in our subsequent experiments, the simple communication was not considered, and the primary focus was placed on the first two desired behaviours.
 
 \begin{table}[]
@@ -160,7 +160,7 @@ The reward function provides a way for us to set the desired behaviour of our ag
 \label{cum-death}
 \end{table}
 
-\subsubsection{Implementation of reward function}
+\subsubsection{Implementation of Reward Function}
 The final reward is the sum of survive bonus, eating bonus, wasting bonus and saving bonus. The individual bonuses will be explained now.
 \paragraph{Survive bonus}
 The survive bonus is implemented with two conditions.
@@ -212,7 +212,7 @@ savingBonus $\gets$ savingBonus $+1$\;
 }
 \end{algorithm}
 
-\subsection{Simple reward function}
+\subsection{Simple Reward Function}
 
 Based on the health decay model defined in \ref{health_modeling}, the agent reward was designed to encourage the agent to reward a health above critical and punish dropping to critical health as well as punish overeating using a reward point value for each day. The reward function with its tuned hyperparameters is as such:
 \begin{itemize}
@@ -260,13 +260,13 @@ When tuning the hyper parameters in the reward function appropriately, the main 
 
 The values found for tuning are only estimates of what gives best agent performance in synergy with the tower. This is because the tower introduces a very strong randomness effect as it reshuffles the agent floor locations after only one day. This means almost no run will ever be the same and highly unlucky events, with for example no food for several days, are very likely to occur. 
 
-\section{Results and analysis}
-\subsection{Aim of the simulations}
+\section{Results and Analysis}
+\subsection{Aim of the Simulations}
 The aim of these demonstrations, as outlined throughout the report, was to design and produce an agent that could display the survivability of a reinforcement learning agent. The agent was intended to attempt to strike a balance between prioritizing individual utility through survival, and collective utility through sustainable behaviour with resources. This was to be done with the principle of Teleo-Reactivity in mind, whereby the agent must take actions to pursue the goal of survival by dynamically adapting to the environment using perceived information. As such, for the demonstration to be considered successful, the final design of the agent should display how it learns through reinforcement learning, with the core strategies combined with Q-learning and Hill Climbing and the environmental response, to survive in the Tower along with other agents. This includes utilising the design of states for q-table and reward formula, as well as demonstrating taking a variety of actions before died. This in turn would culminate into a converge reinforcement learning agent. This section aims to highlight how the agent achieves each of the environments by going through the survivability of the reinforcement learning agent in the environment with different hyperparameters. 
 
 The performance of our agent will be justified by metric relating to both individual and collective utility: reward by day, cumulative reward by day, HP vs day, and food taken per day (HP), and age lived per generation.
 
-\subsection{The performance of our agent}
+\subsection{The Performance of our Agent}
 As mentioned, the performance of our agent will be measured with metrics involving reward, HP, food taken, and age. For a reinforcement learning agent, cumulative reward is often used to judge a reinforcement learning algorithm. The reward that the agent receives while acting and learning tells how well the algorithm performed while being deployed. On the other hand, the plot for HP vs days describes the survivability in the environment (Tower in this situation).
 \subsubsection{Convergence}
 \begin{figure}
@@ -342,7 +342,7 @@ Following the design in the reward function, the HP of our agent is learnt to re
 
 This may indicate that staying at a high HP level may not be a good surviving strategy in the tower. 
 
-\subsection{Reincarnation of agent}
+\subsection{Reincarnation of Agent}
 The results of this part are from experiments without random agents and only one agent for our team is involved.
 
 With reincarnation, the agent will not be able to lose its memory or experience after each death, which is a basic factor for a learning algorithm. In our hill-climbing Q-learning, the reincarnation allows for the retention of the Q table and policy table when the agent dies. 
@@ -401,7 +401,7 @@ The results in Figure \ref{251team2} shows that the Team 2 agent does indeed hav
 \label{252team2}
 \end{figure}
 
-\subsection{Learnt policies}
+\subsection{Learnt Policies}
 \begin{table}
 \centering
 \caption{Policy of agent when HP is 0-10.}
