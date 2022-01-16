@@ -87,7 +87,6 @@ The first three observations served to fulfil the first aim of the task, as they
 \begin{table}
 \centering
 \caption{State space defintion}
-\label{state-table}
 \begin{adjustbox}{width=\columnwidth,center}
 \begin{tabular}{@{}lllll@{}}
 \toprule
@@ -108,6 +107,7 @@ State Number & HP          & Food on platform & Days at critical & Neighbour’s
 4399         & 90 – Max HP & 90 – Max Food    & 3                & 90 – Max HP    \\ \bottomrule
 \end{tabular}
 \end{adjustbox}
+\label{state-table}
 \end{table}
 \subsubsection{Implementation of state space}
 The state space is implemented as a 4D slice, with each dimension corresponding to columns 2-4 in Table 1. The 4D slice is then iterated through with each state being assigned an incrementing number. The state number of the agent can then be checked by accessing the 4D slice with the corresponding indices.
@@ -125,7 +125,6 @@ In the game, taking food is the main interaction with the Tower, which provides 
 \begin{table}
 \centering
 \caption{Action space definition}
-\label{action-space}
 \begin{tabular}{@{}ll@{}}
 \toprule
 Action number & Intended food intake \\ \midrule
@@ -136,6 +135,7 @@ Action number & Intended food intake \\ \midrule
 4             & 25                   \\
 5             & 30                   \\ \bottomrule
 \end{tabular}
+\label{action-space}
 \end{table}
 
 We excluded the possibility of taking more than 30 food units, as eating above this level will only bring punishment to our agent according to our reward design. Note that the intended food intakes are multiple of 5, as we would like the agent to have less actions to learn, resulting in faster convergence. 
@@ -385,7 +385,7 @@ As a conclusion to reincarnation, the most important impact of reincarnating the
 \subsection{Self-Organising Ability}
 A Tower that can self-organise has reached an equilibrium where agents no longer die and instead are able to survive all together based on their adaption to each other and the environment. As discussed in Section \ref{team2-organisation} this generally would occur when all the agent behaviours have assimilated and converged to become one and the same. Thus, it is in our interests to test a scenario with a Tower full of the same agent type. To test Team 2 agents’ own self-organising ability, Towers with different number of Team 2 agents present where tested.
 
-The results in Figure \ref{251team2} shows that the Team 2 agent does indeed have a huge impact on the Towers performance. The more Team 2 agents present in the Tower the fewer deaths the Tower would have. But with this reading alone its not possible to determine if the Team 2 agents actually has a self-organizing ability as there is no way of knowing when the last agent died in each run. Figure \ref{252team2} on the other hand shows how a Tower consisting only of Team 2 agents eventually reached an equilibrium point where all agents stayed alive. As such the design of the Team 2 agent showed self-organizing ability with its Q-learning PHC reinforcement learning strategy.
+The results in Figure \ref{251team2} shows that the Team 2 agent does indeed have a huge impact on the Towers performance. The more Team 2 agents present in the Tower the fewer deaths the Tower would have. But with this reading alone its not possible to determine if the Team 2 agents actually has a self-organising ability as there is no way of knowing when the last agent died in each run. Figure \ref{252team2} on the other hand shows how a Tower consisting only of Team 2 agents eventually reached an equilibrium point where all agents stayed alive. As such the design of the Team 2 agent showed self-organising ability with its Q-learning PHC reinforcement learning strategy.
 
 \begin{figure}
 \centering
