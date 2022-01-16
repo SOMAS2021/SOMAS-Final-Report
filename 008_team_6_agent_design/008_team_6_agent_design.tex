@@ -242,7 +242,7 @@ With the agent's behavioural theory defined, its corresponding strategy can be e
 An altruistic agent will always take 0 food, as it is only concerned for the well-being of others with a total disregard for itself.
 
 \subsubsection{Collectivist}
-A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical region, and will die if it spends \textit{N = maxCritical} days in this zone without consuming the minimum required units of food to return to the \textit{WeakLevel}. The collectivist agent, having entered the Critical region, will consume food on a randomly assigned day within the allowable period to leave the Critical region. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
+A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical region, and will die if it spends \texttt{N = maxCritical} days in this zone without consuming the minimum required units of food to return to the \texttt{WeakLevel}. The collectivist agent, having entered the Critical region, will consume food on a randomly assigned day within the allowable period to leave the Critical region. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
 
 % \begin{verbatim}
 % case "Collectivist": // Only eat when in critical zone randomly before expiry
@@ -261,14 +261,14 @@ A collectivist agent will consume just enough food to survive, and consume no fo
 % \end{verbatim}
 
 \begin{itemize}
-    \item If this agent has health $\geq$ \textit{weakLevel}:
+    \item If this agent has health $\geq$ \texttt{weakLevel}:
     \begin{enumerate}
-        \item Assign \textit{allowedFoodTakeDay} to \textit{rand(0, maxDaysCritical)}
+        \item Assign \texttt{allowedFoodTakeDay} to \texttt{rand(0, maxDaysCritical)}
         \item Take 0 food
     \end{enumerate}
-    \item Else if this agent has health $\geq$ \textit{criticalLevel}:
+    \item Else if this agent has health $\geq$ \texttt{criticalLevel}:
     \begin{itemize}
-        \item If \textit{allowedFoodTakeDay} matches the number of days that this agent has stayed critical: take 2 food
+        \item If \texttt{allowedFoodTakeDay} matches the number of days that this agent has stayed critical: take 2 food
         \item Otherwise: take 0 food
     \end{itemize}
     \item Default: take 0 food
@@ -276,12 +276,12 @@ A collectivist agent will consume just enough food to survive, and consume no fo
 
 \subsubsection{Selfish}
 
-A selfish agent consumes the amount of food required to remain in a healthy state. A healthy state is arbitrarily defined as between 30\% and 60\% of the maximum possible health. These values are assigned to variables \textit{healthyLevel} and \textit{strongLevel}, respectively, with the selfish agent operating accordingly under these three conditions:
+A selfish agent consumes the amount of food required to remain in a healthy state. A healthy state is arbitrarily defined as between 30\% and 60\% of the maximum possible health. These values are assigned to variables \texttt{healthyLevel} and \texttt{strongLevel}, respectively, with the selfish agent operating accordingly under these three conditions:
 
 \begin{itemize}
-    \item If the agent's health is greater than or equal to the \textit{strongLevel}: take 0 food
-    \item If the agent's health is between \textit{healthyLevel} and \textit{strongLevel}: take enough food to maintain the current HP value
-    \item If the agent's health is less than the \textit{healthyLevel}, the agent takes enough food to reach the \textit{healthyLevel}.
+    \item If the agent's health is greater than or equal to the \texttt{strongLevel}: take 0 food
+    \item If the agent's health is between \texttt{healthyLevel} and \texttt{strongLevel}: take enough food to maintain the current HP value
+    \item If the agent's health is less than the \texttt{healthyLevel}, the agent takes enough food to reach the \texttt{healthyLevel}.
 \end{itemize}
 
 
