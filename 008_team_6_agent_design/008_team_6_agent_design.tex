@@ -356,7 +356,7 @@ The actual amount of food consumed by the agents in the final implementation doe
 
 With treaties offering a notion of socially accepted institutional power, the formation of treaties must be handled carefully so as not to disadvantage the agents who engage in them. For this reason, a social network must be constructed to offer a heuristic for joining into these agreements. 
 
-Trust serves as ``an important role for the formation of coalitions in social networks and in determining how high value of information flows through the network'' \cite{trustEEE}, with Ostrom futher supporting that ``trust is an essential social lubricant'' \cite{ostrom2003trust}. Ostrom further asserts that trust ``affects the willingness to cooperate'' \cite{ostrom2003trust} and ``enhances cooperation in social-dilemma experiments'' \cite{ostrom2003trust}, providing clear reasoning that trust is an effective parameter to introduce to the agent structure.
+Trust serves as ``an important role for the formation of coalitions in social networks and in determining how high value of information flows through the network'' \cite{trustEEE}, with Ostrom further supporting that ``trust is an essential social lubricant'' \cite{ostrom2003trust}. Ostrom further asserts that trust ``affects the willingness to cooperate'' \cite{ostrom2003trust} and ``enhances cooperation in social-dilemma experiments'' \cite{ostrom2003trust}, providing clear reasoning that trust is an effective parameter to introduce to the agent structure.
 
 Finally, it is through this introduction of trust that we demonstrate the assertion from Adali's work \cite{trustEEE} that trust facilitates ``communication behaviors which are statistically different from random communications''.
 
@@ -420,7 +420,7 @@ If an agent continually averages less than one unit of food per day, it makes th
 
 To maintain a strong sense of social cohesion, the trust assigned to another agent must be continually updated to reflect the ongoing exchange of information \cite{trustEEE}. Again, this agent implementation asserts that the different social motives will have different responses to positive and negative interactions, with the magnitude of the change in trust varying proportionally. This scaling is documented below.
 
-In the case of a positive exchange, the trust of another agent will increase as follows:
+In the case of a positive exchange, the scaling is as follows:
 \begin{itemize}
     \item Narcissist: $\times 0$
     \item Selfish: $\times 1$
@@ -444,7 +444,7 @@ Conversely, in the case of a negative exchange, the trust of another agent will 
 %%%%%%%%%%%
 \section{Approach to Treaties}\label{self-organization}
 
-Messages allow for short-lived communication between two neighbours. With request and response messages, such as “leave X food on the platform”, agents can organize locally. However, to establish a stable, self-organizing system across many floors and many reassignment periods, a more sophisticated form of agreement is necessary. For this reason, an agent's strategies rely heavily on treaties, mimicking research findings from the field of behavioural psychology.
+Messages allow for short-lived communication between two neighbours. With request and response messages, such as “leave X food on the platform”, agents can organise locally. However, to establish a stable, self-organising system across many floors and many reassignment periods, a more sophisticated form of agreement is necessary. For this reason, an agent's strategies rely heavily on treaties, mimicking research findings from the field of behavioural psychology.
 
 To successfully handle treaties, an agent must:
 \begin{enumerate}
@@ -456,7 +456,7 @@ To successfully handle treaties, an agent must:
 
 \subsection{Types of Treaties}
 
-As food is a scarce resource in the tower, the main purpose of self-organization should be to limit how much food agents eat. By handling all possible conditions, (``less than'', ``less than or equal'', ``equal to'', ``greater than or equal to'', ``greater than''), this strategy focuses on assigning upper bounds to the amount of food eaten.
+As food is a scarce resource in the tower, the main purpose of self-organisation should be to limit how much food agents eat. By handling all possible conditions, (``less than'', ``less than or equal'', ``equal to'', ``greater than or equal to'', ``greater than''), this strategy focuses on assigning upper bounds to the amount of food eaten.
 
 To ensure that an agent has access to food on a given turn, it is integral for the neighbouring agents to \texttt{leave} food, wherein the infrastructure of the tower provides multiple types of treaties: \texttt{LeaveAmountFood}, \texttt{LeavePercentageFood} and \texttt{Inform}. To enforce localised sanctions and suggest an intake of food to allow stability, however, what really counts is the amount of food taken. Thinking in terms of the \texttt{LeaveFood} types limits how much treaties can distribute through the tower: \texttt{LeaveAmountFood} would allow the first few agent floors to eat as much as desired without breaking the treaty. Once this amount is reached, any subsequent agent does not receive anything. Similarly, \texttt{LeavePercentageFood} limits agents by exponentially decreasing portions, such that low levels have little chance of surviving even if everyone satisfies the treaty. \texttt{TakeAmountFood} does not face this issue as it limits consumption no matter the amount of food an agent has access to. Consequently, the agent thinks in terms of the amount food it takes, converting any other treaty type to an equivalent upper bound of food it is allowed take. This makes it easier to compare treaties and make sure that accepted treaties are not contradicting one another.
 
@@ -678,8 +678,8 @@ The collectivist and selfish agents are therefore the two social motives that pr
 
 The possible treaties that could be proposed are set based on the different social motives. These were changed for testing purposes (see \Cref{simulation_results}), however, the basic structure is outlined below:
 \begin{itemize}
-    \item Collectivist: If the agent's health is above the \textit{weakLevel}, leave 100\% of resources on the platform
-    \item Selfish: If the agent's health is above the \textit{strongLevel}, leave 100\% of resources on the platform
+    \item Collectivist: If the agent's health is above the \texttt{weakLevel}, leave 100\% of resources on the platform
+    \item Selfish: If the agent's health is above the \texttt{strongLevel}, leave 100\% of resources on the platform
 \end{itemize}
 
 \subsubsection{Propagating Treaties}
@@ -706,7 +706,7 @@ Before presenting the simulation results, we offer the following hypotheses we w
     
     \item In a purely collectivist system, a stable state is reached.
     
-    \item In a system composed of agents with different social motives, a polystable, \emph{i.e.,} a system that has more than 1 convergent state, "whose parts have many equilibria" \cite{ashby2015design}, can be reached in a long-term scenario.
+    \item In a system composed of agents with different social motives, a polystable, i.e., a system that has more than one convergent state, ``whose parts have many equilibria'' \cite{ashby2015design}, can be reached in a long-term scenario.
         
     \item There exists a threshold on the number of selfish agents that can be incorporated in the system before a stable collectivist system becomes unstable.
      
@@ -722,7 +722,7 @@ Before presenting the simulation results, we offer the following hypotheses we w
 %%
 \subsection{Summary of Simulations}\label{simulation_summary}
 
-To examine the different hypothesis introduced in \Cref{hypothesis}, different simulations need to be executed. We divide the simulations into 5 groups characterised by having different initialisation parameters. \Cref{tab:simulation_summary_1} and \Cref{tab:simulation_summary_2} summarize the simulations parameters. The percentages of each social motive correspond to the initial distribution. If not explicitly mentioned, we run experiments using 100 agents, with 100 food initially on the platform for 60 days and with a reshuffle period of 30 days. We also impose that this is a homogeneous tower, implementing only agents of this type (Team 6).
+To examine the different hypotheses introduced in \Cref{hypothesis}, different simulations need to be executed. We divide the simulations into five groups characterised by having different initialisation parameters. \Cref{tab:simulation_summary_1} and \Cref{tab:simulation_summary_2} summarise the simulation parameters. The percentages of each social motive correspond to the initial distribution. If not explicitly mentioned, we run experiments using 100 agents, with 100 food on the platform for 60 days and with a reshuffle period of 30 days. We also impose that this is a homogeneous tower, implementing only agents of this type (Team 6).
 
 \begin{table}[h]
 \centering
@@ -758,7 +758,7 @@ Communication     & yes&no  &yes & yes &yes & yes & yes
 
 In addition, cases C3, D2, E1 and E2 have additional specific features. In comparison to C1, C3 introduces more restrictive treaties. This is also the case for D2. In simulation E1 and E2, we use a a concept approaching natural selection to replace the agents that die. More details about these cases will be given in the respective subsections.
 
-Our simulations results are given as the average over 10 repeated simulations for the cases A, B and C. For cases D and E, we want to show specific simulation and therefore do not perform any average calculation.
+Our simulations results are given as the average over 10 repeated simulations for the cases A, B and C. For cases D and E, we want to show specific simulations and therefore do not perform any average calculations.
 
 %%
 %% Simulation Results
@@ -795,15 +795,15 @@ The first set of simulations we analyse are simulations that include agents that
 
 
 
-As to be expected, a system containing purely altruists (\Cref{fig:res_A} (a) and (b)) leads to the inevitable death of its agents, since by acting purely selflessly, these agents never take any resources from the tower.
+As expected, a system containing purely altruists (\Cref{fig:res_A} (a) and (b)) leads to the inevitable death of its agents, since by acting purely selflessly, these agents never take any resources from the tower.
 
-As all agents die at the same moment and are all replaced by a new group of altruists, we see a clear pattern in the curve describing the number of deaths over time: after 10 days without eating, all the agents die, leading to a step of 100 additional deaths. 
+As all agents die at the same moment and are all replaced by a new group of altruists, we see a clear pattern in the curve describing the number of deaths over time: after 10 days without eating, all of the agents die, leading to a step of 100 deaths. 
 
 This step pattern is coupled with the global utility. Indeed, each 10 days, there arises a spike in global utility. We attribute this to the fact that there are no agents requesting food, contrasting the alternative case where altruists are presented a bountiful platform, yet appropriate nothing. \ToDo{This can be directly seen in equation (INSERT CREF from global utility function in infra part), which state that the utility of such agents is positive in this case.}
 
 Similar to the altruist agents, the narcissists have a large number of deaths among them every 10 days (\Cref{fig:res_A} (h)). This is evidently due to the agents located on the upper floors of the tower taking all of the food, leaving none for the agents below. In comparison to the altruists, a system composed of narcissists will show negative peaks of global utility, as can be seen in \Cref{fig:res_A} (g). This can be explained using the exact opposite reasoning for the altruistic case - agents no longer vie for maximal resources and receive nothing.
 
-As a compromise between these 2 systems, a system including only selfish agents presents smoother curves (\Cref{fig:res_A} (e) and (f)). These agents take less food than the narcissists, but still too much to maintain zero deaths in an economy of scarcity.
+As a compromise between these two systems, a system including only selfish agents presents smoother curves (\Cref{fig:res_A} (e) and (f)). These agents take less food than the narcissists, but still take too much to maintain zero deaths in an economy of scarcity.
 
 Finally, the collectivists instantaneously achieve a stable society in which none of the agents die (\Cref{fig:res_A} (d)). This is due to their innate strategy regarding food intake that ensures the optimal distribution and intake of the common pool resources.
 
