@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d (TeX Live 2021/W32TeX)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: IEEEtranN.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: references.bib
+-- IEEEtranN.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+** Natbib version - not for normal IEEE work.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Warning--missing school in 0d9bc1ee81234780b2bb6ecd02762d56
+Warning--empty title in kahneman_tversky_2000
+
+Done.
+You've used 14 entries,
+            4855 wiz_defined-function locations,
+            1040 strings with 10872 characters,
+and the built_in function-call counts, 10284 in all, are:
+= -- 1050
+> -- 191
+< -- 48
++ -- 98
+- -- 48
+* -- 509
+:= -- 1716
+add.period$ -- 27
+call.type$ -- 14
+change.case$ -- 27
+chr.to.int$ -- 59
+cite$ -- 16
+duplicate$ -- 763
+empty$ -- 717
+format.name$ -- 68
+if$ -- 2316
+int.to.chr$ -- 1
+int.to.str$ -- 15
+missing$ -- 106
+newline$ -- 76
+num.names$ -- 42
+pop$ -- 241
+preamble$ -- 1
+purify$ -- 14
+quote$ -- 2
+skip$ -- 862
+stack$ -- 0
+substring$ -- 250
+swap$ -- 528
+text.length$ -- 22
+text.prefix$ -- 0
+top$ -- 6
+type$ -- 208
+warning$ -- 2
+while$ -- 41
+width$ -- 0
+write$ -- 200
+(There were 2 warnings)
