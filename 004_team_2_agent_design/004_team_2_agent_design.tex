@@ -86,7 +86,7 @@ The first three observations served to fulfil the first aim of the task, as they
 
 \begin{table}
 \centering
-\caption{State space defintion.}
+
 \begin{adjustbox}{width=\columnwidth,center}
 \begin{tabular}{@{}lllll@{}}
 \toprule
@@ -107,6 +107,7 @@ State Number & HP          & Food on platform & Days at critical & Neighbour’s
 4399         & 90 – Max HP & 90 – Max Food    & 3                & 90 – Max HP    \\ \bottomrule
 \end{tabular}
 \end{adjustbox}
+\caption{State space definition.}
 \label{state-table}
 \end{table}
 \subsubsection{Implementation of State Space}
@@ -124,7 +125,6 @@ func (a *CustomAgent2) CheckState() int {
 In the game, taking food is the main interaction with the Tower, which provides feedback according to the amount of food taken. Thus, we divided the action of taking food into six distinct actions with different number of intended food intake, as shown in Table \ref{action-space}.
 \begin{table}
 \centering
-\caption{Action space definition.}
 \begin{tabular}{@{}ll@{}}
 \toprule
 Action number & Intended food intake \\ \midrule
@@ -135,6 +135,7 @@ Action number & Intended food intake \\ \midrule
 4             & 25                   \\
 5             & 30                   \\ \bottomrule
 \end{tabular}
+\caption{Action space definition.}
 \label{action-space}
 \end{table}
 
@@ -406,20 +407,18 @@ The results in Figure \ref{251team2} shows that the Team 2 agent does indeed hav
 \subsection{Learnt Policies}
 \begin{table}
 \centering
-\caption{Policy of agent when HP is 0-10.}
-\label{lowhp-team2}
 \begin{tabular}{@{}ll@{}}
 \toprule
 HP   & Average Food decided to take \\ \midrule
 0-10 & 27.3                         \\ \bottomrule
 \end{tabular}
+\caption{Policy of agent when HP is 0-10.}
+\label{lowhp-team2}
 \end{table}
 Table \ref{lowhp-team2} shows that when the HP of agent is low, the agent tends to take in as much food as he can to survive, as it must prioritise its individual survival and cannot consider other lofty altruistic goals.
 
 \begin{table}[]
 \centering
-\caption{Policy of agent when HP is 10-20.}
-\label{midhp-team2}
 \begin{tabular}{@{}lll@{}}
 \toprule
 HP    & Food on the platform & Food decided to take \\ \midrule
@@ -427,6 +426,8 @@ HP    & Food on the platform & Food decided to take \\ \midrule
 10-20 & 20-30                & 7.1                  \\
 10-20 & 30-100               & 23.9                 \\ \bottomrule
 \end{tabular}
+\caption{Policy of agent when HP is 10-20.}
+\label{midhp-team2}
 \end{table}
 
 From Table \ref{midhp-team2}, it is prominent that the agent is still in a dangerous HP range. When there is not much food on the platform, the agent decides to eat more to survive.
@@ -436,8 +437,6 @@ When the food is abundant on the platform at this HP level, the agent takes in m
 
 \begin{table}[]
 \centering
-\caption{Policy of agent when HP is 20-30.}
-\label{2030-team2}
 \begin{tabular}{@{}lll@{}}
 \toprule
 HP    & Food on the platform & Food decided to take \\ \midrule
@@ -446,19 +445,21 @@ HP    & Food on the platform & Food decided to take \\ \midrule
 20-30 & 30-50                & 21.0                 \\
 20-30 & 50-100               & 5.0                  \\ \bottomrule
 \end{tabular}
+\caption{Policy of agent when HP is 20-30.}
+\label{2030-team2}
 \end{table}
 
 Table \ref{2030-team2} shows the decisions of the agent when HP is in 20-30 level. It is observed that its policy at this level is quite similar to that at HP 10-20. It still chooses to ensure the survival of itself when the food is not enough. When the food is above the level of scarce, it still decides to eat less and leave the food for others. In addition, when there is 30-50 food on the platform, it decides to eat more again, but when the food on the platform is more than this it chooses to barely eat. It seems that from the experience of agent in HP 20-30, 30-50 food on the platform can be a dangerous indication that it may starve or lose HP in the next few days, so he tends to supply himself for the future. And the agent considers it unnecessary to eat much when there is abundant food on the platform, due to the reward function penalties.
 
 \begin{table}[]
 \centering
-\caption{Policy of agent when HP is 30-100.}
-\label{30100-team2}
 \begin{tabular}{@{}ll@{}}
 \toprule
 HP     & Food decided to take \\ \midrule
 30-100 & 5.0                  \\ \bottomrule
 \end{tabular}
+\caption{Policy of agent when HP is 30-100.}
+\label{30100-team2}
 \end{table}
 
 Table \ref{30100-team2} shows that when the HP of agent is larger than 30, it tends to eat the minimum amount of food and leave the food to others.
