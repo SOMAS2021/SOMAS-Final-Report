@@ -17,7 +17,7 @@ Section \ref{sec:team5-overview} provides an overview of the agent's parameters 
 
 The strategy employed by this agent aims to maximise its chances of survival while also considering those who have helped the agent in the past.
 
-At the beginning of each day, the agent's `personality' is updated using various parameters stored from previous days. These personality parameters are shown in Table \ref{tab:team5-personality}.
+At the beginning of each day, the agent's `personality' is updated using various parameters stored from previous days. These personality parameters are shown in Table \ref{tab:team5-personality}. Each of these parameters are linked and contribute to the calculation of how much food an agent will attempt to eat.
 
 \begin{table}
     \centering
@@ -63,9 +63,7 @@ Collaboration between different agents operating in a system requires communicat
 \subsection*{Strategy}\label{sec:team5-messaging-strategy}
 The agent's approach to messaging is to adopt a ``passive observer'' role focussed on gathering information about other agents to organise itself with these agents in the tower. With more information at its disposal, the agent can make more informed decisions to balance its own individual utility with the collective utility of the agents in the tower.
 
-\ToDo{choose whether to say 12 or 8 ticks to send all messages}\\
-\ToDo{choose whether to include intended food intake in messages}\\
-The agent sends three types of messages to each of the agents residing one or two floors above and below its own floor; it therefore takes 12 ticks to send all of its messages. These messages ask for the HP, intended food intake, and actual food intake of other agents. The decision of which message type to send to which floor is controlled by the Messaging Counter described in Table \ref{tab:team5-personality}. This counter is incremented each tick, and reset either every 25 ticks or at the end of each day, whichever comes first. This ensures that the agent is requesting up-to-date information regularly for use in its decision making.
+The agent sends three types of messages to each of the agents residing one or two floors above and below its own floor; it therefore takes 12 ticks to send all of its messages. These messages ask for the HP, intended food intake, and actual food intake of other agents. The decision of which message type to send to which floor is controlled by the \texttt{Messaging Counter} described in Table \ref{tab:team5-personality}. This counter is incremented each tick, and reset either every 25 ticks or at the end of each day, whichever comes first. This ensures that the agent is requesting up-to-date information regularly for use in its decision making.
 
 The order of sent messages is:
 \begin{enumerate}
@@ -74,6 +72,8 @@ The order of sent messages is:
     \item Ask for an agent's intended food intake
 \end{enumerate}
 The Team 5 agent first targets the agent immediately below it, then the agent immediately above, then two floors below, and finally the agent two floors above.
+
+In addition to sending out requests for information, the agent also accepts any state messages it receives even if it did not ask for them, so that it can gain the largest amount of knowledge that it can. This includes messages where the agent is not the intended recipient: in this case the Team 5 agent will read the information contained in the message before passing it on.
 
 \section{Social Memory}\label{sec:team5-memory}
 The agent stores the information gained from communication in its `memory': the information stored by this data structure is shown in Table \ref{tab:team5-memory}.
@@ -122,6 +122,8 @@ The favour metric quantifies the agent's opinion of others in the tower. It is b
     \end{cases}\\
 \end{align*}
 
+We have designed the favour calculation in such a way that means positive changes in favour occur slowly while negative changes in favour can occur quickly; this is to reflect human behaviour regarding trust, which tends to be lost more quickly than it is gained.
+
 Measuring favour allows the agent to act according to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
 
 For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.
@@ -141,11 +143,11 @@ A proposed treaty is always rejected if:
 \begin{itemize}
     \item It conflicts with any other active treaties. A treaty is considered to conflict with another treaty if they could ever cause the agent to take incompatible actions. For example, an agent cannot leave more than five units of food and fewer than four units of food at the same time.
     \item It is badly formed. For example, a treaty which requires the agent to leave more than 100\% of the food on the platform is badly formed.
-    \item \ToDo{Check this one} It requires agents to leave less than a certain amount of food on the platform, as this is never advantageous to the tower as a whole.
-    \item \ToDo{Check this one} It requires the agent to leave an exact amount of food on the platform, as this would result in all but one of the agents signed up to the treaty to take no food each day.
+    \item It requires agents to leave less than a certain amount of food on the platform, as this is never advantageous to the tower as a whole.
+    \item It requires the agent to leave an exact amount of food on the platform, as this would result in all but one of the agents signed up to the treaty to take no food each day.
     \item It makes a request based on low HP, low amounts of food on the platform, or a low floor, as in these conditions the agent will already be desperate for survival, so will not want to be further constrained by a treaty.
-    \item \ToDo{Check this one} It makes a request based on HP where the threshold is within the ``weak'' or ``critical'' HP bands, as this means the agent could become critical or die as a result of following the treaty.
-    \item \ToDo{Check this one} It would require the agent to take less food than is required to avoid entering the ``critical'' HP band.
+    \item It makes a request based on HP where the threshold is within the ``weak'' or ``critical'' HP bands, as this means the agent could become critical or die as a result of following the treaty.
+    \item It would require the agent to take less food than is required to avoid entering the ``critical'' HP band.
 \end{itemize}
 If the treaty does not meet any of the above conditions, the \texttt{decision} value is then computed as:
 \[\texttt{decision} = 6 - \texttt{selfishness} + \texttt{proposerFavour} - \frac{\texttt{treatyDuration}}{3}\]
@@ -163,7 +165,7 @@ If the \texttt{decision} value is positive, the treaty is accepted.
 At the start of each day, the agent checks whether it has become a `leader': if it has, then the agent proposes a treaty. Whether an agent becomes a leader or not is based on:
 \begin{itemize}
     \item The agent's selfishness: a selfish agent is less likely to propose treaties
-    \item The agent's floor: agents higher up in the tower are more likely to propose treaties. This is because agents higher up in the tower have more access to food and therefore have more control over the food available to those below them. This control means these agents are in a better position to effect change.
+    \item The agent's floor: agents higher up in the tower are more likely to propose treaties. This is because an agent's floor is the only indicator of social hierarchy in the tower, as those at the top can choose the amount of food they eat and therefore control the amount of food available to those below them. This control means these agents are in a better position to effect change.
     \item The agent's \texttt{leadership} threshold: this is randomly set during the agent's initialisation and those with a lower leadership threshold are more likely to become leaders.
 \end{itemize}
 The leadership value is calculated by:
@@ -175,6 +177,8 @@ The proposed treaty is always that agents whose HP is greater than or equal to a
 \begin{equation}\label{eq:team5-treaty-hp-threshold}
     \texttt{hpThreshold} = \texttt{aimHP} - \frac{\texttt{aimHP} - \texttt{WeakLevel}}{10}\times\left(\texttt{leadership} - \texttt{leadershipThreshold}\right)
 \end{equation}
+
+It was decided that of the available treaty types, treaties that limit HP were the most suitable for composing resource management-based agreements between agents. This is because treaties based directly on quantities of food make it difficult to construct treaties that control each agent's food intake in a fair manner. While food is the main reseource in the tower, we can view HP as a secondary resource given that it is directly affected by food and reflects the allocation of this main resource.
 
 \section{Experimentation}\label{sec:team5-experimentation}
 This section focuses on how the agent's performance varies with changes in its environment.
@@ -388,6 +392,8 @@ Figure \ref{fig:team5-exp-sim-length} shows the relationship between the length 
 Figure \ref{fig:team5-exp-food-per-agent} shows the effect of increasing the amount of food on the platform: the graph trends downwards as expected, showing that more food reduces the number of deaths.
 
 \subsubsection*{Reshuffle Period}
+Figure \ref{fig:team5-exp-reshuffle-period} shows the effect of changing the reshuffle period on the number of deaths. There is a small trend between deaths and the reshuffle period length, with an average increase in deaths of 0.25 per day; this implies that the agent performs better with a shorter reshuffle period.
+
 \begin{figure}
     \centering
     \begin{minipage}{0.6\textwidth}
@@ -497,7 +503,11 @@ Figure \ref{fig:team5-exp-food-per-agent} shows the effect of increasing the amo
 % The Team 5 agent is least compatible with random agents (i.e. agents which take a random amount of food). The total number of deaths is highest and average age upon death is lowest with this pairing. The life expectancy also does not improve with more food on the platform.
 
 \subsection*{Self-Organisation With Other Agents}
-The overall aim within the tower is for agents to self-organise and create a stable society. Tests were run to investigate how compatible the Team 5 agent is with each of the agents designed by each of the other teams. Simulations were run with a tower consisting of Team 5 agents and one other agent type, with seven agents each and five food available per agent, to see whether they could self-organise within 100 days. These results are shown in Table \ref{tab:team5-self-org-agents}
+The overall aim within the tower is for agents to self-organise and create a stable society. Tests were run to investigate how compatible the Team 5 agent is with each of the agents designed by each of the other teams. Simulations were run with a tower consisting of Team 5 agents and one other agent type, with seven agents each and five food available per agent, to see whether they could self-organise within 100 days. These results are shown in Table \ref{tab:team5-self-org-agents}.
+
+Team 5 is able to self-organise with Teams 3, 4, and 7, and can do so immediately with Team 4. Team 5 does not perform well wither either Teams 2 or 6; the agents were not able to self-organise within 100 days, resulting in continual deaths.
+
+The Team 5 agent also does not perform well with random agents (i.e. agents which take a random amount of food). Experiments on towers consisting of Team 5 and random agents resulted in a comparatively high number of deaths, with a low average age upon death. The average age also does not improve when the food per agent ratio is increased.
 
 \begin{table}
     \centering
