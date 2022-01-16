@@ -154,7 +154,7 @@ Treaties are the mechanism by which agents can communicate their needs to each o
 
 \subsubsection{Rejecting Proposed Treaties}
 \label{subsec: Rejecting Treaties}
-Treaties are rejected on the basis of certain criteria, these 'conditions' reflect proposed treaties that are detrimental to the health of Team 7's agents at the expense of other agents. The following are the main criteria for rejecting treaties:
+Treaties are rejected on the basis of certain criteria, these `conditions' reflect proposed treaties that are detrimental to the health of Team 7's agents at the expense of other agents. The following are the main criteria for rejecting treaties:
 
 \begin{enumerate}
     \item 
@@ -191,10 +191,10 @@ Once a treaty is rejected, a confirmation of the rejection is sent to the propos
 \subsubsection{Accepting Treaties}
 \label{subsec: Accepting Treaties}
 
-Treaties are accepted if the aforementioned rejection criteria are not satisfied \textbf{AND} the agent has the relevant personality traits and behaviour. In particular, the responsiveness behaviour characteristic of a given agent should be greater than 50 and the personality trait conscientiousness should be greater than 33. 
+Treaties are accepted if the aforementioned rejection criteria are not satisfied and the agent has the relevant personality traits and behaviour. In particular, the responsiveness behaviour characteristic of a given agent should be greater than 50 and the personality trait conscientiousness should be greater than 33. 
 \newline
 
-All accepted treaties are stored in the active treaties field of the Base Agent thus allowing for the conflict criteria to be checked by iterating through the 'activetreaties' map. Theoretically all treaties that get through the vetting process are either beneficial to the agent or the wider group and do not make the agent prone to an earlier than expected death as a result of accepting said treaty.
+All accepted treaties are stored in the active treaties field of the Base Agent thus allowing for the conflict criteria to be checked by iterating through the \texttt{activetreaties} map. Theoretically all treaties that get through the vetting process are either beneficial to the agent or the wider group and do not make the agent prone to an earlier than expected death as a result of accepting said treaty.
 
 \subsubsection{Treaty Usage}
 \label{subsec: Treaty Usage}
@@ -213,7 +213,7 @@ Treaty Formulation can play an important role in creating favourable conditions,
     
     \item \textbf{Floor:} If the conscientiousness of the agent is a above a certain threshold, meaning that the agent is relatively forward thinking and aware of their surroundings, then the agent will try to initiate a treaty with the neighbouring agent above him. This is triggered upon a floor change when the current floor is at a lower level than the previous floor. A conscientiousness agent will know that it is likely that food will be more scarce at this level and so he initiates a treaty to make survival at this floor easier.
 
-    \item \textbf{Propagation:} A treaty that has been accepted from an agent will be propagated onward in the same direction. If the treaty is coming from downwards and the request type is 'LeaveAmountFood', then the request value is increased before propagating the same treaty upwards. This must be done to ensure that the agent above leaves enough food for our agent \textit{and} the agents below us. If the agent above uses the same strategy, then this can form an efficient means of survival for all agents in the tower.
+    \item \textbf{Propagation:} A treaty that has been accepted from an agent will be propagated onward in the same direction. If the treaty is coming from downwards and the request type is `LeaveAmountFood', then the request value is increased before propagating the same treaty upwards. This must be done to ensure that the agent above leaves enough food for our agent \textit{and} the agents below us. If the agent above uses the same strategy, then this can form an efficient means of survival for all agents in the tower.
 \end{enumerate}
 
 \section{Simulations and Analysis}
@@ -264,7 +264,7 @@ This demonstrates that the agents perform better collectively when treaties are 
     \label{fig: Low Openness}
 \end{figure}
 
-It can be observed that the agents collectively perform significantly better when openness is low, as a stabilising of the cumulative deaths curve can be seen for the agent with low openness. This can be explained by the fact that an agent with high openness will have a lower standard for accepting message requests and treaties - meaning they are more likely to agree to a request that is detrimental to their survival. Furthermore, an agent with a low openness value, will be less welcoming to a change in floor and will therefore behave more cautiously. This will also improve the agents chances of survival. 
+It can be observed that the agents collectively perform significantly better when openness is low, as a stabilising of the cumulative deaths curve can be seen for the agent with low openness. This can be explained by the fact that an agent with high openness will have a lower standard for accepting message requests and treaties - meaning they are more likely to agree to a request that is detrimental to their survival. Furthermore, an agent with a low openness value will be less welcoming to a change in floor and will therefore behave more cautiously. This will also improve the agents chances of survival. 
 
 \subsubsection{Neuroticism}
 \label{subsubsec: Neuroticism}
@@ -388,44 +388,44 @@ A high kindness score sees double the deaths of a low kindness score. A high kin
 \subsubsection{Inter-team Comparison}
 The following table shows the total number of deaths for simulations of various combinations of agent teams. All simulations are run with a simulation period of 500 days, shuffle period of 7 days and 10 team 7 agents with 10 agents of one other team type. The table is further broken down into food available per agent (5, 10 and 15).
 \begin{table}
-\begin{center}
-\begin{tabular} { | m{4em} | m{6em} | m{4em} | m{4em} | m{4em} | }
-    \hline
-        \textbf{Agent Team} & \textbf{Food/Agent} & \textbf{Total Deaths} & \textbf{Team 7 Deaths} & \textbf{Other Deaths} \\
-    \hline
-    2 & 5 & 463 & 273 & 190 \\
-  \hline
-    2 & 10 & 149 & 80 & 49 \\
-  \hline
-    2 & 15 & 0 & 0 & 0 \\
-  \hline
-    3 & 5 & 347 & 183 & 164\\
-  \hline
-    3 & 10 & 73 & 53 & 20\\
-  \hline
-    3 & 15 & 0 & 0 & 0 \\
-  \hline
-    4 & 5 & 217 & 92 & 125\\
-  \hline
-    4 & 10 & 0 & 0 & 0 \\
-  \hline
-    4 & 15 & 0 & 0 & 0 \\
-  \hline
-    5 & 5 & 213 & 107 & 106 \\
-  \hline
-    5 & 10 & 5 & 5 & 0 \\
-  \hline
-    5 & 15 &  0 & 0 & 0 \\ 
-  \hline
-    6 & 5 & 459 & 136 & 323\\
-  \hline
-    6 & 10 & 273 & 48 & 225\\
-  \hline
-    6 & 15 & 126 & 24 & 102\\
-  \hline
-\end{tabular}
-\end{center}
-\caption{Comparison between agent teams and team 7.}
+    \begin{center}
+    \begin{tabular} { | m{4em} | m{6em} | m{4em} | m{4em} | m{4em} | }
+        \hline
+            \textbf{Agent Team} & \textbf{Food/Agent} & \textbf{Total Deaths} & \textbf{Team 7 Deaths} & \textbf{Other Deaths} \\
+        \hline
+        2 & 5 & 463 & 273 & 190 \\
+        \hline
+        2 & 10 & 149 & 80 & 49 \\
+        \hline
+        2 & 15 & 0 & 0 & 0 \\
+        \hline
+        3 & 5 & 347 & 183 & 164\\
+        \hline
+        3 & 10 & 73 & 53 & 20\\
+        \hline
+        3 & 15 & 0 & 0 & 0 \\
+        \hline
+        4 & 5 & 217 & 92 & 125\\
+        \hline
+        4 & 10 & 0 & 0 & 0 \\
+        \hline
+        4 & 15 & 0 & 0 & 0 \\
+        \hline
+        5 & 5 & 213 & 107 & 106 \\
+        \hline
+        5 & 10 & 5 & 5 & 0 \\
+        \hline
+        5 & 15 &  0 & 0 & 0 \\ 
+        \hline
+        6 & 5 & 459 & 136 & 323\\
+        \hline
+        6 & 10 & 273 & 48 & 225\\
+        \hline
+        6 & 15 & 126 & 24 & 102\\
+        \hline
+    \end{tabular}
+    \end{center}
+    \caption{Comparison between agent teams and team 7.}
 \end{table}
 All team agents, bar team 6, were able to coexist with team 7 and achieve zero deaths for a food availability of 15 per agent, indicating that Team 6 agent was the most incompatible with our agent. Team 4 achieved zero deaths for food availability of 10 demonstrating a greater compatibility with team 7 and team 5's results are not too dissimilar.  
 
