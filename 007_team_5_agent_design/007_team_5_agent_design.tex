@@ -207,7 +207,7 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
                 xmajorgrids=true,
                 grid style=dashed,
             ]
-            \addplot[smooth,mark=*,blue]
+            \addplot[mark=*,blue]
                 coordinates{
                     (15, 0)
                     (14, 0)
@@ -224,7 +224,7 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
                     (3, 234)
                     (2, 305)
                     (1, 362)
-                };
+                }; \label{leg:team5-food-per-agent-deaths}
             \end{axis}
             
             \begin{axis}[
@@ -237,7 +237,7 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
               xmajorgrids=true,
               grid style=dashed,
             ]
-            \addplot[smooth,mark=*,red]
+            \addplot[mark=*,red]
                 coordinates{
                     (15, 0.077)
                     (14, 0.074)
@@ -254,7 +254,9 @@ When the ratio of food to agent is greater than 9, the agents are able to self-o
                     (3, 0.022)
                     (2, 0.013)
                     (1, 0.003)
-                };
+                }; \label{leg:team5-food-per-agent-utility}
+                \addlegendimage{/pgfplots/refstyle=leg:team5-food-per-agent-deaths}\addlegendentry{Deaths}
+                \addlegendimage{/pgfplots/refstyle=leg:team5-food-per-agent-utility}\addlegendentry{Average utility}
             \end{axis}
             \end{tikzpicture}
     \end{minipage}
@@ -308,13 +310,145 @@ It was found that, with the food per agent ratio set to 2, there appeared to be 
     \label{fig:team5-20agents-2food}
 \end{figure}
 
-Given these results, we considered whether a homogeneous tower of Team 5 agents would achieve organisation given an infinite amount of time regardless of the number of agents provided at least two food per agent was available. We predict that this is not possible: every time an agent is replaced in the tower, they are initialised with maximum selfishness and have no social network. It takes time for agents to build trust with each other but deaths occur too quickly for this happen if the settings of the tower are too strict.
+Given these results, we considered whether a homogeneous tower of Team 5 agents would achieve organisation given an infinite amount of time regardless of the number of agents provided at least two food per agent was available. We predict that this is not possible: every time an agent is replaced in the tower, its replacement is initialised with maximum selfishness and has no social network. It takes time for agents to build trust with each other but deaths occur too quickly for this happen if the settings of the tower are too strict.
 
 \subsection*{Heterogeneous Tower Experiments}
+These experiments compare the Team 5 agent with the agents designed by the other agent teams. The base parameters for all simulations are as follows:
+\begin{itemize}
+    \item 10 Team 5 agents, and two agents from each other team, excluding the random and selfish agents (i.e. half of the tower is Team 5).
+    \item 6 food per agent
+    \item 3 day reshuffle period
+    \item 20 day simulation
+\end{itemize}
 
+\subsubsection*{Simulation Length}
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=\textwidth,
+                ymin=0,
+                xmin=0,
+                xlabel=Length of Simulation,
+                ylabel=Age,
+                ymajorgrids=true,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[mark=*,blue]
+                coordinates{
+                    (20, 0)
+                    (30, 0)
+                    (40, 18)
+                    (50, 18.75)
+                    (60, 25)
+                    (70, 22)
+                    (80, 40)
+                    (90, 31)
+                    (100, 33)
+                };
+            \end{axis}
+            \end{tikzpicture}
+            \caption{Average age upon death vs length of simulation. Points with age 0 mean no agent died during those simulations.}
+            \label{fig:team5-exp-sim-length}
+    \end{minipage}
+    \hspace{0.05\textwidth}
+    \begin{minipage}{0.45\textwidth}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=\textwidth,
+                ymin=0,
+                xmin=0,
+                xlabel=Food per agent,
+                ylabel=Deaths,
+                ymajorgrids=true,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[mark=*,blue]
+                coordinates{
+                    (3, 7)
+                    (4, 6)
+                    (5, 2)
+                    (6, 0)
+                    (7, 1)
+                };
+            \end{axis}
+            \end{tikzpicture}
+            \caption{Number of deaths vs food per agent ratio}
+            \label{fig:team5-exp-food-per-agent}
+    \end{minipage}
+\end{figure}
+\ToDo{Check this result: is it actually true?}
+Figure \ref{fig:team5-exp-sim-length} shows the relationship between the length of the simulation and the average age of Team 5 agents when they die: the graph shows a positive trend of increasing average age, implying that Team 5 agents perform better over time.
 
+\subsubsection*{Food Per Agent}
+Figure \ref{fig:team5-exp-food-per-agent} shows the effect of increasing the amount of food on the platform: the graph trends downwards as expected, showing that more food reduces the number of deaths.
 
+\subsubsection*{Reshuffle Period}
+\begin{figure}
+    \centering
+    \begin{minipage}{0.6\textwidth}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=\textwidth,
+                axis y line*=left,
+                ymin=0,
+                xmin=0,
+                xlabel=Reshuffle period,
+                ylabel=Age,
+                ymajorgrids=true,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[mark=*,blue]
+                coordinates{
+                    (1, 10)
+                    (2, 11)
+                    (3, 0)
+                    (4, 17)
+                    (5, 16.6)
+                    (6, 0)
+                    (7, 12)
+                    (8, 13)
+                    (9, 16)
+                }; \label{leg:team5-age}
+            \addlegendentry{Age}
+            \end{axis}
+            
+            \begin{axis}[
+                width=\textwidth,
+              axis y line*=right,
+              axis x line=none,
+              ymin=0,
+              ylabel=Number of deaths,
+              ymajorgrids=true,
+              xmajorgrids=true,
+              grid style=dashed,
+            ]
+            \addplot[mark=*,red]
+                coordinates{
+                    (1, 1)
+                    (2, 1)
+                    (3, 0)
+                    (4, 2)
+                    (5, 3)
+                    (6, 0)
+                    (7, 5)
+                    (8, 2)
+                    (9, 3)
+                }; \label{leg:team5-deaths}
+            \addlegendimage{/pgfplots/refstyle=leg:team5-age}\addlegendentry{Age}
+            \addlegendimage{/pgfplots/refstyle=leg:team5-deaths}\addlegendentry{Deaths}
+            \end{axis}
+            \end{tikzpicture}
+    \end{minipage}
+    \caption{Average age upon death and number of deaths vs reshuffle period}
+    \label{fig:team5-exp-reshuffle-period}
+\end{figure}
 
+\subsubsection*{Long Simulations Against Single Teams}
 
 
 
