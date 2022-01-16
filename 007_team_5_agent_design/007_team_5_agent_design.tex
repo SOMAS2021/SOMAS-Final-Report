@@ -63,8 +63,9 @@ Collaboration between different agents operating in a system requires communicat
 \subsection*{Strategy}\label{sec:team5-messaging-strategy}
 The agent's approach to messaging is to adopt a ``passive observer'' role focussed on gathering information about other agents to organise itself with these agents in the tower. With more information at its disposal, the agent can make more informed decisions to balance its own individual utility with the collective utility of the agents in the tower.
 
-\ToDo{choose whether to say 12 or 8 ticks to send all messages}
-The agent sends three types of messages targeting each of the agents two floors above and below its own floor; it therefore takes 12 ticks to send all of its messages. These messages ask for the HP, intended food intake, and actual food intake of other agents. The decision of which message type to send to which floor is controlled by the Messaging Counter described in Table \ref{tab:team5-personality}. This counter is incremented each tick, and reset either every 25 ticks or at the end of each day, whichever comes first. This ensures that the agent is requesting up-to-date information regularly for use in its decision making.
+\ToDo{choose whether to say 12 or 8 ticks to send all messages}\\
+\ToDo{choose whether to include intended food intake in messages}\\
+The agent sends three types of messages to each of the agents residing one or two floors above and below its own floor; it therefore takes 12 ticks to send all of its messages. These messages ask for the HP, intended food intake, and actual food intake of other agents. The decision of which message type to send to which floor is controlled by the Messaging Counter described in Table \ref{tab:team5-personality}. This counter is incremented each tick, and reset either every 25 ticks or at the end of each day, whichever comes first. This ensures that the agent is requesting up-to-date information regularly for use in its decision making.
 
 The order of sent messages is:
 \begin{enumerate}
@@ -185,12 +186,12 @@ To evaluate the self-organisation abilities of the Team 5 agent, simulations wer
     \item The average utility
     \item Whether self-organisation was achieved.
 \end{enumerate}
-We have defined self-organisation as when all agents take only what they need to survive and there are little to no deaths beyond a certain point in time.
+Self-organisation has been defined in this case to be when all agents take only what they need to survive and there are little to no deaths beyond a certain point in time.
 
 \subsubsection*{Food Per Agent On Platform}
-The baseline experiment for testing was to vary the amount of food per agent available on the platform; we expect that more food being available will result in fewer deaths. In this experiment, simulations were run for 100 simulation days, with a reshuffle period of 7 days and 50 agents in the tower and repeated three times, with the average of these runs taken. Figure \ref{fig:team5-deaths-utility-food-per-agent} shows that the number of deaths decreases and average utility increases as we increase the amount of food available.
+The baseline experiment for testing was to vary the amount of food per agent available on the platform; it was expected that having more food available would result in fewer deaths. In this experiment, simulations were run for 100 simulation days, with a reshuffle period of 7 days and 50 agents in the tower and repeated three times, with the average of these runs taken. Figure \ref{fig:team5-deaths-utility-food-per-agent} shows that the number of deaths decreases and average utility increases as we increase the amount of food available.
 
-When the ratio of food to agent is greater than 9, the agents are able to self-organise within 100 days, and typically do so within 70 days. When food availability is less than this, the agents did not achieve self-organisation, however interestingly, it was observed that more treaties were accepted than rejected. This shows that the agents recognise theneed to self-organise and are willing to make attemps to do so. It is possible that they did not achieve self-organisation because agents died too quickly to reach agreements among enough agents for this to be successful.
+When the ratio of food to agent is greater than 9, the agents are able to self-organise within 100 days, and typically do so within 70 days. When food availability was less than this, the agents did not achieve self-organisation. However it was interesting to observe that more treaties were accepted than rejected. This shows that the agents recognise the need to self-organise and are willing to make attempts to do so. It is possible that they did not achieve self-organisation because agents died too quickly to reach agreements among enough agents for this to be successful.
 
 \begin{figure} % Number of Deaths and Average Utility vs Available Food Per Agent
     \centering
@@ -310,7 +311,7 @@ It was found that, with the food per agent ratio set to 2, there appeared to be 
     \label{fig:team5-20agents-2food}
 \end{figure}
 
-Given these results, we considered whether a homogeneous tower of Team 5 agents would achieve organisation given an infinite amount of time regardless of the number of agents provided at least two food per agent was available. We predict that this is not possible: every time an agent is replaced in the tower, its replacement is initialised with maximum selfishness and has no social network. It takes time for agents to build trust with each other but deaths occur too quickly for this happen if the settings of the tower are too strict.
+These results naturally led to the consideration of whether a homogeneous tower of Team 5 agents would achieve organisation given an infinite amount of time regardless of the number of agents provided at least two food per agent was available. We predict that this is not possible: every time an agent is replaced in the tower, its replacement is initialised with maximum selfishness and has no social network. It takes time for agents to build trust with each other but deaths occur too quickly for this happen if the settings of the tower are too strict.
 
 \subsection*{Heterogeneous Tower Experiments}
 These experiments compare the Team 5 agent with the agents designed by the other agent teams. The base parameters for all simulations are as follows:
@@ -519,7 +520,3 @@ The overall aim within the tower is for agents to self-organise and create a sta
 The Team 5 agent is capable of achieving self-organisation within the tower provided the simulation parmaeters are not too strict. A large number of agents within the tower greatly inhibits the agent's ability to self-organise, but they are capable of organising when there is the food per agent ratio is at least 2, for low agent numbers. This demonstrates the reliance on communication and sharing of knowledge in order to solve the problem of long-term survival in the tower.
 
 During the presentation for this coursework, Professor Pitt compared the Team 5 agent's strategy to theory from Ober, who stated that ``alignment is an epistemic process, predicated on the right people having and using the right information in the right context'' \cite{ober_athens}. We had not considered this theory when designing our agent, however in a sort-of convergent evolution we observed this in the randomeness and large variation in the Team 5 agent's ability to self-organise, and the events that need to take place for this to be successful.
-
-
-
-
