@@ -8,7 +8,7 @@ However, the agent will also be influneced by the behaviour of agents around it:
 
 An agent will maintain a low HP only if it is confident that other agents will allow it to survive by leaving enough food, through the signing of treaties to build trust. A tower that consists solely of Team 5 agents would require those at the top to be willing to decrease their own short-term satisfaction in order to give the best chance of survival for all agents, and trust others to do the same upon reshuffling.
 
-Section \ref{sec:team5-overview} provides an overview of the agent's parameters and strategy, Section \ref{sec:team5-messaging} describes the agent's communication strategy, Section \ref{sec:team5-memory} describes how the agent stores its social network and how it judges other agents, and Section \ref{sec:team5-treaties} describes how the Team 5 agent utilises treaties. Finally, Section \ref{sec:team5-experimentation} contains analysis of this agent and how it performs in a Tower consisting of itself alone and together with other agent types and Section \ref{sec:team5-conclusion} provides summarising remarks regarding the implementation of this agent type.
+Section \ref{sec:team5-overview} provides an overview of the agent's parameters and strategy, Section \ref{sec:team5-messaging} describes the agent's communication strategy, Section \ref{sec:team5-memory} describes how the agent stores its social network and how it judges other agents, and Section \ref{sec:team5-treaties} describes how the Team 5 agent utilises treaties. Finally, Section \ref{sec:team5-experimentation} contains analysis of this agent including how it performs in a Tower consisting of itself alone as well as together with other agent types and Section \ref{sec:team5-conclusion} provides summarising remarks regarding the implementation of this agent type.
 
 \section{Agent Overview}
 \label{sec:team5-overview}
@@ -71,7 +71,7 @@ The order of sent messages is:
 \begin{enumerate}
     \item Ask for an agent's HP
     \item Ask for an agent's previous food intake
-    % \item Ask for an agent's intended food intake
+    \item Ask for an agent's intended food intake
 \end{enumerate}
 The Team 5 agent first targets the agent immediately below it, then the agent immediately above, then two floors below, and finally the agent two floors above.
 
@@ -87,7 +87,7 @@ The agent stores the information gained from communication in its `memory': the 
         \hline
         Agent ID & An agent's unique ID\\
         \hline
-        Agent HP & The agent's HP level\\
+        Agent HP & The agent's last known HP level\\
         \hline
         Food Taken & The amount of food the agent last took\\
         % \hline
@@ -102,7 +102,7 @@ The agent stores the information gained from communication in its `memory': the 
     \label{tab:team5-memory}
 \end{table}
 
-This memory allows the agent to construct a social network of agents in the tower and evaluate others based on these parameters. This consequently leads to the idea of favour, a metric the Team 5 agent uses to judge other agents. If more than five days have passed since the agent's last interaction with someone, then the memory of that agent is reset. This prevents the agent from using out-of-date information in its calculation and also allows for the removal of dead agents from its memory.
+This memory allows the agent to construct a social network of agents in the tower and evaluate others based on these parameters. This consequently leads to the idea of favour, a metric the Team 5 agent uses to judge other agents. If more than five days have passed since the agent's last interaction with another agent, then the memory of that agent is reset. This prevents the agent from using out-of-date information in its calculation and also allows for the removal of dead agents from its memory.
 
 \subsection*{Favour}\label{sec:team5-favour}
 The favour metric quantifies the agent's opinion of others in the tower. It is bounded between 0 and 10, and in a single tick can either increase by 1, decrease by 3, or stay the same:
@@ -139,10 +139,10 @@ The Team 5 agent's treaty strategy consists of three main parts:
 \subsection*{Responding to Proposed Treaties}\label{sec:team5-treaties-response}
 A proposed treaty is always rejected if:
 \begin{itemize}
-    \item It conflicts with any other active treaties. A treaty is considered to conflict with another treaty if they could ever cause the agent to incompatible actions (for example, an agent cannot leave more than five units of food and fewer than four units of food at the same time).
+    \item It conflicts with any other active treaties. A treaty is considered to conflict with another treaty if they could ever cause the agent to take incompatible actions. For example, an agent cannot leave more than five units of food and fewer than four units of food at the same time.
     \item It is badly formed. For example, a treaty which requires the agent to leave more than 100\% of the food on the platform is badly formed.
     \item \ToDo{Check this one} It requires agents to leave less than a certain amount of food on the platform, as this is never advantageous to the tower as a whole.
-    \item \ToDo{Check this one} It requires the agent to leave an exact amount of food on the platform, as this would result ina ll but one of the agents signed up to the treaty to take no food each day.
+    \item \ToDo{Check this one} It requires the agent to leave an exact amount of food on the platform, as this would result in all but one of the agents signed up to the treaty to take no food each day.
     \item It makes a request based on low HP, low amounts of food on the platform, or a low floor, as in these conditions the agent will already be desperate for survival, so will not want to be further constrained by a treaty.
     \item \ToDo{Check this one} It makes a request based on HP where the threshold is within the ``weak'' or ``critical'' HP bands, as this means the agent could become critical or die as a result of following the treaty.
     \item \ToDo{Check this one} It would require the agent to take less food than is required to avoid entering the ``critical'' HP band.
@@ -154,7 +154,7 @@ This calculation is based on the following considerations:
 \begin{itemize}
     \item Selfish agents will always be less likely to sign treaties
     \item The proposing agent is more likely to be trusted if the receiving agent views them more favourably
-    \item Longer treaties are viewed more negatively because factors such as the receiving agent's opinion of the proposer and the agent's selfishness can change over time, meaning the same treaty could be viewed less favourably in future. Therefore, the agent should avoid constraining its actions to satisfy an agent of which it has a negative opinion.
+    \item Longer treaties are viewed more negatively because factors such as the receiving agent's opinion of the proposer and the agent's selfishness can change over time, meaning the same treaty could be viewed less favourably in future. Therefore, the agent should avoid constraining its actions to satisfy an agent of which it could form a negative opinion.
 \end{itemize}
 
 If the \texttt{decision} value is positive, the treaty is accepted.
@@ -163,12 +163,12 @@ If the \texttt{decision} value is positive, the treaty is accepted.
 At the start of each day, the agent checks whether it has become a `leader': if it has, then the agent proposes a treaty. Whether an agent becomes a leader or not is based on:
 \begin{itemize}
     \item The agent's selfishness: a selfish agent is less likely to propose treaties
-    \item The agent's floor: agents higher up in the tower are more likely to propose treaties. This is because agents higher up in the tower have more access to food and therefore have more control over the food available to those below them. This control means these agents are in a better position to affect change.
+    \item The agent's floor: agents higher up in the tower are more likely to propose treaties. This is because agents higher up in the tower have more access to food and therefore have more control over the food available to those below them. This control means these agents are in a better position to effect change.
     \item The agent's \texttt{leadership} threshold: this is randomly set during the agent's initialisation and those with a lower leadership threshold are more likely to become leaders.
 \end{itemize}
 The leadership value is calculated by:
 \[ \texttt{leadership} = x - \texttt{selfishness} - \texttt{agentFloor}\]
-The variable $x$ is a random number between 3 and 12, inclusive. If $leadership$ is greater than the agent's leadership threshold, then the agent becomes a leader and proposes a treaty.
+The variable $x$ is a random number between 3 and 12, inclusive. If \texttt{leadership} is greater than the agent's leadership threshold, then the agent becomes a leader and proposes a treaty.
 
 The proposed treaty is always that agents whose HP is greater than or equal to a certain value should always leave 100\% of the food on the platform, and always lasts for five days. The threshold value for HP is calculated using Equation \ref{eq:team5-treaty-hp-threshold}. Note that in this equation, \texttt{WeakLevel} refers to the threshold between the ``critical'' and ``weak'' HP states.
 
