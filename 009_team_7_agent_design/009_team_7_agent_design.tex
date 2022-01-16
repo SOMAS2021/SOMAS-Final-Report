@@ -8,13 +8,14 @@ This chapter outlines the design and findings of Team 7's agent. The primary goa
 \label{sec: Agent Design}
 
 There are 3 key elements that define the agent: its personality, behaviour and memory. The personality defines a given agent at its core, and for the purpose of this experiment is kept constant throughout a given simulation. An agents behaviour is influenced by its personality, memory (a record of its experiences) and the environment. The environment can include current floor, food available and interaction wit other agents. The personality and behaviour then combine to influence the various decisions that the agent makes over the course of the simulation. 
-This basic agent framework is illustrated in Fig. \ref{agent_flow}
+This basic agent framework is illustrated in \Cref{agent_flow}.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=6cm]{009_team_7_agent_design/Images/agent_flow.png}
+        \includegraphics[width=6cm]
+        {009_team_7_agent_design/Images/agent_flow.png}
     \end{center}
-    \caption{Agent framework}
+    \caption{Agent framework.}
     \label{agent_flow}
 \end{figure}
 
@@ -27,7 +28,7 @@ The five personality dimensions consist of:
 \begin{itemize}
 \item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change.
 \item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking.
-\item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. They also require a certain level of social interaction to 
+\item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. 
 \item  \textbf{Agreeableness}: An individual with high agreeableness will  exhibit greater degrees of kindness, trust and altruism. Whereas an individual with low agreeableness will demonstrate a lack of sympathy and may be spiteful or manipulative of others. 
 \item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. 
 \end{itemize}
@@ -51,7 +52,7 @@ The behaviour characteristics are described below:
         \item Eating no food increases greediness by a quadratic factor with respect to the number of days since the last food intake.
         \item Agents display increased levels of greediness in response to being placed at a lower floor during the reshuffle and vice versa. The degree to which this changes is dependent on the openness of said agent.  
         \item Based on past experience, if the agent expects food shortages on a new floor, there will be an additional boost to greediness. This adjustment has a greater impact if the agent has high level of conscientiousness.
-        \item Neuroticism can cause sporadic daily fluctuations in the greediness of an agent. A higher neuroticism results in more substantial daily changes of the relevant behaviours 
+        \item Neuroticism can cause sporadic daily fluctuations in the greediness of an agent. A higher neuroticism results in more substantial daily changes of the relevant behaviours.
     \end{itemize}
     
     \item  \textbf{Kindness}: An agent with a high kindness value will demonstrate greater sympathy for other agents and will be more supportive of the wider social cause. Kinder agents will take less food and will be more likely to collaborate with other agents. 
@@ -100,7 +101,7 @@ Below is a description of all the elements of information stored in the agent's 
 
 Upon a floor reshuffle, the agent uses its experiences from past floors in order to build an expectation of the level of risk it associates with the new floor that it has been assigned to. The first step to doing this is to generate a prediction for the amount of food that will be available on the current floor. 
 
-In order to make this estimate, the agent utilises the prevFloors map from its memory. This contains information on the average food that was available on each floor that the agent has already been on. The agent approximates the relationship between the floor level and the average food available on that floor. For example let us take an agent that has been on floors 10 and 6, and is now assigned to floor 8. The agent will calculate the linear function which corresponds to the average food on floors 6 to 10. It will then use this function to obtain the estimate for the food it expects on floor 8. 
+In order to make this estimate, the agent utilises the prevFloors map from its memory. This contains information on the average food that was available on each floor that the agent has already been on. The agent approximates the relationship between the floor level and the average food available on that floor. For example, let us take an agent that has been on floors 10 and 6, and is now assigned to floor 8. The agent will calculate the linear function which corresponds to the average food on floors 6 to 10. It will then use this function to obtain the estimate for the food it expects on floor 8. 
 
 The above assumes that the agent has experienced floors both above and below the current floor. In the scenario where the agent has only experienced floors either below or above its current floor, the agent will extrapolate the trend line for the average food from the closest experienced floor. 
 
@@ -115,19 +116,19 @@ This section outlines the particulars of agent operation and decision making.
 \subsection{Main Operation}
 \label{subsec: Main Operation}
  
-At the each is deployed into the simulation its personality traits, behavioural characteristics and memory bank are initialised. 
+At the point where each agent is deployed into a simulation, its personality traits, behavioural characteristics and memory bank are initialised. 
 
 Once initialisation is complete, the agents check their inbox for messages, requests or treaties. This is done every tick to ensure messages are detected from the floors above and below. When a message, request or treaty is found in the inbox, a function calls the corresponding handler to the message type. The handlers then decide whether a request or treaty is accepted and the relevant actions performed. This is further discussed in later sections. 
 
 Once the inbox is handled, the agent checks whether a floor change has occurred and updates the floor Map (prevFloors) with the current available food on the platform for the day. The agent also completes a Floor risk assessment which has been outlined in the previous two sections. 
 
-The flow chart in figure \ref{fig: operation flow chart} outlines the decisions made concerning how much food to take.
+The flow chart in \Cref{fig: operation flow chart} outlines the decisions made concerning how much food to take.
 
 \begin{figure}[h!]
     \begin{center}
         \includegraphics[scale=0.75]{009_team_7_agent_design/Images/v2.drawio.png}
     \end{center}
-    \caption{Food taking Decision Flow Chart}
+    \caption{Food taking decision flow chart.}
     \label{fig: operation flow chart}
 \end{figure}
 
@@ -224,24 +225,21 @@ Treaty Formulation can play an important role in creating favourable conditions,
     \item \textbf{Health:} When an agent is in critical health state it is compelled to ask the neighbour above to leave an amount of food that can allow him to survive, i.e. go from critical to weak state. This health condition for this treaty is set such that the agents who sign the treaty are not put in danger, and this also makes it more likely for the treaty to be accepted.
     
     \item \textbf{Floor:} If the conscientiousness of the agent is a above a certain threshold, meaning that the agent is relatively forward thinking and aware of their surroundings, then the agent will try to initiate a treaty with the neighbouring agent above him. This is triggered upon a floor change when the current floor is at a lower level than the previous floor. A conscientiousness agent will know that it is likely that food will be more scarce at this level and so he initiates a treaty to make survival at this floor easier.
-    
+
     \item \textbf{Propagation:} A treaty that has been accepted from an agent will be propagated onward in the same direction. If the treaty is coming from downwards and the request type is 'LeaveAmountFood', then the request value is increased before propagating the same treaty upwards. This must be done to ensure that the agent above leaves enough food for our agent \textit{and} the agents below us. If the agent above uses the same strategy, then this can form an efficient means of survival for all agents in the tower.
 \end{enumerate}
 
-\newpage
 \section{Simulations and Analysis}
 \subsubsection{Significance of Treaties}
 \label{sec: Simulations and Analysis}
 
-Figure \ref{fig: Cumulative Deaths without Treaties} 
-
-Figures \ref{fig: Cumulative Deaths without Treaties} and \ref{fig: Cumulative Deaths with Treaties} illustrate the results from simulations with treaties disabled and enabled respectively. All other factors are left as default.
+\Cref{fig: Cumulative Deaths without Treaties} and \Cref{fig: Cumulative Deaths with Treaties} illustrate the results from simulations with treaties disabled and enabled respectively. All other factors are left as default.
 
 \begin{figure}[h!]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, WO Treaties, T7Only, 2000days, 20food, 93deaths.png}
     \end{center}
-    \caption{Cumulative Deaths without Treaties (93 Deaths)}
+    \caption{Cumulative deaths without treaties (93 deaths).}
     \label{fig: Cumulative Deaths without Treaties}
 \end{figure}
 
@@ -249,7 +247,7 @@ Figures \ref{fig: Cumulative Deaths without Treaties} and \ref{fig: Cumulative D
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, 67deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Treaties (67 Deaths)}
+    \caption{Cumulative deaths with treaties (67 deaths).}
     \label{fig: Cumulative Deaths with Treaties}
 \end{figure}
 
@@ -262,13 +260,13 @@ This demonstrates that the agents perform better collectively when treaties are 
 \subsubsection{Openness}
 \label{subsubsec: Openness}
 
-The figures \ref{fig: High Openness} and \ref{fig: Low Openness} detail how our agents adapt to situations/scenarios differently based on varying levels of openness. In figure \ref{fig: High Openness}, all the agents are spawned with openness values greater than 70 and in figure \ref{fig: Low Openness}, the agents are spawned with openness values less than 30. All other personality traits are distributed as in the default case.
+\Cref{fig: High Openness} and \Cref{fig: Low Openness} detail how our agents adapt to situations/scenarios differently based on varying levels of openness. In figure \ref{fig: High Openness}, all the agents are spawned with openness values greater than 70 and in figure \ref{fig: Low Openness}, the agents are spawned with openness values less than 30. All other personality traits are distributed as in the default case.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, High Openness, 434deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with High Openness (434 Deaths)}
+    \caption{Cumulative deaths with high openness (434 deaths).}
     \label{fig: High Openness}
 \end{figure}
 
@@ -276,7 +274,7 @@ The figures \ref{fig: High Openness} and \ref{fig: Low Openness} detail how our 
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, Low Openness, 29deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Low Openness (29 Deaths)}
+    \caption{Cumulative deaths with low openness (29 deaths).}
     \label{fig: Low Openness}
 \end{figure}
 
@@ -286,13 +284,13 @@ It can be observed that the agents collectively perform significantly better whe
 \subsubsection{Neuroticism}
 \label{subsubsec: Neuroticism}
 
-Figures \ref{fig: High Neuroticism} and \ref{fig: Low Neuroticism} illustrate the results from simulations with agents with high neuroticism ($>$70) and low neuroticism ($<$30) respectively. All other traits are left as default.
+\Cref{fig: High Neuroticism} and \Cref{fig: Low Neuroticism} illustrate the results from simulations with agents with high neuroticism ($>$70) and low neuroticism ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, High Neur, 154deaths.png}
     \end{center}
-    \caption{Cumulative deaths with High Neuroticism (154 deaths)}
+    \caption{Cumulative deaths with high neuroticism (154 deaths).}
     \label{fig: High Neuroticism}
 \end{figure}
 
@@ -300,7 +298,7 @@ Figures \ref{fig: High Neuroticism} and \ref{fig: Low Neuroticism} illustrate th
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, Low Neur, 102deaths.png}
     \end{center}
-    \caption{Cumulative deaths with Low Neuroticism (102 deaths)}
+    \caption{Cumulative deaths with low neuroticism (102 deaths).}
     \label{fig: Low Neuroticism}
 \end{figure}
 
@@ -310,13 +308,13 @@ It can be seen that higher levels of neuroticism result in a greater number of a
 \subsubsection{Conscientiousness}
 \label{subsubsec: Conscientiousness}
 
-Figures \ref{fig: High Conscientiousness} and \ref{fig: Low Conscientiousness} illustrate the results from simulations with agents with high conscientiousness ($>$70) and low conscientiousness ($<$30) respectively. All other traits are left as default.
+\Cref{fig: High Conscientiousness} and \cref{fig: Low Conscientiousness} illustrate the results from simulations with agents with high conscientiousness ($>$70) and low conscientiousness ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, High Conscient, 85deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with High Conscientiousness (85 Deaths)}
+    \caption{Cumulative deaths with high conscientiousness (85 deaths).}
     \label{fig: High Conscientiousness}
 \end{figure}
 
@@ -324,7 +322,7 @@ Figures \ref{fig: High Conscientiousness} and \ref{fig: Low Conscientiousness} i
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, Low Conscient, 76deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Low Conscientiousness (76 Deaths)}
+    \caption{Cumulative deaths with low conscientiousness (76 deaths).}
     \label{fig: Low Conscientiousness}
 \end{figure}
 
@@ -334,13 +332,13 @@ It can be observed that there is no substantial difference in the number of deat
 \subsubsection{Extraversion}
 \label{subsubsec: Extraversion}
 
-Figures \ref{fig: High Extraversion} and \ref{fig: Low Extraversion} illustrate the results from simulations with agents with high extraversion ($>$70) and low extraversion ($<$30) respectively. All other traits are left as default.
+\Cref{fig: High Extraversion} and \Cref{fig: Low Extraversion} illustrate the results from simulations with agents with high extraversion ($>$70) and low extraversion ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, High extra, 87deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with High Extraversion (87 Deaths)}
+    \caption{Cumulative deaths with high extraversion (87 deaths).}
     \label{fig: High Extraversion}
 \end{figure}
 
@@ -348,7 +346,7 @@ Figures \ref{fig: High Extraversion} and \ref{fig: Low Extraversion} illustrate 
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, With Treaties, T7Only, 2000days, 20food, Low extra, 87deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Low Extraversion (87 Deaths)}
+    \caption{Cumulative deaths with low extraversion (87 deaths).}
     \label{fig: Low Extraversion}
 \end{figure}
 
@@ -360,13 +358,13 @@ The following figures explore scenarios where the agents greediness and kindness
 \subsubsection{Greediness}
 \label{subsubsec: Greediness}
 
-Figures \ref{fig: Fixed High Greediness} and \ref{fig: Fixed Low Greediness} illustrate the results from simulations with agents with high greediness ($>$70) and low greediness ($<$30) respectively. All other traits are left as default.
+\Cref{fig: Fixed High Greediness} and \Cref{fig: Fixed Low Greediness} illustrate the results from simulations with agents with high greediness ($>$70) and low greediness ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, fixed high greediness, T7Only, 2000days, 20food, 3deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with High Greediness (3 Deaths)}
+    \caption{Cumulative deaths with high greediness (3 deaths).}
     \label{fig: Fixed High Greediness}
 \end{figure}
 
@@ -374,7 +372,7 @@ Figures \ref{fig: Fixed High Greediness} and \ref{fig: Fixed Low Greediness} ill
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, fixed low greediness, T7Only, 2000days, 20food, 74deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Low Greediness (74 Deaths)}
+    \caption{Cumulative deaths with low greediness (74 deaths).}
     \label{fig: Fixed Low Greediness}
 \end{figure}
 
@@ -383,13 +381,13 @@ A tower housing agents with high greediness and enforceable (unbreakable) treati
 \subsubsection{Kindness}
 \label{subsubsec: Kindness}
 
-Figures \ref{fig: Fixed High Kindness} and \ref{fig: Fixed Low Kindness} illustrate the results from simulations with agents with high kindness ($>$70) and low kindness ($<$30) respectively. All other traits are left as default.
+\Cref{fig: Fixed High Kindness} and \Cref{fig: Fixed Low Kindness} illustrate the results from simulations with agents with high kindness ($>$70) and low kindness ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, fixed high kindness, T7Only, 2000days, 20food, 153deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Fixed High Kindness (153 Deaths)}
+    \caption{Cumulative deaths with fixed high kindness (153 deaths).}
     \label{fig: Fixed High Kindness}
 \end{figure}
 
@@ -397,7 +395,7 @@ Figures \ref{fig: Fixed High Kindness} and \ref{fig: Fixed Low Kindness} illustr
     \begin{center}
         \includegraphics[scale=0.25]{009_team_7_agent_design/Images/Cumulative Deaths, fixed low kindness, T7Only, 2000days, 20food, 70deaths.png}
     \end{center}
-    \caption{Cumulative Deaths with Fixed Low Kindness (70 Deaths)}
+    \caption{Cumulative deaths with fixed low kindness (70 deaths).}
     \label{fig: Fixed Low Kindness}
 \end{figure}
 
@@ -443,7 +441,7 @@ The following table shows the total number of deaths for simulations of various 
   \hline
 \end{tabular}
 \end{center}
-\caption{Comparison between agent teams and team 7}
+\caption{Comparison between agent teams and team 7.}
 \end{table}
 All team agents, bar team 6, were able to coexist with team 7 and achieve zero deaths for a food availability of 15 per agent, indicating that Team 6 agent was the most incompatible with our agent. Team 4 achieved zero deaths for food availability of 10 demonstrating a greater compatibility with team 7 and team 5's results are not too dissimilar.  
 
