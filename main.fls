@@ -1220,11 +1220,6 @@ INPUT ./005_team_3_agent_design/images/image1.JPG
 INPUT ./005_team_3_agent_design/images/image1.JPG
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT ./005_team_3_agent_design/images/table2.JPG
-INPUT ./005_team_3_agent_design/images/table2.JPG
-INPUT 005_team_3_agent_design/images/table2.JPG
-INPUT ./005_team_3_agent_design/images/table2.JPG
-INPUT ./005_team_3_agent_design/images/table2.JPG
 INPUT ./006_team_4_agent_design/006_team_4_agent_design.tex
 INPUT ./006_team_4_agent_design/006_team_4_agent_design.tex
 INPUT ./006_team_4_agent_design/006_team_4_agent_design.tex
@@ -1305,7 +1300,9 @@ INPUT ./main.out
 INPUT ./main.out
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb

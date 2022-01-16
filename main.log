@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.5)  16 JAN 2022 15:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.5)  16 JAN 2022 15:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -917,13 +917,7 @@ Package pdftex.def Info: 005_team_3_agent_design/images/image1.jpg  used on inpu
 (pdftex.def)             Requested size: 227.62206pt x 159.52744pt.
 [6
 
- <./005_team_3_agent_design/images/image1.JPG>] [7] [8] [9] [10] [11]
-<005_team_3_agent_design/images/table2.jpg, id=330, 545.78906pt x 95.9836pt>
-File: 005_team_3_agent_design/images/table2.jpg Graphic file (type jpg)
-<use 005_team_3_agent_design/images/table2.jpg>
-Package pdftex.def Info: 005_team_3_agent_design/images/table2.jpg  used on input line 135.
-(pdftex.def)             Requested size: 455.24411pt x 80.06032pt.
- [12 <./005_team_3_agent_design/images/table2.JPG>]) (./006_team_4_agent_design/006_team_4_agent_design.tex [13]
+ <./005_team_3_agent_design/images/image1.JPG>] [7] [8] [9] [10] [11] [12]) (./006_team_4_agent_design/006_team_4_agent_design.tex [13]
 Chapter 7.
 ) (./007_team_5_agent_design/007_team_5_agent_design.tex [14
 
@@ -974,18 +968,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 6AD5268A569022252C8542EEBDBAE62C;4755.
  ) 
 Here is how much of TeX's memory you used:
- 32019 strings out of 478353
- 659415 string characters out of 5852102
- 1007833 words of memory out of 5000000
- 49471 multiletter control sequences out of 15000+600000
+ 32012 strings out of 478353
+ 659127 string characters out of 5852102
+ 1010833 words of memory out of 5000000
+ 49465 multiletter control sequences out of 15000+600000
  413915 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,8n,80p,1167b,893s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (29 pages, 319893 bytes).
+ 84i,10n,80p,1167b,893s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on main.pdf (29 pages, 218537 bytes).
 PDF statistics:
- 463 PDF objects out of 1000 (max. 8388607)
- 411 compressed objects within 5 object streams
+ 472 PDF objects out of 1000 (max. 8388607)
+ 417 compressed objects within 5 object streams
  117 named destinations out of 1000 (max. 500000)
- 308 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 303 words of extra memory for PDF output out of 10000 (max. 10000000)
 

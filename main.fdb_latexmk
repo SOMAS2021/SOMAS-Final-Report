@@ -1,20 +1,19 @@
 # Fdb version 3
-["bibtex main"] 1642346166 "main.aux" "main.bbl" "main" 1642346171
+["bibtex main"] 1642346166 "main.aux" "main.bbl" "main" 1642347462
   "c:/texlive/2021/texmf-dist/bibtex/bst/ieeetran/IEEEtranN.bst" 1641322806 63583 d34cb6c328acc69716207f4a3421ad46 ""
-  "main.aux" 1642346170 10883 4dc19bb98ee90f7bfeacd2ceb907e6bf "pdflatex"
+  "main.aux" 1642347461 10883 4dc19bb98ee90f7bfeacd2ceb907e6bf "pdflatex"
   "references.bib" 1642331314 5253 b598323c6b5f805ce237c43439a0c840 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1642346167 "c:/Users/bsalg/Documents/GitHub/SOMAS-Final-Report/main.tex" "main.pdf" "main" 1642346171
+["pdflatex"] 1642347457 "c:/Users/bsalg/Documents/GitHub/SOMAS-Final-Report/main.tex" "main.pdf" "main" 1642347462
   "000_introduction/000_introduction.tex" 1641320585 266 3ed0d6795b707dc3b7755d23d537ed10 ""
   "001_organisation_structure/001_organisation_structure.tex" 1641320585 361 4001aedd3e44993b6402c46178277860 ""
   "002_simulation_structure/002_simulation_structure.tex" 1642161945 341 2f79986d9ced7ab3c250ed42ca2a4c56 ""
   "003_visualisation/003_visualisation.tex" 1641320585 81 2aa0e75ab0b0c70d26c57f7e3e35818d ""
   "004_team_2_agent_design/004_team_2_agent_design.tex" 1642100190 56 1f91936504716ecc1dc23b3206c66189 ""
-  "005_team_3_agent_design/005_team_3_agent_design.tex" 1642346159 24669 47e92f0fc2cdc6ecabaa91960ba97cc8 ""
+  "005_team_3_agent_design/005_team_3_agent_design.tex" 1642347455 26382 27650cae2514f128299e393b130e40b9 ""
   "005_team_3_agent_design/images/image1.JPG" 1642289705 41030 45e18feec40cd0dc8e34ec4e6b4916ae ""
-  "005_team_3_agent_design/images/table2.JPG" 1642161945 118550 b58d392a7786076ff9076263f1511f69 ""
   "006_team_4_agent_design/006_team_4_agent_design.tex" 1641320585 56 a4ce74e15b68cbc2b9b3294f48e783f7 ""
   "007_team_5_agent_design/007_team_5_agent_design.tex" 1641320585 56 952a35c21e1117d8648f72fedfb681b3 ""
   "008_team_6_agent_design/008_team_6_agent_design.tex" 1642161945 56 7399ee60fc25040acf5f798af2628247 ""
@@ -58,9 +57,11 @@
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1641320865 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1641319818 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1641319818 32080 340ef9bf63678554ee606688e7b5339d ""
+  "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1641319818 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1641319818 35752 024fb6c41858982481f6968b5fc26508 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1641319818 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1641319818 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1641319818 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1641319818 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "c:/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1641324014 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2021/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1641319982 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -226,10 +227,10 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1641345437 4412718 fc252c72f234afbf669ef6bc32c4af28 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1641345596 2820071 0230dfa7d11e9080f3d11ae9af0c1b80 ""
   "c:/texlive/2021/texmf.cnf" 1641345375 713 baa45e065482d44c4cd81b98ef72c63b ""
-  "main.aux" 1642346170 10883 4dc19bb98ee90f7bfeacd2ceb907e6bf "pdflatex"
+  "main.aux" 1642347461 10883 4dc19bb98ee90f7bfeacd2ceb907e6bf "pdflatex"
   "main.bbl" 1642346167 4903 ae992a9de60b7b0a58c76568aed452b0 "bibtex main"
-  "main.out" 1642346170 4755 6ad5268a569022252c8542eebdbae62c "pdflatex"
-  "main.toc" 1642346170 2703 c33fe2acec03aa2ec737b43a3d09fba0 "pdflatex"
+  "main.out" 1642347461 4755 6ad5268a569022252c8542eebdbae62c "pdflatex"
+  "main.toc" 1642347461 2703 c33fe2acec03aa2ec737b43a3d09fba0 "pdflatex"
   "template_figures/logo.eps" 1641320586 1035249 ff185f9b2455dc5949d7beacddc11a17 ""
   (generated)
   "main.aux"

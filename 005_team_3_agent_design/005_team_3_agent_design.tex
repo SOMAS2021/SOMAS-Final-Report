@@ -130,10 +130,19 @@ Both of the last treaties are proposed randomly by the agent, without a specific
 
 \subsection{Handling a Proposed Treaty}
 Following our strategy, agents that are in a bad mood will not accept treaties that they need to honour when they are in very low health, since they have low confidence in the capabilities of other agents. However, when in a good mood agents will accept treaties that must be honoured even at low health. Morality is an indicator of the agent’s desire to perform actions that will benefit others, as opposed to just benefiting the agent itself. Therefore, very moral agents will accept treaties that involve them consuming just enough food to survive, but not too little food that they die or too much that they are too greedy. Similarly, very immoral agents will only accept treaties where they consume more than enough food since they disregard the food needs of the other agents. The table below displays the mood and morality values that agents must satisfy to accept treaties with any given condition depending on the agent’s health, and the food the agent would have to leave according to the request of the treaty. \par
-\begin{figure}[htb]
+\begin{table}[htb]
     \centering
-    \includegraphics[width=1\linewidth]{005_team_3_agent_design/images/table2.jpg}
-\end{figure}
+    \resizebox{\textwidth}{!}{\begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \hline
+        mood (m)/morality (M)   & ~                                     & 0 $<$ morality $<$ 40     & 20 $<$ morality $<$ 60    & 40 $<$ morality $<$ 80    & 60 $<$ morality $<$ 100   & morality $>$ 80       & morality $>$ 100      \\ \hline
+        ~                       & AgentPosition $\backslash$ FoodTaken  & VeryLarge (1)             & Large (2)                 & Moderate (3)              & Little (4)                & SurvivalAmount (5)    & TooLittle (6)         \\ \hline
+        mood $>$ 0              & Strong (1)                            & m$>$0, 0$<$M$<$40         & m$>$0, 20$<$M$<$60        & m$>$0, 40$<$M$<$80        & m$>$0, 60$<$M$<$100       & m$>$0, 80$<$M         & N/A since 100$<$M     \\ \hline
+        mood $>$ 20             & Healthy (2)                           & m$>$20, 0$<$M$<$40        & m$>$20, 20$<$M$<$60       & m$>$20, 40$<$M$<$80       & m$>$20, 60$<$M$<$100      & m$>$20, 80$<$M        & N/A since 100$<$M     \\ \hline
+        mood $>$ 40             & Average (3)                           & m$>$40, 0$<$M$<$40        & m$>$40, 20$<$M$<$60       & m$>$40, 40$<$M$<$80       & m$>$40, 60$<$M$<$100      & m$>$40, 80$<$M        & N/A since 100$<$M     \\ \hline
+        mood $>$ 60             & Weak (4)                              & m$>$60, 0$<$M$<$40        & m$>$60, 20$<$M$<$60       & m$>$60, 40$<$M$<$80       & m$>$60, 60$<$M$<$100      & m$>$60, 80$<$M        & N/A since 100$<$M     \\ \hline
+        mood $>$ 80             & SurvivalLevel (5)                     & m$>$80, 0$<$M$<$40        & m$>$80, 20$<$M$<$60       & m$>$80, 40$<$M$<$80       & m$>$80, 60$<$M$<$100      & m$>$80, 80$<$M        & N/A since 100$<$M     \\ \hline
+    \end{tabular}}
+\end{table}
 Treaties also have a specified duration and signature count, which are visible to any agent that wishes to sign the treaty. These are likely to affect an agent’s decision to accept a treaty and have been taken into account. If a treaty lasts longer than twice the reshuffle period, an agent deems it too far into the future to be able to predict what will happen and plans to reject the treaty. However, if a treaty has more than five signatures, we deem it to be a popular treaty. If the agent plans to reject the treaty as a result of any previous logic, the influence of peer pressure will cause the agent to reconsider accepting the treaty. Peer pressure is based on the concept of crowd suggestibility coined by Park, R. E.  in 1904 in his “Masse und Publikum”, \cite{Solr-413687}. The stubbornness of an agent is used as the likelihood to give in to peer pressure, so more stubborn agents are less likely to reconsider their response, and more likely to stick with their original decision. \par
 
 \section{Food Intake}\label{sec:food_intake}
