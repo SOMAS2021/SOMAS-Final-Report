@@ -181,7 +181,7 @@ The proposed treaty is always that agents whose HP is greater than or equal to a
 It was decided that of the available treaty types, treaties that limit HP were the most suitable for composing resource management-based agreements between agents. This is because treaties based directly on quantities of food make it difficult to construct treaties that control each agent's food intake in a fair manner. While food is the main reseource in the tower, we can view HP as a secondary resource given that it is directly affected by food and reflects the allocation of this main resource.
 
 \section{Experimentation}\label{sec:team5-experimentation}
-This section focuses on how the agent's performance varies with changes in its environment.
+This section focuses on the agent's performance and how this varies with changes in its environment.
 
 \subsection*{Homogeneous Tower Experiments}
 To evaluate the self-organisation abilities of the Team 5 agent, simulations were run with the agent in variations of a homogeneous tower (i.e. a tower that contains agents of only one type). The agent has been evaluated on three main metrics:
@@ -300,11 +300,11 @@ After making this observation, it was decided that it would be interesting to in
         \hline
         
     \end{tabular}
-    \caption{The number of deaths and number of days required for Team 5 agents to self-organise}
+    \caption{The number of deaths and number of days required for Team 5 agents to self-organise. We have shown some repeated experiments here to demonstrate the effect of randomness on this agent's performance.}
     \label{tab:team5-exp-num-agents}
 \end{table}
 
-The results show that the length of time it takes for the agents to organise is very variable: randomness plays a large factor due to the many random variables present in the simulation, such as an agent's floor and its leadership threshold. For organisation to occur, agents who are more likely to become leaders need to become less selfish and be reshuffled high up in the tower. This will enable them to send treaties to surrounding agents. The surrounding agnets must view them favourably enoguh to accept the treaties they receive.
+The results show that the length of time it takes for the agents to organise is very variable: randomness plays a large factor due to the many random variables present in the simulation, such as an agent's floor and its leadership threshold. For organisation to occur, agents who are more likely to become leaders need to become less selfish and be reshuffled high up in the tower. This will enable them to send treaties to surrounding agents. The surrounding agents must also view them favourably enough to accept the treaties they receive.
 
 It was found that, with the food per agent ratio set to 2, there appeared to be a threshold value of approximately 18 agents where organisation was far less likely to occur within the early days of the tower. Further testing showed that this threshold increases with the amount of food available per agent. Figure \ref{fig:team5-20agents-2food} shows the results of a simulation where 20 agents managed to organise themselves.
 
