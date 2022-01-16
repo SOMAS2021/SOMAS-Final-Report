@@ -4,7 +4,7 @@ The Team 5 agent operates on the basis that upon entering the tower, the need to
 
 This situation can be thought of as a `hawk-dove' game where it is beneficial for all agents to take less food but any single agent who does so is worse off if no other agents follow suit. Communication is key to breaking out of this situation. This agent will attempt to establish relationships with surrounding agents -- the agent has parameters to judge other agents and also attempts to learn about the tower -- and encourage behaviours that benefit the overall tower utility.
 
-However, the agent will also be influneced by the behaviour of agents around it: if other agents are selfish then it will also be selfish. This can be thought of as a `tit-for-tat' strategy, but with enough HP, agents will be willing to `make the first move', with the insurance that if others do not follow then they have some buffer time to re-establish their own selfish behaviour.
+However, the agent will also be influenced by the behaviour of agents around it: if other agents are selfish then it will also be selfish. This can be thought of as a `tit-for-tat' strategy, but with enough HP, agents will be willing to `make the first move', with the insurance that if others do not follow then they have some buffer time to re-establish their own selfish behaviour.
 
 An agent will maintain a low HP only if it is confident that other agents will allow it to survive by leaving enough food, through the signing of treaties to build trust. A tower that consists solely of Team 5 agents would require those at the top to be willing to decrease their own short-term satisfaction in order to give the best chance of survival for all agents, and trust others to do the same upon reshuffling.
 
@@ -58,7 +58,7 @@ At the beginning of each day, the agent's `personality' is updated using various
 At the start of each tick, the agent checks to see if it has received any messages and if so, will respond to these\footnote{Note that an agent can receive and respond to only one message per tick.}. The agent then sends out messages to other agents. The mechanism for messaging is described in Section \ref{sec:team5-messaging}.
 
 \section{Messaging}\label{sec:team5-messaging}
-Collaboration between different agents operating in a system requires communication. The motivation for messaging is to improve the agent's understanding of its surroundings, enable building of mutually beneficial relationships, and introduce collaboration and argeement between parties.
+Collaboration between different agents operating in a system requires communication. The motivation for messaging is to improve the agent's understanding of its surroundings, enable the building of mutually beneficial relationships, and introduce collaboration and agreement between parties.
 
 \subsection*{Strategy}\label{sec:team5-messaging-strategy}
 The agent's approach to messaging is to adopt a ``passive observer'' role focussed on gathering information about other agents to organise itself with these agents in the tower. With more information at its disposal, the agent can make more informed decisions to balance its own individual utility with the collective utility of the agents in the tower.
@@ -126,7 +126,7 @@ We have designed the favour calculation in such a way that means positive change
 
 Measuring favour allows the agent to act according to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
 
-For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore not deemed an appropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.
+For agents which have low favour, the Team 5 agent maintains its passiveness and does not ``punish'' them by, for example, taking more food than is necessary. The effect of ``punishing'' an agent propagates to all floors below the agent and is therefore deemed an inappropriate course of action. Instead, the agent strives to behave positively if surrounding agents also demonstrate positive behaviour.
 
 It should also be noted that while the Team 5 agent computes favour for agents both above and below its floor, a positive favour value for agents above is helpful to that agent only if they are moved to a floor below the Team 5 agent following a reshuffle: this is because there is no way to reward the behaviour of an agent above you in the tower.
 
@@ -184,7 +184,7 @@ It was decided that of the available treaty types, treaties that limit HP were t
 This section focuses on the agent's performance and how this varies with changes in its environment.
 
 \subsection*{Homogeneous Tower Experiments}
-To evaluate the self-organisation abilities of the Team 5 agent, simulations were run with the agent in variations of a homogeneous tower (i.e. a tower that contains agents of only one type). The agent has been evaluated on three main metrics:
+To evaluate the self-organisation abilities of the Team 5 agent, simulations were run with the agent in variations of a homogeneous tower, i.e., a tower that contains agents of only one type. The agent has been evaluated on three main metrics:
 \begin{enumerate}
     \item The number of deaths
     \item The average utility
@@ -505,7 +505,7 @@ Figure \ref{fig:team5-exp-reshuffle-period} shows the effect of changing the res
 \subsection*{Self-Organisation With Other Agents}
 The overall aim within the tower is for agents to self-organise and create a stable society. Tests were run to investigate how compatible the Team 5 agent is with each of the agents designed by each of the other teams. Simulations were run with a tower consisting of Team 5 agents and one other agent type, with seven agents each and five food available per agent, to see whether they could self-organise within 100 days. These results are shown in Table \ref{tab:team5-self-org-agents}.
 
-Team 5 is able to self-organise with Teams 3, 4, and 7, and can do so immediately with Team 4. Team 5 does not perform well wither either Teams 2 or 6; the agents were not able to self-organise within 100 days, resulting in continual deaths.
+Team 5 is able to self-organise with Teams 3, 4, and 7, and can do so immediately with Team 4. Team 5 does not perform well with either Teams 2 or 6; the agents were not able to self-organise within 100 days, resulting in continual deaths.
 
 The Team 5 agent also does not perform well with random agents (i.e. agents which take a random amount of food). Experiments on towers consisting of Team 5 and random agents resulted in a comparatively high number of deaths, with a low average age upon death. The average age also does not improve when the food per agent ratio is increased.
 
