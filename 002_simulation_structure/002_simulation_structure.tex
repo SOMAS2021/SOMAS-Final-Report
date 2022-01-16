@@ -115,7 +115,7 @@ with the \texttt{daysAtCritical} counter incremented by 1. If \texttt{daysAtCrit
 %%%%%%%%
 \section{Global Utility}\label{global_utility}
 
-To assess the performance of the agents in the tower as a group, we need to define a metric. More insightful than the number of deaths, the notion of \emph{global utility} is of great help in this context [Add reference]. For this project, we implement the definition of global utility used in [Add reference].
+To assess the performance of the agents in the tower as a group, we first need to define a metric. A common choice is the so-called \emph{social welfare}, based on each agent individual utility. For this project, we implement the notion of utility as introduced in \cite{somasPitt}.
 
 Our system is composed of $N$ agents that can perform specific actions in relation with the common pool resources. In a general context, each agent 
 $i\in\{1, \ldots, N\}$ takes the following actions at each iteration $t\in\{1,\ldots,\infty\}$:
@@ -133,20 +133,22 @@ In the current setup, the available resources $q_i$ corresponds to the current a
 
 \begin{equation}\label{resources_needed}
     q_i=\begin{cases}
-     \frac{\mathit{numberDaysInCriticalState}}{\mathit{maxDaysInCriticalState}} & \mbox{if } \mathit{currentHP\leq \mathit{weakLevel}}  \\ 
+     \frac{\texttt{numberDaysInCriticalState}}{\texttt{maxDaysInCriticalState}} & \mbox{if } \texttt{currentHP}\leq \texttt{weakLevel}  \\ 
      0 & \mbox{else.}
      \end{cases}
 \end{equation}
 
-This way, we ensure that $q_i$ is bounded by 1 and is proportional to the days spent in the critical health zone below \textit{weakLevel}.
+This way, we ensure that $q_i$ is bounded by 1 and is proportional to the days spent in the critical health zone below \texttt{weakLevel}.
 
 Moreover, the agents do not make any provision $p_i$ to the common pool, as they cannot give food to the platform ($p_i=0$). Their demands for resources is the food they ask when the platform is at their level. In addition, the agents appropriate all resources they are allocated, so that $r'_i=r_i$.\footnote{We ensure that all these parameters are effectively in the range $[0,1]$ by dividing the mentioned quantities by their maximum values.}
 
-[Add reference] defines the total resources accrued $R_i$ at the end of an iteration as
+The total resources accrued at the end of an iteration, $R_i$, is hence defined as:
 
 \begin{equation}\label{resources_accrued}
-    R_i=r'_i+ (g_i-p_i).
+    R_i=r'_i+ (g_i-p_i)
 \end{equation}
+
+where each agent will `generate' resources equal to: its appropriation, plus the amount available on the platform, minus the provision made back to the common pool.
 
 Using the above parameters, it is possible to compute the following utility per agent:
 
@@ -160,8 +162,8 @@ Using the above parameters, it is possible to compute the following utility per 
 
 where $\alpha_i$, $\beta_i$ and $\gamma_i$ are tuning parameters that follow the rule $\alpha_i>\gamma_i>\beta_i$. In our work, we use the values $\alpha_i=\alpha=0.2$, $\beta_i=\beta=0.1$, and $\gamma_i=\gamma=0.18$.
 
-Finally, we use \eqref{utility_per_agent} to compute the global average utility $U$ by summing over all agent:
+Finally, we use \eqref{utility_per_agent} to compute an average global utility, which corresponds to the social welfare \textit{SW} divided by the number of agents:
 
 \begin{equation}\label{utility_eq}
-    U=\frac{\sum_i^N u_i}{N}
+    \mathit{U}=\frac{\sum_i^N u_i}{N}=\frac{\mathit{SW}}{N}
 \end{equation}
