@@ -2,11 +2,10 @@
 
 \section{Overview}
 \label{sec: Team 7 Overview}
-This chapter outlines the design and findings of Team 7's agent. The primary goal of team 7 was to emulate human behaviour closely and to replicate the normal variation in personality types exhibited in a typical human population. This would then enable analysis into whether particular personality types exhibited particular behavioural patterns or are more conducive to self organisation.
+This chapter outlines the design and findings of Team 7's agent. The primary goal of team 7 was to emulate human behaviour closely and to replicate the normal variation in personality types exhibited in a typical human population. This would then enable analysis into whether particular personality types exhibited particular behavioural patterns or are more conducive to self organisation and thus acheiving the goal of sustainability in a collective action problem.
 
 \section{Agent Design}
 \label{sec: Agent Design}
-
 There are 3 key elements that define the agent: its personality, behaviour and memory. The personality defines a given agent at its core, and for the purpose of this experiment is kept constant throughout a given simulation. An agents behaviour is influenced by its personality, memory (a record of its experiences) and the environment. The environment can include current floor, food available and interaction wit other agents. The personality and behaviour then combine to influence the various decisions that the agent makes over the course of the simulation. 
 This basic agent framework is illustrated in \Cref{agent_flow}.
 
@@ -21,23 +20,21 @@ This basic agent framework is illustrated in \Cref{agent_flow}.
 
 \subsection{Personality Traits}
 \label{subsec: Agent Design}
-
 The use of personality traits to attribute human characteristics to our agents is a construct derived from Robert R. McCrae and Paul Costa's 5 factor theory of personality. McCrae and colleagues discovered that the big five traits are surprisingly universal which was confirmed by a study that looked at people from more than 50 different cultures. They determined that the five personality traits could be used to accurately model the human psychological framework.
 
 The five personality dimensions consist of: 
 \begin{itemize}
-\item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change. 
-\item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking.
-\item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. 
-\item  \textbf{Agreeableness}: An individual with high agreeableness will  exhibit greater degrees of kindness, trust and altruism. Whereas an individual with low agreeableness will demonstrate a lack of sympathy and may be spiteful or manipulative of others. 
-\item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. Therefore, an agent that is high in Neuroticism will commit actions that may seem unreasonable or illogical.
+    \item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change. For an agent in the tower this means a high openness score means that they are less impacted by floor changes and thus its behavioural characteristics are not varied as much. Conversely a low openness score means an agent is significantly impacted by change such as arriving at a lower floor which increases their greediness more than it would an agent with a higher openness score. Openness also influences responsiveness which dictates how much an agent is willing to accept or requests or treaties.
+    \item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking. In the context of this experiment, a high conscientiousness score means an agent will demonstrate greater learning from its experiences, as it will identify underlying trends in these experiences in order to make strategically better decisions. A more planning-oriented agent of such will also give greater importance to collaborating with other agents.
+    \item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. The extraversion score affects the responsiveness. A high extraversion score increases the likelihood of positive social interaction such as accepting requests or treaties. 
+    \item  \textbf{Agreeableness}: An individual with high agreeableness will exhibit greater degrees of kindness, trust and altruism. Whereas an individual with low agreeableness will demonstrate a lack of sympathy and may be spiteful or manipulative of others. Therefore, greediness and kindness are initialised by agreeableness and scaled accordingly. Agreeableness also has influence over responsivenes in the same way that openness and extraversion do.
+    \item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. Therefore, an agent that is high in Neuroticism will commit actions that may seem unreasonable or illogical. The way this is implemented is that neuroticism will create random day-to-day volatality in the greediness and kindness levels of an agent. Since greediness and kindness directly control the amount of food taken, an agent with higher Neuroticism may either intend to take an inadequate or excess amount of food.
 \end{itemize}
 
 Any time a new agent is deployed it is initialised with a value for these traits ranging from 20-80. We did this in order to exclude extreme personality traits on either end. The personality traits assigned to an agent are innate and unchanged for the duration of the simulation. This is done in order to emulate how traits remains fairly constant over a person's life.
 
 \subsection{Behavioural Traits}
 \label{subsec: Behaviour}
-
 In contrast to personality traits, behavioural characteristics of an agent change over the course of the simulation. The behaviours are initialized based on the agent's personality traits and can range from 0-100 over the lifetime of the agent. These behaviours are then updated daily by environmental factors such as food availability, floor changes and interactions with other agents. 
 
 The behaviour characteristics are described below:
@@ -75,26 +72,23 @@ The memory structure of the agent behaves analogously to human memory. It serves
 Below is a description of all the elements of information stored in the agent's memory:
 
 \begin{itemize}
+    \item  \textbf{orderPrevFloors}: A chronologically ordered list of the floors that the agent has been in. 
+    \item  \textbf{prevFloors}: A map of all the floors that the agent has experienced. This keeps track of the number of days spent on each given floor and the average food that was available whilst the agent was on that floor.
+    \item  \textbf{currentDayonFloor}:The number of days the agent has spent on the current floor.
+    \item  \textbf{currentFloorRisk}: This is the level of risk to the survival of the agent associated with the current floor. 
 
-\item  \textbf{orderPrevFloors}: A chronologically ordered list of the floors that the agent has been in. 
-\item  \textbf{prevFloors}: A map of all the floors that the agent has experienced. This keeps track of the number of days spent on each given floor and the average food that was available whilst the agent was on that floor.
-\item  \textbf{currentDayonFloor}:The number of days the agent has spent on the current floor.
-\item  \textbf{currentFloorRisk}: This is the level of risk to the survival of the agent associated with the current floor. 
-
-\item  \textbf{daysHungry}: The number of consecutive days the agent has not consumed food.
-\item  \textbf{seenPlatform}: This variable is used to remember if the agent has seen the platform. The agent uses this to decide when to prepare for a new day.
-\item  \textbf{prevAge}: The age of the agent on the previous day.
-\item  \textbf{prevHP}: A record of the HP at the end of the previous day.
-\item  \textbf{foodEaten}: The amount of food consumed the previous day.
-\item  \textbf{receivedReq}: This is a variable that indicates whether the agent has decided to abide by a request made in a message. A false value indicates that no requests have been accepted. 
-\item  \textbf{takeFood}: This stores the amount of food an agent has requested to be taken. It is initialised with a value of -1 if there are no accepted requests.
-\item  \textbf{leaveFood}: This stores the amount of food an agent has requested to be left. It is also initialised with a value of -1 if there are no accepted requests.
-
+    \item  \textbf{daysHungry}: The number of consecutive days the agent has not consumed food.
+    \item  \textbf{seenPlatform}: This variable is used to remember if the agent has seen the platform. The agent uses this to decide when to prepare for a new day.
+    \item  \textbf{prevAge}: The age of the agent on the previous day.
+    \item  \textbf{prevHP}: A record of the HP at the end of the previous day.
+    \item  \textbf{foodEaten}: The amount of food consumed the previous day.
+    \item  \textbf{receivedReq}: This is a variable that indicates whether the agent has decided to abide by a request made in a message. A false value indicates that no requests have been accepted. 
+    \item  \textbf{takeFood}: This stores the amount of food an agent has requested to be taken. It is initialised with a value of -1 if there are no accepted requests.
+    \item  \textbf{leaveFood}: This stores the amount of food an agent has requested to be left. It is also initialised with a value of -1 if there are no accepted requests.
 \end{itemize}
 
 \subsection{Floor Risk Estimation}
 \label{subsec: Floor Map}
-
 Upon a floor reshuffle, the agent uses its experiences from past floors in order to build an expectation of the level of risk it associates with the new floor that it has been assigned to. The first step to doing this is to generate a prediction for the amount of food that will be available on the current floor. 
 
 In order to make this estimate, the agent utilises the prevFloors map from its memory. This contains information on the average food that was available on each floor that the agent has already been on. The agent approximates the relationship between the floor level and the average food available on that floor. For example, let us take an agent that has been on floors 10 and 6, and is now assigned to floor 8. The agent will calculate the linear function which corresponds to the average food on floors 6 to 10. It will then use this function to obtain the estimate for the food it expects on floor 8. 
@@ -111,7 +105,6 @@ This section outlines the particulars of agent operation and decision making.
 
 \subsection{Main Operation}
 \label{subsec: Main Operation}
- 
 At the point where each agent is deployed into a simulation, its personality traits, behavioural characteristics and memory bank are initialised. 
 
 Once initialisation is complete, the agents check their inbox for messages, requests or treaties. This is done every tick to ensure messages are detected from the floors above and below. When a message, request or treaty is found in the inbox, a function calls the corresponding handler to the message type. The handlers then decide whether a request or treaty is accepted and the relevant actions performed. This is further discussed in later sections. 
@@ -136,18 +129,18 @@ Once the routine is complete the seenPlatform variable is reset to indicate the 
 \label{subsec: Messages}
 Although not a crucial feature of the final agent strategy - reasonable consideration went into deciding how to leverage messaging to better serve an agent during a simulation of the tower.
 
-In order to think about how messaging could benefit the agent, two scenario’s can be considered - one where the agent is sending messages to make an alert, enquiry or request and the converse, where an agent receives messages and can perform some action based on the incoming information or request.
+In order to think about how messaging could benefit the agent, two scenario's can be considered - one where the agent is sending messages to make an alert, enquiry or request and the converse, where an agent receives messages and can perform some action based on the incoming information or request.
 \subsubsection{Sending Messages}
 \label{subsubsec: Sending Messages}
-The agent’s behaviour is majorly determined by the intrinsic characteristics that constitute the agent’s personality and so it was deemed that sending messages to gather information served no significant additional purpose as the new information would not have any influence on the next decision made. It is, however, important to benefit the collective effort of maintaining survival as a population - therefore an agent will send a reply to acknowledge information from other agent’s and respond to requests stating whether they can comply.
+The agent's behaviour is majorly determined by the intrinsic characteristics that constitute the agent's personality and so it was deemed that sending messages to gather information served no significant additional purpose as the new information would not have any influence on the next decision made. It is, however, important to benefit the collective effort of maintaining survival as a population - therefore an agent will send a reply to acknowledge information from other agent's and respond to requests stating whether they can comply.
 
 \subsubsection{Receiving Messages}
 \label{subsubsec: Receiving Messages}
-The agent may adapt its behaviour upon receipt of request messages from other agent’s. The criteria that must be met in order to comply with a request is as follows; 
+The agent may adapt its behaviour upon receipt of request messages from other agent's. The criteria that must be met in order to comply with a request is as follows; 
 
 \begin{itemize}
-  \item The agent’s extraversion rating must be higher than 5
-  \item The agent’s kindness rating must be higher than it’s greediness rating
+  \item The agent's extraversion rating must be higher than 5
+  \item The agent's kindness rating must be higher than it's greediness rating
   \item The agent must not have been at critical health for \(\ge\) (the max \# of days at critical - 3)
 \end{itemize}
 
@@ -156,6 +149,7 @@ If all of this criteria is met the agent will comply with the request, and it wi
 In all cases a truthful reply is sent from the agent to the message sender in an attempt to benefit the collective.
 
 \subsection{Treaties}
+\label{subsec: Treaties}
 Treaties are the mechanism by which agents can communicate their needs to each other and organise themselves in way that is mutually beneficial.  
 
 \subsubsection{Rejecting Proposed Treaties}
@@ -163,7 +157,6 @@ Treaties are the mechanism by which agents can communicate their needs to each o
 Treaties are rejected on the basis of certain criteria, these 'conditions' reflect proposed treaties that are detrimental to the health of Team 7's agents at the expense of other agents. The following are the main criteria for rejecting treaties:
 
 \begin{enumerate}
-    
     \item 
     \textbf{Personality and behaviour traits:} \newline
     Treaties that are proposed to agents that have a less than average responsiveness are automatically rejected as this aligns with our aim to replicate human responses with agents. Note that responsiveness is an average of agreeableness, openness and extroversion. Thus most personality traits are taken into account. Similarly, an agent with conscientiousness less than 33\%\ lacks the intuition to plan for future events and thus is casual in its approach to treaties, resulting in viable treaties being rejected. This shows our commitment to having agents mirror their personality traits in the actions that they take.
@@ -191,7 +184,6 @@ Treaties are rejected on the basis of certain criteria, these 'conditions' refle
     \item 
     \textbf{Clash of treaties:} \newline
     Each new treaty is compared to the existing active treaties that are already stored in the agent's memory. If a treaty is incompatible with those that are already active, then the agent will reject such treaties. For example: treaties that are based on the same request type cannot ask for conflicting amounts of food, for e.g. If a treaty asking us to leave exactly 10 units of food has been accepted, then a freshly proposed treaty requesting to leave less than 7 units of food has to be rejected to avoid conflict.
-
 \end{enumerate}
 
 Once a treaty is rejected, a confirmation of the rejection is sent to the proposer of the treaty and a message noting the outcome of the treaty is added to the log file at the output.
@@ -203,7 +195,6 @@ Treaties are accepted if the aforementioned rejection criteria are not satisfied
 \newline
 
 All accepted treaties are stored in the active treaties field of the Base Agent thus allowing for the conflict criteria to be checked by iterating through the 'activetreaties' map. Theoretically all treaties that get through the vetting process are either beneficial to the agent or the wider group and do not make the agent prone to an earlier than expected death as a result of accepting said treaty.
-
 
 \subsubsection{Treaty Usage}
 \label{subsec: Treaty Usage}
@@ -228,7 +219,6 @@ Treaty Formulation can play an important role in creating favourable conditions,
 \section{Simulations and Analysis}
 \subsubsection{Significance of Treaties}
 \label{sec: Simulations and Analysis}
-
 \Cref{fig: Cumulative Deaths without Treaties} and \Cref{fig: Cumulative Deaths with Treaties} illustrate the results from simulations with treaties disabled and enabled respectively. All other factors are left as default.
 
 \begin{figure}[h!]
@@ -275,7 +265,6 @@ This demonstrates that the agents perform better collectively when treaties are 
 \end{figure}
 
 It can be observed that the agents collectively perform significantly better when openness is low, as a stabilising of the cumulative deaths curve can be seen for the agent with low openness. This can be explained by the fact that an agent with high openness will have a lower standard for accepting message requests and treaties - meaning they are more likely to agree to a request that is detrimental to their survival. Furthermore, an agent with a low openness value, will be less welcoming to a change in floor and will therefore behave more cautiously. This will also improve the agents chances of survival. 
-
 
 \subsubsection{Neuroticism}
 \label{subsubsec: Neuroticism}
@@ -327,7 +316,6 @@ It can be observed that there is no substantial difference in the number of deat
 \newpage
 \subsubsection{Extraversion}
 \label{subsubsec: Extraversion}
-
 \Cref{fig: High Extraversion} and \Cref{fig: Low Extraversion} illustrate the results from simulations with agents with high extraversion ($>$70) and low extraversion ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
@@ -376,7 +364,6 @@ A tower housing agents with high greediness and enforceable (unbreakable) treati
 
 \subsubsection{Kindness}
 \label{subsubsec: Kindness}
-
 \Cref{fig: Fixed High Kindness} and \Cref{fig: Fixed Low Kindness} illustrate the results from simulations with agents with high kindness ($>$70) and low kindness ($<$30) respectively. All other traits are left as default.
 
 \begin{figure}[H]
