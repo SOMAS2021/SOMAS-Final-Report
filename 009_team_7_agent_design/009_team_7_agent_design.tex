@@ -72,19 +72,19 @@ The memory structure of the agent behaves analogously to human memory. It serves
 Below is a description of all the elements of information stored in the agent's memory:
 
 \begin{itemize}
-    \item  \textbf{orderPrevFloors}: A chronologically ordered list of the floors that the agent has been in. 
-    \item  \textbf{prevFloors}: A map of all the floors that the agent has experienced. This keeps track of the number of days spent on each given floor and the average food that was available whilst the agent was on that floor.
-    \item  \textbf{currentDayonFloor}:The number of days the agent has spent on the current floor.
-    \item  \textbf{currentFloorRisk}: This is the level of risk to the survival of the agent associated with the current floor. 
+    \item  \texttt{orderPrevFloors}: A chronologically ordered list of the floors that the agent has been in. 
+    \item  \texttt{prevFloors}: A map of all the floors that the agent has experienced. This keeps track of the number of days spent on each given floor and the average food that was available whilst the agent was on that floor.
+    \item  \texttt{currentDayonFloor}:The number of days the agent has spent on the current floor.
+    \item  \texttt{currentFloorRisk}: This is the level of risk to the survival of the agent associated with the current floor. 
 
-    \item  \textbf{daysHungry}: The number of consecutive days the agent has not consumed food.
-    \item  \textbf{seenPlatform}: This variable is used to remember if the agent has seen the platform. The agent uses this to decide when to prepare for a new day.
-    \item  \textbf{prevAge}: The age of the agent on the previous day.
-    \item  \textbf{prevHP}: A record of the HP at the end of the previous day.
-    \item  \textbf{foodEaten}: The amount of food consumed the previous day.
-    \item  \textbf{receivedReq}: This is a variable that indicates whether the agent has decided to abide by a request made in a message. A false value indicates that no requests have been accepted. 
-    \item  \textbf{takeFood}: This stores the amount of food an agent has requested to be taken. It is initialised with a value of -1 if there are no accepted requests.
-    \item  \textbf{leaveFood}: This stores the amount of food an agent has requested to be left. It is also initialised with a value of -1 if there are no accepted requests.
+    \item  \textt{daysHungry}: The number of consecutive days the agent has not consumed food.
+    \item  \texttt{seenPlatform}: This variable is used to remember if the agent has seen the platform. The agent uses this to decide when to prepare for a new day.
+    \item  \texttt{prevAge}: The age of the agent on the previous day.
+    \item  \texttt{prevHP}: A record of the HP at the end of the previous day.
+    \item  \textt{foodEaten}: The amount of food consumed the previous day.
+    \item  \texttt{receivedReq}: This is a variable that indicates whether the agent has decided to abide by a request made in a message. A false value indicates that no requests have been accepted. 
+    \item  \texttt{takeFood}: This stores the amount of food an agent has requested to be taken. It is initialised with a value of -1 if there are no accepted requests.
+    \item  \texttt{leaveFood}: This stores the amount of food an agent has requested to be left. It is also initialised with a value of -1 if there are no accepted requests.
 \end{itemize}
 
 \subsection{Floor Risk Estimation}
@@ -139,9 +139,9 @@ The agent's behaviour is majorly determined by the intrinsic characteristics tha
 The agent may adapt its behaviour upon receipt of request messages from other agent's. The criteria that must be met in order to comply with a request is as follows; 
 
 \begin{itemize}
-  \item The agent's extraversion rating must be higher than 5
-  \item The agent's kindness rating must be higher than it's greediness rating
-  \item The agent must not have been at critical health for \(\ge\) (the max \# of days at critical - 3)
+  \item The agent's extraversion rating must be higher than 5.
+  \item The agent's kindness rating must be higher than it's greediness rating.
+  \item The agent must not have been at critical health for \(\ge\) (the max \# of days at critical - 3).
 \end{itemize}
 
 If all of this criteria is met the agent will comply with the request, and it will reject the request if any of the conditions above are not met.
@@ -425,7 +425,7 @@ A high kindness score sees double the deaths of a low kindness score. A high kin
         \hline
     \end{tabular}
     \end{center}
-    \caption{Comparison between agent teams and team 7}
+    \caption{Comparison between agent teams and team 7.}
     \label{tab: Inter-team data}
 \end{table}
 
