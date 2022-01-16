@@ -28,7 +28,7 @@ All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such
     \begin{tabular}{c|c}
       \textbf{Parameter} & \textbf{Range}\\
       \hline
-      BaseBehaviour & \textit{N} $\in$ [0,10]\\
+      \texttt{BaseBehaviour} & \textit{N} $\in$ [0,10]\\
      texttt{Stubbornness} & \textit{N} $\in$ [0,1]\\
       texttt{MaxBehaviourSwing} & \textit{N} $\in$ [0,10]\\
       texttt{ParamWeights} & \{ HPWeight:\textit{N}, FloorWeight:\textit{N} \} \\
@@ -749,7 +749,7 @@ Communication     &yes  & yes&yes &yes & yes & yes
 \% Selfish        & 40 & 40 & 40 & 0   & 0  & 25  & 25 \\
 \% Narcissist     & 10 & 10 & 10 & 0   & 0  & 25  & 25 \\
 Stubbornness      & 0.2& 0.2& 0.2& 0.8 & 0.8& 0.2 & 0.2\\
-MaxBehaviourSwing & 8  & 8  & 8  & 6   & 6  & 6   & \ToDo{2?} \\
+MaxBehaviourSwing & 8  & 8  & 8  & 6   & 6  & 6   & 2 \\
 Communication     & yes&no  &yes & yes &yes & yes & yes
 \end{tabular}
 \caption{Summary of the experiments C1 to E2. The agents are able to change their social motives.}
@@ -771,7 +771,7 @@ In this section, we present the results by simulating this system according to \
 
 
 %%%
-\subsubsection{Simulations A: Single Agent Type} \label{sec:simA}
+\subsubsection{Simulation A: Single Agent Type} \label{sec:simA}
 
 The first set of simulations we analyse are simulations that include agents that all have the same social motive. Moreover, these agents do not have the ability to change their social motive. The simulations results are shown in \Cref{fig:res_A}.
 
@@ -809,10 +809,10 @@ Finally, the collectivists instantaneously achieve a stable society in which non
 
 We also note a uniformly positive curve for global utility over time that is smoother than for the other social motives (\Cref{fig:res_A} (c)). This clearly reflects the increased social cohesion between the agents in the tower and identifies the almost perfect allocation of resources, leading to no wasted utility.
 
-As a conclusion to these experiments, we can now state that the hypothesis 1 and 2 formulated in \Cref{hypothesis} hold in this context.
+As a conclusion from these experiments, we can now state that Hypotheses 1 and 2, formulated in \Cref{hypothesis}, hold in this context.
 
 %%%
-\subsubsection{Simulations B: Multiple Agent Types without Behaviour Change}
+\subsubsection{Simulation B: Multiple Agent Types Without Behaviour Change}
 
 Having assessed groups of agent of each social motive individually in simulations A, we increase the complexity of the system by having agents with different \textit{fixed} social motives in the tower. The inability for these agents to change their social motive with time leads to the simulation results shown in \Cref{fig:res_B}.
 
@@ -831,16 +831,16 @@ Having assessed groups of agent of each social motive individually in simulation
 
 The first conclusion we can draw from these results is that having a larger proportion of collectivists helps the system to perform better in terms of utility and number of deaths. Through comparing B1 to B2, we see that the system comprising a larger amount of collectivists (B2) outperforms the system with a comparatively smaller amount of collectivists (B1). This is to be expected, as the more collectivist agents there are, the more similar to \Cref{fig:res_A} (c-d) the system will be.
 
-A second behaviour illustrated by this simulation is that the action of introducing treaties (\Cref{proposing_treaties}) is not always relevant. The collectivist agents accept the collectivist and selfish treaty (the collectivist one being more restrictive), but the selfish agents \textit{only} accept the selfish treaty.\footnote{The other types of agents, altruist and narcissist, do not play a role in this analysis. The altruists accept the 2 treaties and eat nothing and the narcissist, being even more difficult to convince, will reject the two treaties.} This way, the 2 agent types are following their natural strategy concerning food intake (\Cref{food_consumption}). Knowing this, the system shows similar results with and without treaties, hence we only show the results where communication is allowed.
+A second behaviour illustrated by this simulation is that the action of introducing treaties (\Cref{proposing_treaties}) is not always relevant. The collectivist agents accept the collectivist and selfish treaty (the collectivist one being more restrictive), but the selfish agents \textit{only} accept the selfish treaty.\footnote{The other types of agents, altruist and narcissist, do not play a role in this analysis. The altruists accept the two treaties and eat nothing, and the narcissist, being even more difficult to convince, will reject the two treaties.} This way, the two agent types are following their natural strategy concerning food intake (\Cref{food_consumption}). Knowing this, the system shows similar results with and without treaties, hence we only show the results where communication is allowed.
 
 %%%
-\subsubsection{Simulations C: Multiple Agent Types with Behaviour Change}\label{simulation_C}
+\subsubsection{Simulation C: Multiple Agent Types With Behaviour Change}\label{simulation_C}
 
 This set of simulations builds on top of the framework set by (B), instead investigating the terminal behaviour of a system comprising different distributions of \textit{fluid} social motives. We provide the agents with a non-zero behavioural swing to investigate the changes in distribution, global deaths and utility over 60 iterations. Moreover, we utilise different levels of communication and treaties to contrast the results using the treaties introduced in \Cref{proposing_treaties} (\Cref{fig:res_C} (a-c)). We simulate the system under two other configurations: without considering any form of communication (\Cref{fig:res_C} (d-f)), and by using a better designed, more restrictive treaty (\Cref{fig:res_C} (g-i)).
 
-This last treaty restrict the amount of food of its members when their health drops below the \textit{weakLevel}:
+This treaty restricts the amount of food its members can take when their health drops below the \textit{weakLevel}:
 
-If \textit{currentHP} $<$ \textit{WeakLevel}, take $\leq$ 2 food.\footnote{To implement this treaty, we create a new treaty type, in addition to the existing set \ToDo{cite corresponding section}. We cite the need for this treaty as it not in general being possible to formulate a request to \textit{take} a maximum amount with a corresponding \textit{LeaveAmountFood} or \textit{LeavePercentFood} treaty. The special case ``take 0'' food can be expressed as ``leave 100\% of the food'', but there is in general no such equivalence that holds across the whole tower.}
+If \texttt{currentHP} $<$ \texttt{WeakLevel}, take $\leq$ 2 food.\footnote{To implement this treaty, we create a new treaty type, in addition to the existing set \ToDo{cite corresponding section}. We cite the need for this treaty as it not in general being possible to formulate a request to \texttt{take} a maximum amount with a corresponding \texttt{LeaveAmountFood} or \texttt{LeavePercentFood} treaty. The special case ``take 0'' food can be expressed as ``leave 100\% of the food'', but there is in general no such equivalence that holds across the whole tower.}
 
 
 \begin{figure}[htb]
@@ -874,17 +874,17 @@ If \textit{currentHP} $<$ \textit{WeakLevel}, take $\leq$ 2 food.\footnote{To im
 % Narcissist can survive with no comms, acting individually - get killed with partial comms in C2 (unlike D with forced comms, where they must act collectivist)
 
 
-The overarching comment to draw from this set of results is the impact of specific treaties on the global utility. By comparing the results C1 and C2, the system using the `classical' collectivist treaty C1 (see \Cref{proposing_treaties}) yields a lower performance than the system without treaties C2: the number of deaths is lower in C2, and its global utility is instead higher.
+The overarching comment to draw from this set of results is the impact of specific treaties on the global utility. By comparing the results C1 and C2, the system using the `classical' collectivist treaty (C1) (see \Cref{proposing_treaties}) yields a lower performance than the system without treaties (C2): the number of deaths is lower in C2, and its global utility is higher.
 
-To explain these rather counter-intuitive results, we offer the following hypothesis. As the agents' health falls, their social motives tend to change toward narcissist. In the case of collectivists having signed a treaty, they will turn selfish. Instead of following the natural decision of this social motive (eat to stay above the healthy level), they have to follow the treaty. The moment their health falls below the \textit{weakLevel}, the treaty they signed no longer applies and they will follow their natural food intake rule defined in \Cref{food_consumption}:
+To explain these rather counter-intuitive results, we offer the following hypothesis. As the agents' health falls, their social motives tend to change toward narcissist. In the case of collectivists having signed a treaty, they will turn selfish. Instead of following the natural decision of this social motive (eat to stay above the healthy level), they have to follow the treaty. The moment their health falls below the \texttt{weakLevel}, the treaty they signed no longer applies and they will follow their natural food intake rule defined in \Cref{food_consumption}:
 
-If the agent's health is less than the \textit{healthyLevel}, the agent takes enough food to reach the \textit{healthyLevel}.
+If the agent's health is less than the \texttt{healthyLevel}, the agent takes enough food to reach the \texttt{healthyLevel}.
 
-However, this leads to a lot of wasted resources at this critical health level. Notably, each food intake larger than 2 will not offer additional utility to agents whose health falls below the \textit{weakLevel}: any food intake $\geq2$ upgrades the agents health to the \textit{weakLevel}. The resources would have been used in a better way if the selfish agents, which initially signed the treaty as collectivists, would have been able to eat once their health had just risen above the \textit{weakLevel}.
+However, this leads to a lot of wasted resources at this critical health level. Notably, each food intake greater than 2 will not offer additional utility to agents whose health falls below the \textit{weakLevel}: any food intake greater than or equal to 2 upgrades the agents health to the \textit{weakLevel}. The resources would have been used in a better way if the selfish agents, which initially signed the treaty as collectivists, would have been able to eat once their health had just risen above the \textit{weakLevel}.
 
-This waste of common resources induced by agents following the collectivist treaty is arguably due to a poor treaty design. This experiment clearly shows that treaties might also have negative effect on the global utility, although they were thought to improve it.
+This waste of common resources induced by agents following the collectivist treaty is arguably due to a poor treaty design. This experiment clearly shows that treaties might also have negative effect on the global utility, although they were originally thought to improve it.
 
-To contrast this results, we can propose a more effective treaty. As explained above, simulation C3 introduced a treaty that applies when the agents HP is below the \textit{weakLevel}. As can be seen in \Cref{fig:res_C} (h) and (i), this treaty allows the total amount of death to be lower, and the global utility to be higher. This shows that well designed treaties can have a positive impact on the system. However, the treaty specification is not a trivial and straight-forward task, that can even be counter-intuitive.
+To contrast this results, we can propose a more effective treaty. As explained above, simulation C3 introduced a treaty that applies when the agents HP is below the \texttt{weakLevel}. As can be seen in \Cref{fig:res_C} (h) and (i), this treaty allows the total amount of death to be lower, and the global utility to be higher. This shows that well designed treaties can have a positive impact on the system. However, the treaty specification is not a trivial and straight-forward task, that can even be counter-intuitive.
 
 % ------------------
 
