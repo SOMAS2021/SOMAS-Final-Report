@@ -5,7 +5,7 @@ Team 3’s agents design is based on the Theory of Reasoned Action (TRA) and its
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\linewidth]{005_team_3_agent_design/images/image1.jpg}
-    \caption{TRA explanation}
+    \caption{TRA explanation.}
     \label{fig:TRA-diagram}
 \end{figure}
 The Theory of Reasoned Action was developed by Martin Fishbein in 1967 and was later improved by Icek Ajzen and Martin in 1980, with the Theory of Planned Behaviour. The TPB states that the behavioural intentions of individuals can be attributed to three interdependent factors: Perceived behaviour control, the subjective norm, and the attitude of the individual, as you can see in Figure \ref{fig:TRA-diagram}. It must be noted that the TPB is unable to accurately and consistently predict non-volitional behaviours of the individual. Therefore, TPB can only be applied to those actions for which a reason can be found. These are actions that occur as a reaction to others and that the individual has control over \cite{TRA}. This theory is applicable to agent decisions in the tower since the agent must make decisions in a reactionary manner, based on interactions with other agents.\par 
@@ -29,7 +29,7 @@ With this in mind, we further extended our definition of the agent variables and
 The agent will interact and make decisions based on a combination of these variables, as defined above. More information is given in the sections below, which explains different aspects of the agent, such as their daily actions, memory, decision taking and communication. 
 
 \subsection{Action Process}
-The Agent follows the following steps during their day: 
+The Agent takes the following steps during their day: 
 \begin{enumerate}
     \item The agent starts by updating its defining variables at the beginning of each day based on their HP. This acts as the agents checking in on itself and changing its attitude(mood) and morality depending on its condition(HP). 
     \item If the agent was just ‘born’ it will estimate an initial value for the average food consumed based on the amount of food required to maintain, 50 health.
@@ -129,7 +129,7 @@ This zero-sum agent is how our agent is currently set, it represents the neutral
 
 \subsection{Proposing a Treaty}
 When the agent HP is critical, it will ask for help by either asking for the agent above to leave at least the amount of food necessary to survive or, if it doesn’t have any active treaties, a treaty that states: if HP is higher than 20 leave 95\% of the food in the platform for 3 days. At this time the agent's self-preservation instinct takes precedence and its objective becomes to eat enough food to get out of the critical state before the agent dies.
-When the agent is not in critical condition, it will be able to propose other treaties depending on their morality. The first treaty is detrimental for the tower and the other two are ‘fair’ treaties for the tower. \par
+When the agent is not in critical condition, it is able to propose other treaties depending on their morality. The first treaty is detrimental for the tower and the other two are ‘fair’ treaties for the tower. \par
 \begin{enumerate}
     \item If the agent is very immoral, it will send a treaty that is detrimental for anyone above them. It is expected for this treaty to be rejected by any sensible agents and is done as a way of mimicking frustration or the desire to hurt others when morality is low.
     \item If HP is below 60 leave at least 60\% of the food on the platform for 5 days. This treaty tries to encourage immoral agents in higher positions to share food. 
@@ -170,7 +170,7 @@ The agent calculates the amount of food it decides to take in the following mann
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\linewidth]{005_team_3_agent_design/images/diagram1.jpg}
-    \caption{Food calculation process}
+    \caption{Food calculation process.}
     \label{fig:food-diagram}
 \end{figure}
 \begin{enumerate}
