@@ -149,15 +149,13 @@ for i := 1; i < actionDim; i++ {
 \subsubsection{Design of reward function}
 The reward function provides a way for us to set the desired behaviour of our agent. The reward function will assess the quality of a particular action under a specific state and provide feedback, either reward or punishment, to the agent. Initially, we have designed four desired behaviours. We encourage our agent to survive, not to overeat, and to save neighbour: if the neighbouring agent is in critical state, the agent will be punished. However, the last desired behaviour was only enforced by the simple communication of "Ask HP" with the agent that is one floor below. Indeed, as shown in Table \ref{cum-death}, implementing a simple communication did not improve the agent’s performance on saving other agent, i.e., the overall death count remained the same after adding the simple communication and tuned reward function accordingly. A potential reason might be that the agent cannot learn to save with such limited information. As such, in our subsequent experiments, the simple communication was not considered, and the primary focus was placed on the first two desired behaviours.
 
-\begin{table}
-\begin{adjustbox}{width=\columnwidth,center}
+\begin{table}[]
 \begin{tabular}{@{}llll@{}}
 \toprule
                                               &                                                                                   & Without communication & \begin{tabular}[c]{@{}l@{}}With simple\\ communication\end{tabular} \\ \midrule
 \multirow{2}{*}{Cumulative death in 500 days} & Homogeneous tower (14 team 2 agent)                                               & 50                    & 78                                                                  \\
-                                              & \begin{tabular}[c]{@{}l@{}}Heterogeneous\\ Tower (2 agents per team)\end{tabular} & 133                   & 139                                                                 \\ \cmidrule(l){2-4} 
+                                              & \begin{tabular}[c]{@{}l@{}}Heterogeneous\\ Tower (2 agents per team)\end{tabular} & 133                   & 139                                                                 \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \caption{Effect of simple communication on cumulative death count in 500 days.}
 \label{cum-death}
 \end{table}
@@ -251,6 +249,8 @@ When tuning the hyper parameters in the reward function appropriately, the main 
 5000                     & 80                                       & 1                              & 1                            & 865                              & 6                                         & 69.33                        \\ \bottomrule
 \end{tabular}
 \end{adjustbox}
+\caption{Simulation results used for hyperparameter tuning.}
+\label{hyperparam-tab}
 \end{table}
 \begin{enumerate}
 	\item Tuning the overeat threshold down meant fewer overall deaths, but more team2 agent deaths, a rough optimal value was found at 80 hp. Setting a higher threshold would have the opposite effect
