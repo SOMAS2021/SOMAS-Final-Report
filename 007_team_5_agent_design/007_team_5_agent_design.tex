@@ -122,7 +122,7 @@ The favour metric quantifies the agent's opinion of others in the tower. It is b
     \end{cases}\\
 \end{align*}
 
-We have designed the favour calculation in such a way that means positive changes in favour occur slowly while negative changes in favour can occur quickly; this is to reflect human behaviour regarding trust, which tends to be lost more quickly than it is gained.
+We have designed the favour calculation in such a way that means positive changes in favour occur slowly while negative changes in favour can occur quickly; this was done to design an agent which builds trust slowly over time but will lose trust quickly when other agents behave in a way deemed to be detrimental to the collective good. The exponents of 1.7 and 1.3 were obtained using trial and error to see which values gave the most desired performance.
 
 Measuring favour allows the agent to act according to how other agents are behaving around it, while taking on a passive conformist approach to decision making. If the agent views others around it more favourably, then it eats less food and aims for a lower HP in hopes of improving collective utility. The agent is also more likely to propose treaties to, and accept treaties from, highly favoured agents.
 
