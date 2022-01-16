@@ -6,7 +6,7 @@ This chapter outlines the design and findings of Team 7's agent. The primary goa
 
 \section{Agent Design}
 \label{sec: Agent Design}
-There are 3 key elements that define the agent: its personality, behaviour and memory. The personality defines a given agent at its core, and for the purpose of this experiment is kept constant throughout a given simulation. An agents behaviour is influenced by its personality, memory (a record of its experiences) and the environment. The environment can include current floor, food available and interaction wit other agents. The personality and behaviour then combine to influence the various decisions that the agent makes over the course of the simulation. 
+There are 3 key elements that define the agent: its personality, behaviour and memory. The personality defines a given agent at its core, and for the purpose of this experiment is kept constant throughout a given simulation. An agents behaviour is influenced by its personality, memory (a record of its experiences) and the environment. The environment can include current floor, food available and interaction with other agents. The personality and behaviour then combine to influence the various decisions that the agent makes over the course of the simulation. 
 This basic agent framework is illustrated in \Cref{agent_flow}.
 
 \begin{figure}[H]
@@ -24,11 +24,15 @@ The use of personality traits to attribute human characteristics to our agents i
 
 The five personality dimensions consist of: 
 \begin{itemize}
-    \item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more traditionally and will be less welcoming to change. For an agent in the tower this means a high openness score means that they are less impacted by floor changes and thus its behavioural characteristics are not varied as much. Conversely a low openness score means an agent is significantly impacted by change such as arriving at a lower floor which increases their greediness more than it would an agent with a higher openness score. Openness also influences responsiveness which dictates how much an agent is willing to accept or requests or treaties.
-    \item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking. In the context of this experiment, a high conscientiousness score means an agent will demonstrate greater learning from its experiences, as it will identify underlying trends in these experiences in order to make strategically better decisions. A more planning-oriented agent of such will also give greater importance to collaborating with other agents.
-    \item  \textbf{Extraversion}: The extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. The extraversion score affects the responsiveness. A high extraversion score increases the likelihood of positive social interaction such as accepting requests or treaties. 
-    \item  \textbf{Agreeableness}: An individual with high agreeableness will exhibit greater degrees of kindness, trust and altruism. Whereas an individual with low agreeableness will demonstrate a lack of sympathy and may be spiteful or manipulative of others. Therefore, greediness and kindness are initialised by agreeableness and scaled accordingly. Agreeableness also has influence over responsivenes in the same way that openness and extraversion do.
-    \item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. It is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. Therefore, an agent that is high in Neuroticism will commit actions that may seem unreasonable or illogical. The way this is implemented is that neuroticism will create random day-to-day volatality in the greediness and kindness levels of an agent. Since greediness and kindness directly control the amount of food taken, an agent with higher Neuroticism may either intend to take an inadequate or excess amount of food.
+    \item  \textbf{Openness}: The degree to which an individual is willing and eager to have new experiences. This also has implications for creativity and problem solving. An individual with low openness will behave more conservatively and will be less welcoming to change. 
+    
+    \item  \textbf{Conscientiousness}: The degree of conscientiousness of an individual determines their level of organization, discipline and thoughtfulness. Conscientious individuals are also more strategic and forward thinking. 
+    
+    \item  \textbf{Extraversion}: Extraversion is the extent to which an individual is willing and eager to socialise and interact with other individuals. An extroverted individual is more likely to occupy positions of leadership and influence. 
+    
+    \item  \textbf{Agreeableness}: An individual with high agreeableness will exhibit greater degrees of kindness, trust, and altruism. On the other hand, an individual with low agreeableness will demonstrate a lack of sympathy and might be spiteful or manipulative towards others. 
+    
+    \item  \textbf{Neuroticism}: The neuroticism trait dictates the emotional stability of an individual. A greater value of this is associated with greater proneness to anxiety, irritability and mood swings. In the extreme case, individuals can experience regular fluctuations in their character. Therefore, an agent that is high in Neuroticism will commit actions that may seem unreasonable or illogical. 
 \end{itemize}
 
 Any time a new agent is deployed it is initialised with a value for these traits ranging from 20-80. We did this in order to exclude extreme personality traits on either end. The personality traits assigned to an agent are innate and unchanged for the duration of the simulation. This is done in order to emulate how traits remains fairly constant over a person's life.
@@ -59,12 +63,25 @@ The behaviour characteristics are described below:
     \end{itemize}
     
     \item  \textbf{Responsiveness}: 
-    
     This behaviour influences the likelihood of an agent accepting the treaties of other agents. It is initialized as the average of openness, extraversion, and agreeableness. 
     
-    In the current implementation the responsiveness trait does not vary during the simulation. In an implementation where dishonesty is factored in, the agent would keep record of the trustworthiness of each agent that it interacts with. If other agents are largely untrustworthy, overall responsiveness would go down proportionally. 
+    In the current implementation, the responsiveness trait does not vary during the simulation. In an implementation where dishonesty is factored in, the agent would keep record of the trustworthiness of each agent that it interacts with. If other agents are largely untrustworthy, overall responsiveness would go down proportionally. 
     
 \end{itemize}
+
+The effect of personality traits on the behaviourial charactersitcs are described below:
+\begin{itemize}
+    \item  \textbf{Openness}: A high openness score means that agents are less impacted by floor changes and thus its behavioural characteristics are not varied as much. Conversely, a low openness score means an agent is significantly impacted by change such as arriving at a lower floor which increases their greediness more than it would an agent with a higher openness score. Openness also influences responsiveness, which dictates how much an agent is willing to accept or requests or treaties.
+    
+    \item  \textbf{Conscientiousness}: A high conscientiousness score means an agent will demonstrate greater learning from its experiences, as it will identify underlying trends in these experiences in order to make better decisions. A more planning-oriented agent of such will also give greater importance to collaborating with other agents.
+    
+    \item  \textbf{Extraversion}: Extraversion affects the responsiveness and a high score increases the likelihood of positive social interaction such as accepting requests or treaties. 
+    
+    \item  \textbf{Agreeableness}: Greediness and kindness are initialised by agreeableness and scaled accordingly. Agreeableness also has influence over responsiveness in the same way that openness and extraversion do.
+    
+    \item  \textbf{Neuroticism}: Neuroticism creates random day-to-day volatality in the greediness and kindness of an agent. Since greediness and kindness directly control the amount of food taken, an agent with higher neuroticism may intend to take an inadequate or excess amount of food.
+\end{itemize}
+
 
 \subsection{Operational Memory}
 \label{subsec: Operational Memory}
@@ -76,7 +93,6 @@ Below is a description of all the elements of information stored in the agent's 
     \item  \texttt{prevFloors}: A map of all the floors that the agent has experienced. This keeps track of the number of days spent on each given floor and the average food that was available whilst the agent was on that floor.
     \item  \texttt{currentDayonFloor}:The number of days the agent has spent on the current floor.
     \item  \texttt{currentFloorRisk}: This is the level of risk to the survival of the agent associated with the current floor. 
-
     \item  \texttt{daysHungry}: The number of consecutive days the agent has not consumed food.
     \item  \texttt{seenPlatform}: This variable is used to remember if the agent has seen the platform. The agent uses this to decide when to prepare for a new day.
     \item  \texttt{prevAge}: The age of the agent on the previous day.
@@ -97,7 +113,7 @@ The above assumes that the agent has experienced floors both above and below the
 
 Next, the agent determines the level of risk to its survival that it associates with the current floor. It does this by checking whether the estimated amount of food would be enough to exit a hypothetical critical state and enter the weak state. The difference between the required food and the estimated food will determine the floor risk value. The floor risk value will subsequently adjust the agent's greediness. 
 
-Note that since higher levels of strategising are associated more with conscientiousness agents, it makes sense for their estimates to be more pessimistic. Therefore, they will under-estimate food availability and the floor risk will have a greater impact on their greediness. In the case of less conscientiousness agents, who would be both less planning-oriented and also more optimistic, the food estimation is higher and the risk estimator is weighed down.
+Note that since higher levels of strategising are associated more with conscientiousness agents, their estimates will be more pessimistic. Therefore, they will underestimate food availability and the floor risk will have a greater impact on their greediness. In the case of less conscientiousness agents, who would be both less planning-oriented and also more optimistic, the food estimation is higher and the risk estimator is weighed down.
 
 \section{Agent Operation}
 \label{sec: Agent Operation}
@@ -107,7 +123,7 @@ This section outlines the particulars of agent operation and decision making.
 \label{subsec: Main Operation}
 At the point where each agent is deployed into a simulation, its personality traits, behavioural characteristics and memory bank are initialised. 
 
-Once initialisation is complete, the agents check their inbox for messages, requests or treaties. This is done every tick to ensure messages are detected from the floors above and below. When a message, request or treaty is found in the inbox, a function calls the corresponding handler to the message type. The handlers then decide whether a request or treaty is accepted and the relevant actions performed. This is further discussed in later sections. 
+Once initialisation is complete, the agents check their inbox for messages, requests or treaties. This is done every tick to ensure messages are detected from the floors above and below. When a message, request or treaty is found in the inbox, a function calls the corresponding handler to the message type. The handlers then decide whether a request or treaty is accepted and the relevant actions performed. This is further discussed in \Cref{subsec: Treaties}. 
 
 Once the inbox is handled, the agent checks whether a floor change has occurred and updates the floor Map (prevFloors) with the current available food on the platform for the day. The agent also completes a Floor risk assessment which has been outlined in the previous two sections. 
 
@@ -121,7 +137,7 @@ The flow chart in \Cref{fig: operation flow chart} outlines the decisions made c
     \label{fig: operation flow chart}
 \end{figure}
 
-Upon completion of the memory bank updates and risk assessment routines, the agent then enters its food consumption routine. This routine runs only once per day when the platform is on the agent's floor. The routine begins by assessing whether the agent's health has been critical for multiple days, if this is the case the agent overrides any requests in effect and prioritises getting its health out of critical (Note however no treaties that prevent the agent from leaving critical HP would be accepted by the agent and thus no treaties would be broken at this point, treaty conditions are detailed in a later section). The kindness adjuster is weighted down and the TakeFood function is executed. If the agent's health is not critical the routine evaluates whether it can abide within the constraints imposed for accepted treaties and requests. Once the constraints are in place the TakeFood function is executed in accordance to the greed and kindness adjusters within the bounds of the request/treaty constraints. 
+Upon completion of the memory bank updates and risk assessment routines, the agent then enters its food consumption routine. This routine runs only once per day when the platform is on the agent's floor. The routine begins by assessing whether the agent's health has been critical for multiple days, if this is the case the agent overrides any requests in effect and prioritises getting its health out of critical (Note however no treaties that prevent the agent from leaving critical HP would be accepted by the agent and thus no treaties would be broken at this point, treaty conditions are detailed in \Cref{subsec: Treaties}). The kindness adjuster is weighted down and the TakeFood function is executed. If the agent's health is not critical the routine evaluates whether it can abide within the constraints imposed for accepted treaties and requests. Once the constraints are in place the TakeFood function is executed in accordance to the greed and kindness adjusters within the bounds of the request/treaty constraints. 
 
 Once the routine is complete the seenPlatform variable is reset to indicate the end of the day.
 
