@@ -124,6 +124,7 @@ Summing the net total of all the initial responses to zero, allows us to explore
     Sum total                       & Stubbornness      & Morality         & Mood             & Friendship     \\ \midrule
     Request Leave Food              & 0                 & 0                & 0                & 0              \\ \bottomrule
     \end{tabular}
+    \caption{Message Reactions.}
 \end{table}
 This zero-sum agent is how our agent is currently set, it represents the neutral agent. One who possesses no inherent emotional bias. This was done by balancing the positive and negative reactions to a friend, and those to a non-friend separately. We noticed the need for this when our agent would initially get stuck at the +ve and -ve limits of certain emotions. As future work, it would be exciting to see the emergent strategies which we hope to observe as we introduce biases. For instance, an agent whose net sum of all interactions leaves them with a stubbornness increase, coupled with an inherently moral agent, may create strategies yet thought of. 
 
@@ -152,6 +153,7 @@ Agents that are in a bad mood will not accept treaties that it  needs to honour 
         mood $>$ 60             & Weak (4)                              & m$>$60, 0$<$M$<$40        & m$>$60, 20$<$M$<$60       & m$>$60, 40$<$M$<$80       & m$>$60, 60$<$M$<$100      & m$>$60, 80$<$M        & N/A since 100$<$M     \\ \hline
         mood $>$ 80             & SurvivalLevel (5)                     & m$>$80, 0$<$M$<$40        & m$>$80, 20$<$M$<$60       & m$>$80, 40$<$M$<$80       & m$>$80, 60$<$M$<$100      & m$>$80, 80$<$M        & N/A since 100$<$M     \\ \hline
     \end{tabular}}
+    \caption{Treaty Acceptance.}
 \end{table}
 Treaties also have a specified duration and signature count, which are visible to any agent that wishes to sign the treaty. These are likely to affect an agent’s decision to accept a treaty and have been taken into account. If a treaty lasts longer than twice the reshuffle period, an agent deems it too far into the future to be able to predict what will happen and plans to reject the treaty. However, if a treaty has more than five signatures, we deem it to be a popular treaty. If the agent plans to reject the treaty as a result of any previous logic, the influence of peer pressure will cause the agent to reconsider accepting the treaty. Peer pressure is based on the concept of crowd suggestibility coined by Park, R. E.  in 1904 in his “Masse und Publikum”, \cite{Solr-413687}. The stubbornness of an agent is used as the likelihood to give in to peer pressure, so more stubborn agents are less likely to reconsider their response, and more likely to stick with their original decision.
 
@@ -189,6 +191,7 @@ The agent calculates the amount of food it decides to take in the following mann
         Deaths                  & 309                   & 322                    & 139                   \\ \hline
         Utility                 & 0.009                 & 0.013                  & 0.034                 \\ \hline
     \end{tabular}
+    \caption{Experimental results.}
 \end{table}
 These experiments were run for 500 days, with 50 food for 10 agents. This means there was enough food for every agent to survive at critical level but not enough to satisfy all agents. For this reasons, agents need to communicate and self organise in order to decrease the amount of deaths in this strenuous circumstances.\par 
 The results indicate that the agents are capable of reducing their deaths significantly by following the research on group identity. As expected from this research,  classical game theory methods of selfishness are outperformed by more intricate methods of organisation in a collective, such as the one exposed by group identity.\par
