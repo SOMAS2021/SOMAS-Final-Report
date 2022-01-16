@@ -101,7 +101,7 @@ The process of changing an agent’s social motive based on certain factors can 
 \begin{equation}
     \begin{gathered}
     p = [\mathit{currentHP, currentFloor}],\quad w=[\mathit{weightHP, weightFloor}] \\ 
-    w^\top{}p = \mathit{weightHP*currentHP + weightFloor*currentFloor}
+    w^\top{}p = \mathit{weightHP \cdot currentHP + weightFloor \cdot currentFloor}
     \end{gathered}
 \end{equation}
 
@@ -169,7 +169,7 @@ To represent the willingness of an agent to change its social motive, an additio
 
 \begin{equation}
     \begin{gathered}
-    \mathit{scaledUpdate = behaviourUpdate * (1-stubbornness)} \\
+    \mathit{scaledUpdate = behaviourUpdate \cdot (1-stubbornness)} \\
     \mathit{newBehaviour = currentBehaviour + scaledUpdate}
     \end{gathered}
 \end{equation}
@@ -587,9 +587,9 @@ where $d = \frac{d_\text{current}}{d_\text{treaty}}$.
 The following examples show how this plays out.
 
 \begin{itemize}
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 8$:  $d=100\%$ (treaty expires before leaving the current floor)
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 20$: $d=50\%$
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 100$: $d = 10\%$
+    \item $d_\text{current} = 10$, $d_\text{treaty} = 8\Rightarrow d=100\%$ (treaty expires before leaving the current floor)
+    \item $d_\text{current} = 10$, $d_\text{treaty} = 20\Rightarrow d=50\%$
+    \item $d_\text{current} = 10$, $d_\text{treaty} = 100\Rightarrow d = 10\%$
 \end{itemize}
 
 
