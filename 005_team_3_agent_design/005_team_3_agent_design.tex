@@ -1,131 +1,153 @@
 \chapter{Team 3 Agent Design}\label{team_3_agent_design}
 
-\section{The Agent}\label{the_agent}
-The agent is designed to show different combinations of behaviour depending on three variables we have used to define any agent: stubbornness, \cite{chun_2005},  morality, \cite{waller_2015}, and mood. These three variables, defined in a range of 0 to 100 will change as the agent encounters a series of scenarios, with its personality shifting as events unravel.  The value of the different variables will affect how the agent takes decisions and acts, all of which will be explained in the following pages. \par
-%%ADD THE MAIN CODE!!!
-As the main function from which all the functionality of the agent is bases we have the \texttt{func (a *CustomAgent3) Run()}. The agent follows then next steps:
-\begin{enumerate}
-    \item The agent starts by updating its personality variables at the beginning of each day calling the necessary function. 
-    \item If the agent was just ‘born’ it will learn an initial value for the average food consumed. 
-    \item In the case the agent has changed floors the personality variables are changed depending on the characteristics of the change. 
-    \item In the case the platform is not empty the agent will eat, the quantity depending on \texttt{a.takeFoodCalculation()}.
-    \item Finally the agent will read and send any messages it considers.
-\end{enumerate}
-
-\subsection{Agent Knowledge}
-Agent 3 will be able to remember facts in order to make decisions. The variables in their memory are:
-\begin{enumerate}
-    \item \texttt{floors []int}: stores the floors the agent has been in before. This information is used on reshuffles to set our mood. 
-    \item \texttt{lastHp int}: stores the last recorded HP value. Currently used to check a new day has started.
-    \item \texttt{friends map[uuid.UUID]float64}: the agent is aware of the people they have met during their time in the tower. We assigned the agents uuid with our affection for them. Affection range is 0-1 (0 = dislike, 1 = like). 
-    \item \texttt{foodLastEaten food.FoodType}: stores food last eaten.
-    \item \texttt{foodLastSeen food.FoodType}: stores food last seen in the platform
-    \item \texttt{foodMovingAvg float64}: stores moving average of food consumed
-    \item \texttt{agentAge int}: stores how old (in days) the agent is.
-    \item \texttt{treatyProposed messages.Treaty}: stores whether we already have a treaty with the person above
-    \item \texttt{reshuffleEst int}: stores our estimation of reshuffle
-    \item \texttt{hpAbove int}: stores the HP our neighbour above last told us they had
-    \item \texttt{hpBelow int}: stores the HP our neighbour below last told us they had
-  \end{enumerate}
-
-\subsection{Agent Decisions}
-Agent 3 will be able to take decisions when receiving messages or after signing treaties and store these until they eat. This information is used to symbolize a predetermined decision has been taken instead of “impulsively” eating food depending solely on our hunger and state of mind.
-\begin{enumerate}
-    \item \texttt{foodToEat int}: stores how much food we have decided to eat in the next eating period.
-    \item \texttt{foodToLeave int}: how much food we have decided to leave. It is necessary in case we want to: E.g eat 6 food and leave at least 10 food but when the platform arrives we see that it has 13 food. Both statements cannot be fulfilled and so we must prioritise one.
-\end{enumerate}
-
-\subsection{Agent Variables}
-Agent 3 will act differently depending on three different variables that define them, which will give the agent different personalities.
-\begin{enumerate}
-    \item \texttt{stubbornness int}: defines the likelihood of the agent to read a message. E.g: Stubbornness = 20 means there is a 20\% chance that the agent will ignore the message.
-    \item \texttt{morality int}: defines the willingness of the agent to help others, \cite{waller_2015}, in other words, how much you care about other agents in the tower. 
-    \item \texttt{mood int}: defines how likely the agent is to do things, it will affect its decision-making process.
-\end{enumerate}
-For the purpose of this agent, we will define personality as the individual differences in characteristic patterns of thinking, feeling, and behaving, as defined by the American Psychology Association. The traits that define an agent's personality are mutable, making our agent adapt its personality depending on the circumstances. 
-
-\subsection{Agent Generation}
-%%TODO: have to add the code snippet
-The function generates a new agent by initializing its variables, knowledge and decisions. All knowledge and decisions are defined initially as empty except for our last HP, which is initialized as 100 (as all agents are). \par
-The variables of our agent, which define the personality it has, are randomly allocated to generate different agents. All three variables are defined to be in the range 0 to 100. Therefore morality and mood are randomly allocated to a value between 0 and 100. To ensure our agent is not completely deaf from the start we limit the initial stubbornness to 75. This does not limit the agent once it starts interacting and taking decisions. Which means it could possibly end up with a stubbornness value of 100 if the situations it goes through are auspicious for it.
-
-\subsection{Agent Strategy}
-Our agent follows the following strategy depending on the three agent variables:
-\begin{enumerate}
-    \item When morality is high, agents are more willing to listen and obey other agents.
-    \item When morality is low, agents are less willing to listen and choose to eat more than they would when they have high morality.
-    \item When stubbornness is high, agents will be “deaf” to most messages and not react to them.
-    \item When stubbornness is high, agents are more willing to listen to messages.
-    \item When mood is high, the actions taken are beneficial for more people.
-    \item When mood is low, the actions taken are more beneficial for ourselves.
-\end{enumerate}
-
-\section{Agents Emotions}\label{agents_emotions}
-The following functions act as helpers for the rest of the agent code, enabling changes in the agents variables and reactions due to the value of these variables, as well as reactions to friendships. 
-
-\subsection{Read Function}
-\texttt{func (a *CustomAgent3) read() bool}: our agent's stubbornness will limit the amount of messages it might read and react to. Each time we receive a message we call the \texttt{read()} function. This function will take into account the current stubbornness of the agent and return if the message must be read, and reacted to, or just discarded. 
-This function works by randomly generating a number between 0 and 100. If this number is higher to the current stubbornness the message is read, if not it will be discarded. 
-
-\subsection{Friendship Function}
-\begin{sloppypar} %%Gives style warning so this sloppypar solves it
-\texttt{func (a *CustomAgent3) updateFriendship(friend uuid.UUID, change int)}: changes the value of the friendships using Q-Learning. Change is either -1 or 1. \par
-\end{sloppypar}
-In the case we encounter a new agent we record this new ‘friendship’ in our memory. From the start we have an initial opinion on the agent we have just met. As for now we just know about its existence, we predefine a friendship level depending on our current morality. To ensure we don’t create a huge predisposition of the agent to others we limit this range on initial impression to be between 0.4 and 0.6
-
-\subsection{Mood, Morality and Stubbornness Helper Functions }
-\texttt{func (a *CustomAgent3) changeInMood(pointsMin, pointsMax, direction int)}: Helper function to change the mood. There is an aspect of randomisation and the mood changes between pointsMin and pointsMax. Depending on the direction, 1 or -1, the mood will change in a positive or negative sense, increased or reduced. \par
-\begin{sloppypar} %%Gives style warning so this sloppypar solves it
-\texttt{func (a *CustomAgent3) changeInMorality(pointsMin, pointsMax, direction int)}: same as before but changes morality. \par
-\end{sloppypar}
-\texttt{func (a *CustomAgent3) changeInStubbornness(change, direction int)}: same as before but changes stubbornness. \par
-
-\subsection{Changes to Environment}
-Changes to the environment will change the variables our agent is defined by. We have defined two possible environmental changes our agent will be affected by:
-\begin{enumerate}
-    \item A new day \texttt{func (a *CustomAgent3) changeNewDay()}: changes our morality and mood depending on our HP that morning. Changes depend on our current HP, which we have divided in four possible situations: 0-19, 20-39, 40-74 and 75-100.
-    \item A change in the floor we are located (reshuffle) \texttt{func (a *CustomAgent3) changeNewFloor()}: a change in the floor we are at will make the mood of our agent to change accordingly. We have designed for 4 possible scenarios to happen: 
-    \begin{enumerate}
-        \item We arrive at the highest floor we have ever been to: we get a boost of moodas we should be able to eat more than any other time, our mood can change positively between 5 and 10 points.
-        \item We arrive at a higher floor than before, but not the highest we have ever been: We are higher than before which is positive for us. As we could have done better our mood increases but less than in the previous scenario, our mood can change positively between 0 and 5 points.
-        \item We have arrived at a lower floor than before, but we have been lower: Our situation is worse than before but it could have been even worse. We lose mood points, our mood can change negatively between 0 and 5 points.
-        \item We have arrived at the lowest floor ever: We have never been in a worse situation and our agent will suffer a blow from this change. Our mood can be specially affected in this scenario, our morale can change negatively between 5 and 15 points.
-    \end{enumerate}
-    Each scenario can affect our agent in a different way. To make the scenario as realistic as possible we have added an element of randomness to the change in mood, depending on the range given on each of the scenarios. \par
-    Inside the function we store our new floor in our knowledge, we restart the HP of our neighbors, we don’t know who they are, and call \texttt{a.reshuffleEstimator()}. \par
-    \texttt{func (a *CustomAgent3) reshuffleEstimator()}: ensures we do not accept treaties longer than two times the reshuffle period so there are less chances a treaty kills us 
-\end{enumerate}
-
-\section{Treaties}\label{treaties}
-
-\subsection{Proposing a Treaty}
-
-\subsection{Handling a Proposed Treaty}
-Each Team 3 agent contains variables mood, morality, stubbornness and friendship, which dictate how an agent will send and respond to messages, and how much food an agent will take from the platform. These variables are initialised differently for each agent, and evolve independently depending on the actions of that agent each tick. In order to engineer a system that can be self-organising, it is important to provide agents with the capability to agree to act together. This means that agents will commit to performing the same action when under the same circumstances. A treaty, which is used by all agent types and is explained previously, will need to define the circumstances, or condition, and the action, or request. Hence, the implementation is as follows: \par
-Agents that are in a bad mood will not accept treaties that they need to honour even when they are at very low health, since they have a low confidence in the capabilities of other agents. However, when in a good mood agents will accept treaties that must be honoured even at low health. Morality is an indicator of the agent’s desire to perform actions that will benefit others, as opposed to just benefiting the agent itself. Therefore, very moral agents will accept treaties that involve them consuming just enough food to survive, but not too little food that they die or too much that they are too greedy. Similarly, very immoral agents will only accept treaties where they consume more than enough food, since they disregard the food needs of the other agents. The table below displays of the mood and morality values which agents must satisfy to accept treaties with any given condition on AgentPosition, and request of FoodTaken.\par
+\section{The Agent}\label{sec:the_agent}
+Team 3’s agents are based on the Theory of Reasoned Action (TRA). The agents are designed to have a shifting personality dependent on the three variables that this theory links to the behaviours of an agent. These three variables, together with a social network, define their personality as a whole, \cite{victor} and influence the actions they will take.\par
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=1\linewidth]{005_team_3_agent_design/images/table1.jpg}
+    \includegraphics[width=1\linewidth]{005_team_3_agent_design/images/image1.jpg}
+    \label{fig:TRA-diagram}
 \end{figure}
-Treaties also have a specified duration and signature count, which are visible to any agent that wishes to sign the treaty. These are likely to affect an agent’s decision to accept a treaty, and have been taken into account. If a treaty lasts longer than twice the reshuffle period, an agent deems it too far into the future to be able to predict what will happen, and plans to reject the treaty. However, if a treaty has more than five signatures, it is an extremely popular treaty. If the agent plans to reject the treaty as a result of any previous logic, the influence of peer pressure will cause the agent to reconsider accepting the treaty. The stubbornness of an agent is used as the likelihood to give in to peer pressure, so more stubborn agents are less likely to reconsider their response, and more likely to stick with their original decision.\par
-After all of this, a boolean value to accept or reject the treaty is sent in a reply message, informing the proposed treaty sender of the agent’s decision to accept or reject the treaty.
+The Theory of Reasoned Action was developed by Martin Fishbein in 1967. The TRA states that the behavioural intentions of individuals can be attributed to three interdependent factors: Perceived behaviour control, the subjective norm, and the attitude of the individual, as you can see in the figure above, \cite{norazalan}. Although it was recognised from the start, it must be noted that the TRA is unable to accurately and consistently predict non-volitional behaviours of the individual. Therefore, TRA can only be applied to those actions in which a reason can be found, actions that occur as a reaction to others and that the individual has control over, \cite{TRA}. This is applicable to our scenario, in which the agent must make a decision on how much food to eat after deliberating on their social network’s messages. \par
+The application of TRA, in this case, is ideal given that reversing the methodology enables us to define an individual through the 3 core personality traits. The theory is a valid methodology to predict future behaviour by observing occurring actions and finding those components that caused them. Those components of behaviour can also be extrapolated to define an individual's behaviour and used to define it from the start. Therefore building the main characteristics of the personality of the individual, although lacking the uncontrollable or instinctive reactions. \par
+Following the Theory of Reasoned Action, we have defined the agents’ emotion variables to be: 
+\begin{enumerate}
+    \item Stubbornness: it addresses perceived behaviour control, which is the influence that external agents have on the decisions that are to be taken. It is applied by the agent to ignore or read incoming messages and succumb or not to group pressure. 
+    \item Morality: it addresses the subjective norm, which is one's idea of what is socially perceived to be right or wrong.
+    \item Mood: it defines the attitude towards the action to take.
+\end{enumerate}
+These variables are modified as agents interact, which lead our agent to make different decisions during its time in the tower. All possible changes to these variables are done through ranges with the exact change each time being randomised, in other words inside a specified range any of the variables will change a different amount as a reaction for the same action. This course of action is based on the substantive uniqueness of each behaviour as defended by Martin Fishbein, \cite{TRA}. This characteristic of randomness in the agents’ behaviour fulfilled the role of covering the fact that TRA does not take into account non-volitional behaviours, making the agent act as much as possible in a human-like behaviour. \par
+The next step after identifying our agent strategy was to think about the scenario and how the problem should be solved. Our first approach used classical game theory, which states that under normal circumstances, an unbiased agent would always prioritise themselves and their needs over anything else. Hence, this dictates that each agent should not act in a moral way at all. In our scenario, this leads to agents taking selfish amounts of food, causing agents below to have less food and potentially die. However, we found research demonstrating how humans in a social environment tend to make decisions benefiting the collective, \cite{batson_batson_todd_brummett_shaw_aldeguer_1995}. This contradicted traditional game theory views and made this approach unreasonable when trying to recreate a human type behaviour, following the two most common explanations of why humans violate classic game theory: enlightened self-interest and group identity. 
 
-\section{Agents Food}\label{agents_food}
-The food calculation function first takes into account treaties which the agent in question has agreed to using the handleTreaties function, as by construction treaties take highest priority when deciding the variable foodToLeave, which is the amount of food an agent leaves on the platform. Therefore, when the agent in question has accepted a treaty the food calculations become dependent on the treaty conditions.\par
-All treaties which the agent has accepted are gone through individually to calculate the final amount of food to take from the platform. For each treaty which is accepted by the respective agent, \texttt{conditionMet()} function checks whether the condition stated within the specific treaty is satisfied, in which case the agreed upon amount of food to leave on the platform is calculated and assigned to the foodToLeave variable, replacing its previous value. In the case where the treaty request is not to leave food on the platform, but to inform the sender of the treaty of our agent's HP, a foodToLeave is unchanged and instead a message containing our current HP is sent to the sender agent. After all the treaty conditions have been dealt with, we move onto the actual food calculation portion of the function.\par
-The food calculation function calculates the amount of food an agent should take and leave on the platform depending on various variables, including morality, and if specified, foodToEat and foodToLeave. foodToEat and foodToLeave take the value “-1” if they are not defined by the end of  the message pipeline. This leads to four possible cases of foodToEat and foodToLeave values, which are handled differently. This logic is expressed in the following table:
+
+\subsection{Action Process}
+The Agent follows the following steps during their day: 
+\begin{enumerate}
+    \item The agent starts by updating their defining variables at the beginning of each day based on their HP. This acts as the agents checking in on themselves and changing their attitude(mood) and morality depending on their condition(HP).
+    \item If the agent was just ‘born’ it will estimate an initial value for the average food consumed. 
+    \item When the tower reshuffles the agents (which each agent knows by checking what floor they are on), the agent’s mood changes depending on the relative position of the new floor to the other floor. 
+    \item The agent attempts to eat every day. The quantity depends on treaties, the messages they have received and whether other agents have requested them to leave or eat a certain amount of food or a calculation based on the agent’s current values. More information on this can be found in \Cref{sec:food_intake}. 
+    \item Finally, the agent will attempt to communicate with other agents and create a social network via message sending and treaty proposition. More information on this is can be found in \Cref{sec:agent_communication}. 
+  \end{enumerate}
+
+\subsection{Agent Knowledge}
+Agent 3 will be able to remember facts in order to make decisions. The information that is stored in their memory is:
+\begin{enumerate}
+    \item The floors the agent has been in before. This information will affect the agent’s mood after being reshuffled, as they would remember where they have been and know if the new floor is a good or bad one.  
+    \item The last recorded HP value. Used to see changes in the agent's health.
+    \item The agent’s friendship network. They are aware of the people they have met during their time in the tower. The agent’s friends are identified and are considered more or less close to the agent with an affection parameter that ranges from 0 to 1, 0  being complete dislike for the other agent.
+    \item The amount of food last eaten.
+    \item The amount of food last seen on the platform.
+    \item A moving average of food consumed.
+    \item The age of the agent.
+    \item The treaty we have proposed until it is accepted or rejected.
+    \item The estimation of the reshuffle.
+    \item The HP our neighbour above last told us they had.
+    \item The HP our neighbour below last told us they had.
+\end{enumerate}
+
+\subsection{Agent Generation}
+The defining variables of our agents are randomised when they are generated in order to avoid preconditioned agents and mimic different personalities. All three variables are defined to be in the range 0 to 100. Morality and mood are randomly allocated to a value in the range, but stubbornness is limited to a number between 0 and 75. As explained in our agent parameters, stubbornness represents the effect of external influences on an agent. A stubbornness of 100 would mean this agent is completely unwilling to listen and would ignore all incoming messages, effectively making them an agent that disturbs the tower. In order for this to not be the case, we added the limitation to the value of stubbornness.\par
+As Shao et al. have shown in “Beyond Moral Reasoning: A Review of Moral Identity Research and Its Implications for Business Ethics”, \cite{shao_aquino_freeman_2008}, one’s moral action is most heavily influenced by their moral personality, as opposed to their moral reasoning, which empirically seems to show only a minor influence on the moral behaviour of an agent, \cite{blasi_1983}. Hence, we used this variance and unpredictability to initialise our agents randomly on the moral scale. This insight also allowed us to witness a purely emergent strategy and nature as opposed to a pre-programmed inherent morality.\par
+While the initial randomness allowed for interesting strategies to occur, we also wanted our agents to adapt their morality on the basis of their community and associations, as argued by Shao. Making it possible by having all actions an agent does affect its emotion variables. 
+
+\section{Agent Communication}\label{sec:agent_communication}
+Communication between agents is fundamental for the possibility of collaboration and self-organisation between agents. Crowd behaviour is considered to be generated by individuals, context-dependent and dynamic, as defended by the modern foundation of crowd behaviour, \cite{0d9bc1ee81234780b2bb6ecd02762d56}. In this project, communication between agents is based on two concepts, treaties and direct messages, which are equally exploited by our agent and combined with the conceptualization of friendship levels. 
+
+\subsection{The Agent’s Social Network}
+The agent forms relationships with others surrounding them as they communicate with each other. The agent remembers everyone they have met and assigns a level of friendship to them depending on their interactions. By doing this, the agent forms a social network that will affect their decisions, something that the Theory of Reasoned Action explores in the perceived behaviour control aspect of the theory. It is shown that all three main variables are linked together and for this reason, the agent will have a better or worse opinion of someone they have just met depending on their morality at that point. \par
+Relationships are of high esteem for the agent as it follows the Aristotelian concept of friendship which defends friendship as “the finest way we exercise practical reasoning”. Quoting Aristotle: “Friendship seems to hold cities together, and lawgivers seem to care for it more than for justice … and when men are friends, they have no need for justice”. Friendship is considered the best form of human moral action by The Nicomachean Ethics, \cite{sokolowski}, and is fundamental in the decision-making process of the agent and its response to communication started by other agents. \par 
+McCullough et al. investigate thoroughly the nature of prosocial action and gratitude’s place in transactions, \cite{doi:10.1111/j.1467-8721.2008.00590.x}. While this is difficult to realise fully in the code, we aimed to use the definitional guidelines set out, to relate our agent’s action and emotion to some of the more nuanced but socially beneficial emotions. Our friendship function allows us to assign a level of gratitude to our agent in response to the prosocial action of the other agents. In this way, we could more effectively alert the agent to the prosocial nature of another’s actions. By utilising the friendship function to, in turn, behave more prosocially to those who have done so to us, we embedded a system of gratitude in our agents’ actions. \par
+We graduated our response by negotiating the selflessness of the action of the foreign agent. That is to say, in our game, the more severe the sacrifice on the behalf of the foreign actor, the more grateful we became. This is based on McCullough’s definition that one experiences gratitude when “they have benefited from someone’s costly, intentional, voluntary effort on their behalf”. \par 
+Emotions allow us to respond to reality in a self-protective and self-enhancing way, \cite{ekman_1992}, it was this response we wanted our agent to have so that the emotions would govern their actions, by either leading them on a self-protective path, if circumstances such as selfish agents prevailed, or a self-enhancing manner, as cooperation would beget further cooperation through our system of gratitude.\par 
+This is the basis of our friendship metric and implies our agent will react more positively to a friend and will increase the friendship of those with whom it has positive interactions.
+
+\subsection{Message Sending}
+Message sending is determined by a probabilistic decision, with each message having a 0.2 probability of being sent. The direction the messages are sent in is determined by the moral state of the agent. When the agent's morality is low, they will tend towards self-preservation and send messages upwards requesting information or help. On the other hand, when morality is high, the agent will look to create a stable society as stated by their willingness to look ahead and communicate with those below him to offer help and information, aiming to fortify their social network.\par 
+The design of message passing has various noteworthy characteristics that act to aid the agent and occur if the conditions make it necessary: 
+\begin{enumerate}
+    \item The agent prioritises itself when its HP is critical, opting for treaties and messages that involve other agents leaving food in the platform and utilising this mechanic as a failsafe when in danger.
+    \item The agents take into account the neighbours health when sending messages proposing how much food to leave on the platform. This makes the message more likely to be accepted. 
+\end{enumerate}
+
+\subsection{Message Reception}
+When messages are involved, stubbornness is used to decide to ignore or read a message, with our reaction or answer also being dependent on the stubbornness of the agent. \par
+The agent will follow the next process when a message is received:
+\begin{enumerate}
+    \item The agent will decide to ignore or read the message, with a probability of ignoring the message equal to the stubbornness level.
+    \item If the agent decides to read the message it is analysed and matched with the type of response or responses acceptable for the message. 
+    \item The agent will note the agent that sent the message and consider the friendship level it shares with the sender. Friendship together with the morality level and the content of the message itself will decide the exact content of the response.
+    \item The content of the message and its sender will affect the agents’ emotional variables and the friendship level with the sender. This change affects the future reaction to communication done by other agents and the decisions taken by the agent from that point onwards. 
+\end{enumerate}
+To ensure a minimum level of communication all messages read will be answered by the agent. 
+
+\subsection{Reaction to Received Messages}
+The changes are dependent on four criteria to determine initial agent characteristic manipulation. These four variables are the variables present upon the receipt of the message and somewhat representative of the type 1 brain system discussed in \cite{kahneman_tversky_2000}, \cite{frankish_2010}. \par
+The initial emotional response is based on the variables of the immediate past, the hp moving average on the last five ticks, opposed to the overall hp average, or welfare average. This is to represent the subconscious layer of emotional response, as seen in, \cite{kamble_2021}, whereby our response to the situation is more irrational and illogical than the conscious mind perceives. \par
+Summing the net total of all the initial responses to zero, allows us to explore the oscillatory nature of emotion while avoiding the possible pitfall of any dominant emotions. \par
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{@{}lllll@{}}
+    \toprule
+    HP dec last tick [nonfriend]    & Stubbornness      & Morality         & Mood             & Friendship     \\ \midrule
+    ask Food Taken                  & 0                 & -0.5             & -0.5             & 0              \\
+    ask HP                          & 0                 & -0.5             & -0.5             & 0              \\
+    ask Intended Food Intake        & 0                 & 0                & 0                & 0              \\
+    Request Take Food               & 1                 & -0.5             & -1               & -1             \\
+    Request Leave Food              & 1                 & -0.5             & -1               & 0              \\ \bottomrule
+    \end{tabular}
+\end{table}
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{@{}lllll@{}}
+    \toprule
+    HP inc last tick [nonfriend]    & Stubbornness      & Morality         & Mood             & Friendship     \\ \midrule
+    ask Food Taken                  & 0                 & 0                & 0                & -1             \\
+    ask HP                          & -1                & 1                & 1.5              & 1              \\
+    ask Intended Food Intake        & 0                 & 0                & 0                & 0              \\
+    Request Take Food               & 0                 & 0                & 0                & 0              \\
+    Request Leave Food              & -1                & 1                & 1.5              & 1              \\ \bottomrule
+    \end{tabular}
+\end{table}
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{@{}lllll@{}}
+    \toprule
+    Sum total                       & Stubbornness      & Morality         & Mood             & Friendship     \\ \midrule
+    Request Leave Food              & 0                 & 0                & 0                & 0              \\ \bottomrule
+    \end{tabular}
+\end{table}
+This zero-sum agent is how our agent is currently set, it represents the neutral agent. One who possesses no inherent emotional bias. This was done by balancing the positive and negative reactions to a friend, and those to a non-friend separately. We noticed the need for this when our agent would initially get stuck at the +ve and -ve limits of certain emotions. As future work, it would be exciting to see the emergent strategies which we hope to observe as we introduce biases. For instance, an agent whose net sum of all interactions leaves them with a stubbornness increase, coupled with an inherently moral agent, may create strategies yet thought of. 
+
+\subsection{Proposing a Treaty}
+When the agent HP is critical, they will ask for help by either asking for the person upstairs to leave at least the amount of food necessary to survive or, if it doesn’t have any active treaties, a treaty that states: if HP is higher than 20 leave 95\% of the food in the platform for 3 days. At this time the agent's self-preservation instinct takes precedence and their objective becomes to eat enough food to get out of the critical state before the agent dies.
+When the agent is not in critical condition, it will be able to propose other treaties depending on their morality. The first treaty is detrimental for the tower and the other two are ‘fair’ treaties for the tower. \par
+\begin{enumerate}
+    \item If the agent is very immoral, it will send a treaty that is detrimental for anyone above them. It is expected for this treaty to be rejected by any sensible agent’s and is done as a way of mimicking frustration or the desire to hurt others when morality is low.
+    \item If HP is below 60 leave at least 60\% of the food on the platform for 5 days. This treaty tries to encourage immoral agents in higher positions to share food. 
+    \item If HP is below 10 leave at least 95\% of the food on the platform for 10 days. This treaty is aimed at moral agents that would be willing to start eating less until they are close to death.
+\end{enumerate}
+Both of the last treaties are proposed randomly by the agent, without a specific proclivity for any of the two. The randomness of the treaty selection is done to increase the volitional behaviour of the agent. Characteristics that the agent inherently lacks if its personality is solely based on the TRA.
+
+\subsection{Handling a Proposed Treaty}
+Following our strategy, agents that are in a bad mood will not accept treaties that they need to honour when they are in very low health, since they have low confidence in the capabilities of other agents. However, when in a good mood agents will accept treaties that must be honoured even at low health. Morality is an indicator of the agent’s desire to perform actions that will benefit others, as opposed to just benefiting the agent itself. Therefore, very moral agents will accept treaties that involve them consuming just enough food to survive, but not too little food that they die or too much that they are too greedy. Similarly, very immoral agents will only accept treaties where they consume more than enough food since they disregard the food needs of the other agents. The table below displays the mood and morality values that agents must satisfy to accept treaties with any given condition depending on the agent’s health, and the food the agent would have to leave according to the request of the treaty. \par
 \begin{figure}[htb]
     \centering
     \includegraphics[width=1\linewidth]{005_team_3_agent_design/images/table2.jpg}
 \end{figure}
-Notice that when foodToEat is unspecified, the agent will automatically desire to eat at least survivalFood food if it is dying (meaning having been in critical state for 2 days). However, when foodToEat is specified, this cannot be overwritten. Here, there is also no case which avoids death, since that should have been prevented in the message pipeline if desired.\par
-The calculation of the foodToLeave and foodToEat is scaled according to the current morality of the agent. When the morality of the agent is maximum (100), the agent will take the most considerate action with respect to the other agents. E.g. If food on the platform <= foodToLeave + foodToEat then the agent will opt to leave the requested amount of food instead of eating the desired amount of food. When the morality of the agent is at a minimum (0), the agent will take the most selfish action possible. Eg. If food on the platform <= foodToLeave + foodToEat then the agent will eat the amount of food they desire regardless of how much will be left on the platform afterwards.\par
-A number of helper functions have been created to improve the readability of the code. These are explained below:
-\begin{enumerate}
-    \item \texttt{func (a *CustomAgent3) foodReqCalc(initalHP int, targetHP int) int}: based on the input initialHP and targetHP variables it calculates the amount of food which is required for the agent to reach its targetHP after the health update and decay processes which occur throughout a day in the tower. The formula is complex, and is reverse engineered using food parameters.
-    \item \texttt{func (a *CustomAgent3) targetHPCalc() int}: calculates a reasonable targetHP for the agent to aim for based on its currentHP value. At lower HPs the agent should aim to gain more HP as they are in a weakened state and would like to become healthier. At a medium HP level (65 HP) the agent should aim to remain at that HP level. Finally, when at a high HP level the agent should aim to lose some HP as in a hostile environment such as the tower their conscience should not allow them to act so selfishly. This is done using a linear equation which scales the targetHP accordingly between 20HP (if HP=10) and 93HP (if HP=100), the minimum and maximum HP values excluding the critical state which behaves differently. Formula used: (9/11)*currentHP + 12.
-    \item \texttt{func foodRange(metric int, min int, max int) int}: this function returns a value ranging between the min and max variables. The value returned is equal to max when the metric is 0, and min when the metric is 100. Formula used: max - metric / (100 / (max - min))
-    \item \texttt{func foodScale(number int, metric int, minScale float, maxScale float) int}: this function returns a value ranging between number*minScale and number*maxScale based on the metric variable, which ranges from 0 to 100. Formula used: (number * minScale * metric) / 100 + number * maxScale * (100 - metric) / 100
-\end{enumerate}
+Treaties also have a specified duration and signature count, which are visible to any agent that wishes to sign the treaty. These are likely to affect an agent’s decision to accept a treaty and have been taken into account. If a treaty lasts longer than twice the reshuffle period, an agent deems it too far into the future to be able to predict what will happen and plans to reject the treaty. However, if a treaty has more than five signatures, we deem it to be a popular treaty. If the agent plans to reject the treaty as a result of any previous logic, the influence of peer pressure will cause the agent to reconsider accepting the treaty. Peer pressure is based on the concept of crowd suggestibility coined by Park, R. E.  in 1904 in his “Masse und Publikum”, \cite{Solr-413687}. The stubbornness of an agent is used as the likelihood to give in to peer pressure, so more stubborn agents are less likely to reconsider their response, and more likely to stick with their original decision. \par
 
-\section{Agents Messages}\label{agents_messages}
+\section{Food Intake}\label{sec:food_intake}
+For an agent to choose what to eat on a given day, they first take into account treaties to which they have agreed. These treaties take the highest priority when deciding how much food to take from the platform. Therefore, when the agent in question has accepted a treaty the choice becomes dependent on the treaty conditions. \par 
+For each treaty that has been accepted, the agent follows the following logic: 
+\begin{enumerate}
+    \item They start by checking whether the condition stated within the specific treaty is satisfied, in which case the agreed-upon amount of food to leave on the platform is calculated. 
+    \item In the case where the treaty request is not to leave food on the platform but to inform the sender of the treaty of our agent's HP, a message containing our current HP is sent to the sender agent. 
+\end{enumerate}
+After all the treaty conditions have been dealt with the agent calculates how much food to eat itself. The calculation depends on the morality of the agent, how much food it has decided to leave on the platform and how much food it has decided to eat. It must be noted that during other processes external to the final decision of how much to eat the agent might have decided how much it would like to eat, a non-binding decision. \par
+Depending on the agents’ decision regarding how much food to eat and leave it will arrive at 4 possible scenarios: 
+\begin{enumerate}
+    \item If it has decided how much food to eat and leave and both conditions can be met the agent will eat. If meeting both conditions is impossible, there is not enough food on the platform, a decision that fulfils the value of how much food to leave will be taken, with the value of how much the agent eats ranging from all that it can to just what it needs to survive. 
+    \item If the agent knows how much it wants to eat but not how much to leave it will attempt to eat the amount it has decided it wants.
+    \item If the agent has not decided how much to eat but knows how much to leave it will eat depending on its health condition. If its health is critical or about to die it will eat whatever it needs to survive. If its health is not of concern it will eat as much as it can while leaving the amount it has decided to leave. Morality is used to scale how much food to eat.
+    \item If it is unaware of how much to leave or eat its decision will depend on its health level. If its health is critical or about to die it will eat whatever it needs to survive. If its health is not of concern, eat an amount of food scaled by its morality.
+\end{enumerate}
