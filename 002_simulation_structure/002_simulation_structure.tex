@@ -106,3 +106,64 @@ Agents in the critical state which do not manage to improve their HP by \lstinli
 \end{equation}
 
 with the \texttt{daysAtCritical} counter incremented by 1. If \texttt{daysAtCritical} reaches \texttt{MaxDayCritical}, the agent dies and is replaced. This counter is reset to 0 if an agent exits the critical state.
+
+
+
+
+%%%%%%%%
+%%%%%%%% Global Utility
+%%%%%%%%
+\section{Utility and Social Welfare}\label{utility}
+
+To assess the performance of the agents in the tower as a group, we first need to define a metric. A common choice is the so-called \emph{social welfare}, based on each agent individual utility. For this project, we implement the notion of utility as introduced in \cite{somasPitt}.
+
+Our system is composed of $N$ agents that can perform specific actions in relation with the common pool resources. In a general context, each agent 
+$i\in\{1, \ldots, N\}$ takes the following actions at each iteration $t\in\{1,\ldots,\infty\}$:
+
+\begin{enumerate}
+    \item Determines the resources it has available, $g_i \in [0,1]$.
+    \item Determines its need for resources, $q_i \in [0,1]$.
+    \item Makes a provision of resources, $p_i \in [0,1]$.
+    \item Makes a demand for resources, $d_i \in [0,1]$.
+    \item Receives an allocation of resources, $r_i \in [0,1]$.
+    \item Makes an appropriation of resources, $r'_i \in [0,1]$.
+\end{enumerate}
+
+In the current setup, the available resources $q_i$ corresponds to the current amount of food on the platform.  The need for resources $q_i$ is defined in relation with the health of the agents. We set the following values to $q_i$:
+
+\begin{equation}\label{resources_needed}
+    q_i=\begin{cases}
+     \frac{\texttt{numberDaysInCriticalState}}{\texttt{maxDaysInCriticalState}} & \mbox{if } \texttt{currentHP}\leq \texttt{weakLevel}  \\ 
+     0 & \mbox{else.}
+     \end{cases}
+\end{equation}
+
+This way, we ensure that $q_i$ is bounded by 1 and is proportional to the days spent in the critical health zone below \texttt{weakLevel}.
+
+Moreover, the agents do not make any provision $p_i$ to the common pool, as they cannot give food to the platform ($p_i=0$). Their demands for resources is the food they ask for when the platform is at their level. In addition, the agents appropriate all resources they are allocated, so that $r'_i=r_i$.\footnote{We ensure that all these parameters are constrained to the range $[0,1]$ by dividing the mentioned quantities by their maximum values.}
+
+The total resources accrued at the end of an iteration, $R_i$, is hence defined as:
+
+\begin{equation}\label{resources_accrued}
+    R_i=r'_i+ (g_i-p_i)
+\end{equation}
+
+where each agent will `generate' resources equal to: its appropriation, plus the amount available on the platform, minus the provision made back to the common pool.
+
+Using the above parameters, it is possible to compute the following utility per agent:
+
+\begin{equation}\label{utility_per_agent}
+    u_i=\begin{cases}
+     \alpha_iq_i + \beta_i(R_i-q_i) & \mbox{if } R_i\geq q_i  \\ 
+     \alpha_i R_i - \gamma_i(q_i-R_i) & \mbox{else}
+     \end{cases}
+\end{equation}
+
+
+where $\alpha_i$, $\beta_i$ and $\gamma_i$ are tuning parameters that follow the rule $\alpha_i>\gamma_i>\beta_i$. In our work, we use the values $\alpha_i=\alpha=0.2$, $\beta_i=\beta=0.1$, and $\gamma_i=\gamma=0.18$.
+
+Finally, we use \eqref{utility_per_agent} to compute an average global utility, which corresponds to the social welfare \textit{SW} divided by the number of agents:
+
+\begin{equation}\label{utility_eq}
+    \mathit{U}=\frac{\sum_i^N u_i}{N}=\frac{\mathit{SW}}{N}
+\end{equation}
