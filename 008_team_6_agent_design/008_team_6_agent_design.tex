@@ -2,18 +2,18 @@
 
 \section{Overview}
 
-In this chapter, we present the technical formulation and results of the Team 6 agent. This chapter is divided into 7 parts and is structured as follows: 
+In this chapter, we present the technical formulation and results of the Team 6 agent. This chapter is divided into seven parts and is structured as follows: 
 \begin{enumerate}
-    \item Specification of the agent structure (\Cref{agent-specification}) .
+    \item Specification of the agent structure (\Cref{agent-specification}).
     \item Introduction of the underlying concepts upon which the agent's behaviour is based (\Cref{social_motives}). 
     \item Demonstration of how the agents utilise common pool resources according to the concepts defined in the previous section (\Cref{food_consumption}). 
     \item Explanation of how a social network is formed through the concept of trust (\Cref{trust}).
     \item Exploration of how the agents communicate and interact with each other in order to self-organize (\Cref{self-organization}).
-    \item Presentation and discussion of a set of experimental results through simulations (\Cref{simulation_results}).
-    \item Conclusion and an outlook to future work (\Cref{conclusion_future_work}).
+    \item Presentation and discussion of experimental results through simulations (\Cref{simulation_results}).
+    \item Conclusion and future work (\Cref{conclusion_future_work}).
 \end{enumerate}
 
-Ultimately, we propose that this agent accurately parallels aspects of human nature through its capability to undergo behavioural change and formulate social connections with trust, as well as heavily and intelligently utilizes treaties with an outlook to self-organization.
+Ultimately, we propose that this agent accurately parallels aspects of human nature through its capability to undergo behavioural change and formulate social connections with trust, and heavily and intelligently utilises treaties with an outlook to self-organisation.
 
 %%%%%%%%%
 %%%%%%%%% AGENT SPECIFICATION
@@ -21,7 +21,7 @@ Ultimately, we propose that this agent accurately parallels aspects of human nat
 
 \section{Specification of Agent Design}\label{agent-specification}
 
-All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such that all agents contain sufficient parameterisation to participate in the various communication methods \textit{c} $\in$ \textit{C}, resulting in a set of interactions defined by I = $< \mathit{A, C} >$. Each agent inherits from the \textit{baseAgent} structure, before inheriting the fields contained in table \ref{tab:agentStruct}. We note only the most relevant fields for quantifying the agent have been included.
+All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such that all agents contain sufficient parameterisation to participate in the various communication methods \textit{c} $\in$ \textit{C}, resulting in a set of interactions defined by I = $< \mathit{A, C} >$. Each agent inherits from the \textit{baseAgent} structure and also contains the fields contained in Table \ref{tab:agentStruct}. We note only the most relevant fields for quantifying the agent have been included.
 
 \begin{table}[H]
   \begin{center}
@@ -82,7 +82,7 @@ The initial concept upon which this agent's behaviour is based revolves around t
     \item \textbf{Narcissism:} An excessive interest or admiration of oneself. A narcissistic agent will act in a way that not only benefits themselves, but also hinders the collective.
 \end{itemize}
 
-For this implementation, we assert that all agents' social motives can be defined on a spectrum, with one end corresponding to pure altruism and the other end corresponding to pure narcissism. This is represented as a continuous value between 0.0 and 10.0 that shows where an agent lies in the social motive spectrum. Using a continuous rather than discrete variable for the social motive allows for greater expression: for example, two agents may both be referred to as collectivists, but one may be significantly closer to turning selfish than the other. A number closer to 0.0 corresponds to altruistic behaviours, and a number closer to 10.0 corresponds to narcissistic behaviour. The boundaries for the 4 distinct social motives are shown in Figure \ref{fig:socialMotives}. The initial “natural” state of a given agent as well as its current social motive are also shown and labelled \textit{baseBehaviour} and \textit{currentBehaviour}, respectively. To begin, we set \textit{currentBehaviour} = \textit{baseBehaviour}.
+For this implementation, we assert that all agents' social motives can be defined on a spectrum, with one end corresponding to pure altruism and the other end corresponding to pure narcissism. This is represented as a continuous value between 0.0 and 10.0 that shows where an agent lies in the social motive spectrum. Using a continuous rather than discrete variable for the social motive allows for greater expression: for example, two agents may both be referred to as collectivists, but one may be significantly closer to turning selfish than the other. A number closer to 0.0 corresponds to altruistic behaviour, and a number closer to 10.0 corresponds to narcissistic behaviour. The boundaries for the four distinct social motives are shown in Figure \ref{fig:socialMotives}. The initial “natural” state of a given agent and its current social motive are also shown and labelled \texttt{baseBehaviour} and \texttt{currentBehaviour}, respectively. To begin, we set \texttt{currentBehaviour} = \texttt{baseBehaviour}.
 
 \begin{figure}[htb]
     \centering
@@ -119,7 +119,7 @@ The $hpScore$ is calculated as
 
 yielding a simple linear mapping (\textit{HP} $\in$ [0,100] $\rightarrow$ [1,0]), where a higher \textit{currentHP} maps to a lower \textit{hpScore}, resulting in a tendency for the agent to behave more altruistically.
 
-Calculating the \textit{floorScore} requires knowledge of the maximum floor in the tower. As this information is not available to the agent, it will use its memory of the past floors it has been on to forecast this value. Furthermore, the mapping is non-linear, with lower floors (higher number) being `punished' more; how much more is determined by the parameter $\lambda$ where a greater $\lambda$ weights lower floors disproportionately more. This gives:
+Calculating the \textit{floorScore} requires knowledge of the maximum floor in the tower. As this information is not available to the agent, it will use its memory of the past floors it has been on to forecast this value. Furthermore, the mapping is non-linear, with lower floors (higher number) being `punished' more; how much more is determined by the parameter $\lambda$, where a greater $\lambda$ weights lower floors disproportionately more. This gives:
 
 \begin{equation}
     \mathit{floorScore} = \frac{e^{\frac{\lambda\cdot \mathit{currentFloor}}{\mathit{maxFloor}}}}{e^{\lambda}}
@@ -129,7 +129,7 @@ A lower floor (higher floor number) leads to a higher \textit{floorScore} result
 
 \subsubsection{Dynamic Weights}
 
-This agent offers an additional level of complexity regarding the way it weights the utilities of both its current health and floor in the tower. We propose the idea that, if an agent is consistently evaluating the utility of one of the aforementioned parameters as low, they should assign it a higher weighting so as to encourage a greater shift towards narcissistic behaviour for self-interested survival.
+This agent offers an additional level of complexity regarding the way it weights the utilities of both its current health and floor in the tower. We propose the idea that if an agent is consistently evaluating the utility of one of the aforementioned parameters as low, they should assign it a higher weighting so as to encourage a greater shift towards narcissistic behaviour for self-interested survival.
 
 To achieve this, we update the behavioural weights as follows:
 
@@ -137,11 +137,11 @@ To achieve this, we update the behavioural weights as follows:
     \item If the agent's health is less than 20:
     \begin{enumerate}
         \item \textit{weightHP} $\leftarrow$ \textit{weightHP} + 0.05
-        \item \textit{weightFloor} $\leftarrow$ \textit{weightFloor} - 0.05
+        \item \textit{weightFloor} $\leftarrow$ \textit{weightFloor} $-$ 0.05
     \end{enumerate}
     \item If the agent's average food intake is less than 1:
     \begin{enumerate}
-        \item \textit{weightHP} $\leftarrow$ \textit{weightHP} - 0.1
+        \item \textit{weightHP} $\leftarrow$ \textit{weightHP} $-$ 0.1
         \item \textit{weightFloor} $\leftarrow$ \textit{weightFloor} + 0.1
     \end{enumerate}
 \end{itemize}
@@ -150,7 +150,7 @@ In addition, we use sufficient boundary conditions to ensure that the individual
 
 \subsubsection{Behavioural Update}
 
-Based on the mapping of social motives from 0.0 to 10.0, a lower floor (\emph{i.e.,} greater floor number) and a lower HP (\emph{i.e.,} smaller HP value) push the social motive variable to be higher. The weights are hence chosen to reflect these correlations (initialised as 0.3 resp. 0.7), along with the relevant feature transformations (\Cref{sec:featTran}) applied to these factors.
+Based on the mapping of social motives from 0.0 to 10.0, a lower floor (i.e., greater floor number) and a lower HP push the social motive variable to be higher. The weights are hence chosen to reflect these correlations (initialised as 0.3 resp. 0.7), along with the relevant feature transformations (\Cref{sec:featTran}) applied to these factors.
 
 This weighted sum represents the prediction of the agent's next social motive, titled \textit{nextBehaviourPrediction} in \Cref{fig:socialMotives}. We therefore calculate:
 
@@ -164,7 +164,7 @@ For the first iteration, \textit{currentBehaviour} = \textit{baseBehaviour} as p
 \subsection{Willingness to Change}
 Although the above encapsulates an essential human characteristic, the ability to change, another important element, the willingness to change, is missing. Through this next layer of complexity, we attempt to quantify how resistant an agent is to altering its behaviour. This concept brings forth more freedom for modelling different human characteristics and realistic situations. For example, it is now possible to distinguish between an agent that is initially an altruist, but may then become selfish as the supply of food diminishes, and an agent that is a “true altruist”, which retains the same social motive throughout. Similarly, this is extended to the distinction between a true narcissist agent that never changes, and a narcissist agent that may, during the game, witness others' suffering whilst itself has an abundance of food and therefore steer towards a more collectivist behaviour.
 
-To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \textit{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number (or, precisely, one minus this number) is multiplied with the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \textit{scaledUpdate} and \textit{newBehaviour} as shown below.
+To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \textit{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number is used to scale the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \textit{scaledUpdate} and \textit{newBehaviour} as shown below.
 
 
 \begin{equation}
@@ -222,7 +222,7 @@ If the change as defined in Step 3 results in a \textit{newBehaviour} outside th
 
 % \subsection{Conceptual Description}
 \subsection{Variation by Social Motive}
-With the agent's behavioural theoretical background defined, its corresponding strategy can be expressed based on the defining qualities of its social motive. As the social motive varies from Altruist towards Narcissist, individual utility is valued increasingly more than collective utility, resulting in an increase in food consumption. Whilst social motives are defined using a continuous spectrum, the agent’s consumption and communication strategies are defined on bins along this spectrum, with one bin for each of the four discrete social motives. Thus, which strategy is carried out is decided in a switch-case statement on the agent's current behaviour.
+With the agent's behavioural theory defined, its corresponding strategy can be expressed based on the defining qualities of its social motive. As the social motive varies from Altruist towards Narcissist, individual utility is valued increasingly more than collective utility, resulting in an increase in food consumption. Whilst social motives are defined using a continuous spectrum, the agent’s consumption and communication strategies are defined on bins along this spectrum, with one bin for each of the four discrete social motives. Thus, which strategy is carried out is decided in a switch-case statement on the agent's current behaviour.
 
 
 % \subsubsection{Altruist}
@@ -242,7 +242,7 @@ With the agent's behavioural theoretical background defined, its corresponding s
 An altruistic agent will always take 0 food, as it is only concerned for the well-being of others with a total disregard for itself.
 
 \subsubsection{Collectivist}
-A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical zone, and will die if spending \textit{N = maxCritical} days in this zone without consuming the minimum required units of food to return to the \textit{weakLevel}. The collectivist agent, having entered the Critical zone, will consume food on a randomly assigned day within the allowable period to leave the critical zone. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
+A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical region, and will die if it spends \textit{N = maxCritical} days in this zone without consuming the minimum required units of food to return to the \textit{WeakLevel}. The collectivist agent, having entered the Critical region, will consume food on a randomly assigned day within the allowable period to leave the Critical region. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
 
 % \begin{verbatim}
 % case "Collectivist": // Only eat when in critical zone randomly before expiry
@@ -266,12 +266,12 @@ A collectivist agent will consume just enough food to survive, and consume no fo
         \item Assign \textit{allowedFoodTakeDay} to \textit{rand(0, maxDaysCritical)}
         \item Take 0 food
     \end{enumerate}
-    \item  If this agent has health $\geq$ \textit{criticalLevel}:
+    \item Else if this agent has health $\geq$ \textit{criticalLevel}:
     \begin{itemize}
-        \item If \textit{allowedFoodTakeDay} matches the number of days that this agent has stayed critical: take 2
-        \item Otherwise: take 0
+        \item If \textit{allowedFoodTakeDay} matches the number of days that this agent has stayed critical: take 2 food
+        \item Otherwise: take 0 food
     \end{itemize}
-    \item Default: take 0
+    \item Default: take 0 food
 \end{itemize}
 
 \subsubsection{Selfish}
@@ -344,7 +344,7 @@ A narcissistic agent will take maximum amount of food consumable, since it is pu
 %% Implementation
 %%
 \subsection{Final Implementation}
-The actual amount of food consumed by the agents in the final implementation doesn't solely depend on the social motives and the current health level, but also on other factors, such as trust, and commitments on messages and treaties. The dependency on these other factors will be explored in the corresponding sections.
+The actual amount of food consumed by the agents in the final implementation does not solely depend on the social motives and the current health level, but also on other factors, such as trust, and commitments on messages and treaties. The dependency on these other factors will be explored in the corresponding sections.
 
 
 %%%%%%%%%%
@@ -354,21 +354,20 @@ The actual amount of food consumed by the agents in the final implementation doe
 
 \subsection{Background}
 
-With treaties offering a notion of socially accepted institutional power, the formation of treaties must be handled carefully, so as not to disadvantage the agents who engage in them. For this reason, a social network must be constructed to offer a heuristic for joining into these agreements. 
+With treaties offering a notion of socially accepted institutional power, the formation of treaties must be handled carefully so as not to disadvantage the agents who engage in them. For this reason, a social network must be constructed to offer a heuristic for joining into these agreements. 
 
-Trust serves as ``an important role for the formation of coalitions in social networks and in determining how high value of information flows through the network'' \cite{trustEEE}, with Ostrom futhermore supporting that ``trust is an essential social lubricant'' \cite{ostrom2003trust}. Ostrom further asserts that trust ``affects the willingness to cooperate'' \cite{ostrom2003trust} and ``enhances cooperation in social-dilemma experiments'' \cite{ostrom2003trust}, providing clear reasoning that trust is an effective parameter to introduce to the agent structure.
+Trust serves as ``an important role for the formation of coalitions in social networks and in determining how high value of information flows through the network'' \cite{trustEEE}, with Ostrom futher supporting that ``trust is an essential social lubricant'' \cite{ostrom2003trust}. Ostrom further asserts that trust ``affects the willingness to cooperate'' \cite{ostrom2003trust} and ``enhances cooperation in social-dilemma experiments'' \cite{ostrom2003trust}, providing clear reasoning that trust is an effective parameter to introduce to the agent structure.
 
 Finally, it is through this introduction of trust that we demonstrate the assertion from Adali's work \cite{trustEEE} that trust facilitates ``communication behaviors which are statistically different from random communications''.
 
 \subsection{Initialisation}
-The agent takes a simple algorithmic approach to formulating a social network; firstly, the ID of the neighbouring agents is determined through message passing, this ID is mapped to an initial trust value and the trust value is continually updated through subsequent social interactions. 
+The agent takes a simple algorithmic approach to formulating a social network: first, the ID of the neighbouring agents is determined through message passing; this ID is mapped to an initial trust value which is continually updated through subsequent social interactions. 
 
 This agent implementation offers different initialised trust values based on the social motive, using the general notion that the more narcissistic an agent is, the less likely it is to have an initial positive opinion of their neighbours. 
 
-For this reason, we give a maximal range of trust from -25 to +25 with the initialisations as follows:
-
+For this reason, we give a maximal range of trust from $-25$ to +25 with the initialisations as follows:
 \begin{itemize}
-    \item Narcissist: -5
+    \item Narcissist: $-5$
     \item Selfish: 0
     \item Collectivist: +5
     \item Altruist: +10
@@ -384,12 +383,12 @@ It is through continuous social interaction in the tower that agents will be abl
     \item When an agent receives a response to the treaty it has proposed: 
     \begin{itemize}
         \item If accepted: +3
-        \item If rejected: -2
+        \item If rejected: $-2$
     \end{itemize}
     \item When an agent receives a treaty proposal: 
     \begin{itemize}
         \item  If the treaty is evaluated as good: +2
-        \item   If the treaty is evaluated as bad: -1
+        \item   If the treaty is evaluated as bad: $-1$
     \end{itemize}
 \end{enumerate}
 
@@ -399,30 +398,29 @@ It is through continuous social interaction in the tower that agents will be abl
     \item If an agent makes a request for another to take 0 food (\Cref{sec:takeNone}):
     \begin{itemize}
         \item  If accepted: reset to 0
-        \item  If rejected: -1
+        \item  If rejected: $-1$
     \end{itemize}
     \item If an agent is requested to leave food: 
     \begin{itemize}
-        \item If narcissist: -1
+        \item If narcissist: $-1$
         \item Otherwise: +0
     \end{itemize}
-    \item If an agent is requested to take a certain amount of food: -1
+    \item If an agent is requested to take a certain amount of food: $-1$
 \end{enumerate}
 
 \subsubsection{Case of Low Trust} \label{sec:takeNone}
 
-If an agent holds an extremely low opinion of another agent (trust $\leq$ -10), it will send a message asking the other to take 0 food for 1 turn, so as to restore trust and show repentance. If this agent accepts the request, it is forgiven and have its trust value reset to 0. If not, the opinion of this agent continues to decrease (-1).
+If an agent holds an extremely low opinion of another agent (trust $\leq -10$), it will send a message asking the other to take 0 food for one turn, so as to restore trust and show repentance. If this agent accepts the request, it is forgiven and has its trust value reset to 0. If not, the opinion of this agent is decremented.
 
 \subsubsection{Case of Low Average Food} \label{sec:lowFood}
 
-If an agent continually averages less that 1 unit of food per day, it makes the assumption that the agent above is acting maliciously. For this reason, the trust of this neighbouring agent is decreased (-1). Conversely, if the agent is averaging above this amount, it will increase the trust in the neighbour above (+1).
+If an agent continually averages less than one unit of food per day, it makes the assumption that the agent above is acting maliciously. For this reason, the trust of this neighbouring agent is decremented. Conversely, if the agent is averaging above this amount, it will increment its trust in the neighbour above.
 
 \subsection{Variations in Trust Update} \label{sec:varTrust}
 
 To maintain a strong sense of social cohesion, the trust assigned to another agent must be continually updated to reflect the ongoing exchange of information \cite{trustEEE}. Again, this agent implementation asserts that the different social motives will have different responses to positive and negative interactions, with the magnitude of the change in trust varying proportionally. This scaling is documented below.
 
 In the case of a positive exchange, the trust of another agent will increase as follows:
-
 \begin{itemize}
     \item Narcissist: $\times 0$
     \item Selfish: $\times 1$
@@ -430,10 +428,9 @@ In the case of a positive exchange, the trust of another agent will increase as 
     \item Altruist: $\times 4$
 \end{itemize}
 
-This is to say that, if the agent is currently acting as a narcissist, it is impossible to increase its opinion of another agent. This agent must undergo considerable environmental change to update its behaviour towards the altruistic side of the spectrum to again increase trust.
+If the agent is currently acting as a narcissist it is impossible to increase its opinion of another agent. This agent must undergo considerable environmental change to update its behaviour towards the altruistic side of the spectrum to increase trust.
 
 Conversely, in the case of a negative exchange, the trust of another agent will \textit{decrease} as follows:
-
 \begin{itemize}
     \item Narcissist: $\times 4$
     \item Selfish: $\times 2$
@@ -447,10 +444,9 @@ Conversely, in the case of a negative exchange, the trust of another agent will 
 %%%%%%%%%%%
 \section{Approach to Treaties}\label{self-organization}
 
-Messages allow for short-lived communication between two neighbours. With request and response messages, such as “leave X food on the platform”, agents can organize locally. However, to establish a stable, self-organizing system across many more floors and many reassignment periods, a more sophisticated form of agreement is necessary. For this reason, an agent's strategies rely heavily on treaties, mimicking research findings from the field of behavioural psychology.
+Messages allow for short-lived communication between two neighbours. With request and response messages, such as “leave X food on the platform”, agents can organize locally. However, to establish a stable, self-organizing system across many floors and many reassignment periods, a more sophisticated form of agreement is necessary. For this reason, an agent's strategies rely heavily on treaties, mimicking research findings from the field of behavioural psychology.
 
 To successfully handle treaties, an agent must:
-
 \begin{enumerate}
     \item Rate treaties
     \item Change its behaviour based on accepted treaties
@@ -460,9 +456,9 @@ To successfully handle treaties, an agent must:
 
 \subsection{Types of Treaties}
 
-As food is a scarce resource in the tower, the main purpose of self-organization should be to limit how much food agents eat. By handling all possible conditions, (``less than'', ``less than or equal'', ``equal to'', ``more than or equal to'', ``more than''), this strategy focuses on assigning upper bounds to the amount of food eaten.
+As food is a scarce resource in the tower, the main purpose of self-organization should be to limit how much food agents eat. By handling all possible conditions, (``less than'', ``less than or equal'', ``equal to'', ``greater than or equal to'', ``greater than''), this strategy focuses on assigning upper bounds to the amount of food eaten.
 
-To ensure that an agent can have access to food on a given turn, it is integral for the neighbouring agents to \textit{leave} food, wherein the infrastructure of the tower provides multiple types of treaties: \textit{leaveAmountFood}, \textit{leavePercentageFood} and \textit{inform}. To enforce localised sanctions and suggest an intake of food to allow stability, however, what really counts is the amount of food \textit{taken}. Thinking in terms of the \textit{leaveFood} types limits how much treaties can distribute through the tower: \textit{leaveAmountFood} would allow the first few agent floors to eat as much as desired without breaking the treaty. Once this amount is reached, any subsequent agent does not receive anything. Similarly, \textit{leavePercentageFood} limits agents by exponentially decreasing portions, such that low levels have little chance of surviving even if everyone satisfies the treaty. \textit{takeAmountFood} does not face this issue as it limits consumption no matter the amount of food an agent has access to. Consequently, the agent thinks in terms of the amount food it takes, converting any other treaty type to an equivalent upper bound of food it is allowed take. This makes it easier to compare treaties and make sure that accepted treaties are not contradicting one another.
+To ensure that an agent has access to food on a given turn, it is integral for the neighbouring agents to \texttt{leave} food, wherein the infrastructure of the tower provides multiple types of treaties: \texttt{LeaveAmountFood}, \texttt{LeavePercentageFood} and \texttt{Inform}. To enforce localised sanctions and suggest an intake of food to allow stability, however, what really counts is the amount of food taken. Thinking in terms of the \texttt{LeaveFood} types limits how much treaties can distribute through the tower: \texttt{LeaveAmountFood} would allow the first few agent floors to eat as much as desired without breaking the treaty. Once this amount is reached, any subsequent agent does not receive anything. Similarly, \texttt{LeavePercentageFood} limits agents by exponentially decreasing portions, such that low levels have little chance of surviving even if everyone satisfies the treaty. \texttt{TakeAmountFood} does not face this issue as it limits consumption no matter the amount of food an agent has access to. Consequently, the agent thinks in terms of the amount food it takes, converting any other treaty type to an equivalent upper bound of food it is allowed take. This makes it easier to compare treaties and make sure that accepted treaties are not contradicting one another.
 
 Having clarified the general interpretation of treaties, we now describe the two main underlying principles with which we handle treaties: Forecasting and Utility Theory.
 
@@ -472,12 +468,12 @@ Having clarified the general interpretation of treaties, we now describe the two
 
 Treaties do not have any immediate effect, but instead influence the future consumption of an agent. In order to assess the present value of a treaty, an agent greatly benefits from the ability to predict its future.
 
-In the case of this tower, ``future'' can mean two decisively different things: The future of an agent on the current level and their future on a series of unpredictable levels after that. An example of this may be that an agent very high up in the tower can expect to receive a surplus of food in the coming days, but should not expect the same in future reshuffling periods. The future on this floor is best predicted by the previous experience on this floor, while the future thereafter is best predicted by all previous experience in the tower. Accordingly, we assert that each agent separately keeps track of the amount of food it receives each day during the current reassignment period as well as through its entire lifetime. This aligns well with the core assumption in cognitive psychology that there are separate systems for long- and short-term memory \cite{norris2017short}.
+In the case of this tower, ``future'' can mean two different things: the future of an agent on the current level and their future on a series of unpredictable levels after that. An example of this may be that an agent very high up in the tower can expect to receive a surplus of food in the coming days, but should not expect the same in future reshuffling periods. The future on this floor is best predicted by the previous experience on this floor, while the future thereafter is best predicted by all previous experience in the tower. Accordingly, we assert that each agent separately keeps track of the amount of food it receives each day during the current reassignment period as well as through its entire lifetime. This aligns well with the core assumption in cognitive psychology that there are separate systems for long- and short-term memory \cite{norris2017short}.
 
 \subsubsection{Implementation}
 To implement forecasting, we use two separate arrays corresponding to long-term and short-term memory and store the amount of food received each day (\Cref{fig:forecasting}).
 
-The short-term memory is reset after every reshuffling and a scaled histogram illustrating the number of times the agent has received a certain amount of food results in a discrete distribution that can be used for predicting the expected food in the future.
+The short-term memory is reset after every reshuffle and a scaled histogram illustrating the number of times the agent has received a certain amount of food results in a discrete distribution that can be used for predicting the expected food in the future.
 
 \begin{figure} [htb]
     \centering
@@ -492,7 +488,7 @@ In order to distinguish between the short and long term, this agent also forecas
 
 Memory allows an agent to remember the past; forecasting uses this to predict the future. In order to make a decision regarding treaties, one last step is required: the agent needs to be able to compare two potential futures and decide which one it deems more beneficial.
 
-Behavioural research has shown that the satisfaction of gaining or loosing wealth is non-linear \cite{fishburn1988nonlinear} and utility functions are commonly used to account for this by mapping the monetary value of a good or service to an individual's preference \cite{fishburn1970utility}. To accurately model human decision making, this agent uses utility functions to make decisions regarding food as the one scarce good in the tower.
+Behavioural research has shown that the satisfaction of gaining or losing wealth is non-linear \cite{fishburn1988nonlinear} and utility functions are commonly used to account for this by mapping the monetary value of a good or service to an individual's preference \cite{fishburn1970utility}. To accurately model human decision making, this agent uses utility functions to make decisions regarding food as the one scarce good in the tower.
 
 We program this agent to use utility functions as a mechanism to compare which of two different futures is more beneficial. To achieve this, the agent calculates the expected utility both with and without a treaty, subsequently maximising its estimated future benefit by choosing the larger expected utility. The expected utility from gaining a certain amount of food $a$ is deterministic, hence:
 
@@ -515,7 +511,7 @@ E[U(x)] = p_1 \times U(x_1) + p_2 \times U(x_2) + ... + p_n \times U(x_n)
 
 \subsubsection{Prospect Theory}
 
-Comparing potential future outcomes with utility allows for the introduction of known psychological behaviours to the agents. Prospect theory, first established by Kahneman and Tversky \cite{kahneman2013prospect}, is a well established model of how a change in value is perceived or, alternatively, how much utility is gained or lost from a change in value (\Cref{fig:prospect}). 
+Comparing potential future outcomes with utility allows for the introduction of known psychological behaviours to the agents. Prospect theory, first established by Kahneman and Tversky \cite{kahneman2013prospect}, is a well-established model of how a change in value is perceived or, alternatively, how much utility is gained or lost from a change in value (\Cref{fig:prospect}). 
 
 \begin{figure} [htb]
     \centering
@@ -524,12 +520,11 @@ Comparing potential future outcomes with utility allows for the introduction of 
     \label{fig:prospect}
 \end{figure}
 
-This model comprises 3 main principles:
-
+This model comprises three main principles:
 \begin{itemize}
     \item \textbf{Greediness:} Humans are generally greedy, meaning that more of something is always at least regarded as beneficial. Utility functions are hence generally increasing.
     
-    \item \textbf{Diminishing Sensitivity:} Marginal returns are strictly decreasing, thus, the greater the personal wealth of an agent, the less they value the resource. An additional unit of food matters much more to an agent if it only gets one unit of food compared to if it gets 50 units of food.
+    \item \textbf{Diminishing sensitivity:} Marginal returns are strictly decreasing, thus, the greater the personal wealth of an agent, the less they value the resource. An additional unit of food matters much more to an agent if it only gets one unit of food compared to if it gets 50 units of food.
     
     \item \textbf{Risk aversion:} Humans generally try to avoid risk. The discrete random distribution which forecasts the expected food received does not guarantee any certain amount of food and so is associated with risk. With risk aversion, the amount of food the agent perceives as equivalent to a random distribution, its \textit{certainty equivalent} $C$, is hence less than its mean.
 
@@ -542,16 +537,15 @@ This model comprises 3 main principles:
 
 \subsection{Social Motives and Total Utility}
 
-Prospect theory forms the basis to how the agents' benefit from a change in consumption is modelled. In addition to the \textit{gain}, however, there is also a \textit{cost} that increases with eating more food: Every unit of food gained is one unit of food other agents lost. This social cost, combined with the previously explained explained utility, forms the total utility function of \textit{x}, the amount of food received, given by 
+Prospect theory forms the basis to how the agents' benefit from a change in consumption is modelled. In addition to the \textit{gain}, however, there is also a \textit{cost} that increases with eating more food: every unit of food gained is one unit of food other agents lose. This social cost, combined with the previously explained explained utility, forms the total utility function of \textit{x}, the amount of food received, given by 
 
 \begin{equation}
     U(x)=gx^\frac{1}{r}-cx.
 \end{equation}
 
 Each of the social motives correspond to different values of greediness, risk-aversion, and social cost, which have been chosen according to three insights: 
-
 \begin{enumerate}
-    \item The more selfish and agent is, the greedier it is.
+    \item The more selfish an agent is, the greedier it is.
     
     \item The more an agent cares for the greater good, the greater its social cost associated with consumption.
     
@@ -559,7 +553,6 @@ Each of the social motives correspond to different values of greediness, risk-av
 \end{enumerate}
 
 We choose the parameters for each social motive accordingly, with greediness $g$, risk-seeking $r$ and social responsibility $c$, resulting in the total utility functions in \Cref{fig:utilities}.
-
 \begin{enumerate}[label=(\alph*)]
     \item \textbf{Altruist}: not greedy, very risk-averse, very high social responsibility
     
@@ -589,7 +582,7 @@ b_\text{tot} = d\times b_\text{short} + (1-d)\times b_\text{long}
 \label{eq:shortlongweight}
 \end{equation}
 
-where $d = d_\text{current}/d_\text{treaty}$.
+where $d = \frac{d_\text{current}}{d_\text{treaty}}$.
 
 The following examples show how this plays out.
 
@@ -606,20 +599,19 @@ When one is doing well, the above weighting between the long and short term bene
 
 \subsection{Implementation}
 
-How agents rate treaties closely follows the theoretical steps from above. Every day, the agent stores the amount of food received in two arrays, one for the short and one for the long term. The short-term array is reset after every reshuffling period. When a new treaty is proposed, the agent performs the following steps to conclude whether to sign this new treaty or not.
-
+How agents rate treaties closely follows the theoretical steps from above. Every day, the agent stores the amount of food received in two arrays, one for the short and one for the long term. The short-term array is reset after every reshuffling period. When a new treaty is proposed, the agent performs the following steps to conclude whether to sign this new treaty or not:
 \begin{enumerate}
-    \item Checks if the trust in the proposer agent is high enough
-    \item Checks if the treaty is compatible with treaties that the agent signed already
-    \item Calculates the expected short- and long-term utility is according to \Cref{eq:expectedUtility} and using the memory of food received in the past. The utility function used depends on their current social motive.
-    \item Amplifies the utility if it is negative in accordance with loss-aversion.
-    \item Estimates the amount of food it can take under the treaty, i.e. the difference between the average amount of food it received in the past and the amount of food it needs to leave in order to comply with the treaty, and calculate the utility of taking that amount of food.
-    \item Computes the estimated short-term and long-term benefit of signing the treaty as $U(\text{sign}) - U(\text{don’t sign})$.
-    \item Chooses to focus on the long-term or short-term benefit according to \Cref{eq:shortlongweight}
-    \item Signs the treaty if it’s overall benefit is positive
+    \item Check if the trust in the proposer agent is high enough.
+    \item Check if the treaty is compatible with treaties that the agent signed already.
+    \item Calculate the expected short- and long-term utility using the memory of food received in the past according to \Cref{eq:expectedUtility}. The utility function used depends on their current social motive.
+    \item Amplify the utility if it is negative in accordance with loss-aversion.
+    \item Estimate the amount of food it can take under the treaty, i.e., the difference between the average amount of food it received in the past and the amount of food it needs to leave in order to comply with the treaty, and calculate the utility of taking that amount of food.
+    \item Compute the estimated short-term and long-term benefit of signing the treaty as $U(\text{sign}) - U(\text{don’t sign})$.
+    \item Choose whether to focus on the long-term or short-term benefit according to \Cref{eq:shortlongweight}.
+    \item Sign the treaty if its overall benefit is positive.
 \end{enumerate}
 
-The amount of food that the “collectivist” and “selfish” agents would need to consume in order to maximise utility varies depending on the current health level. The peak of its total utility function thus needs to be able to vary, too. We account for this by introducing a scaling factor $a$ as
+The amount of food that the “collectivist” and “selfish” agents would need to consume in order to maximise utility varies depending on the current health level. The peak of its total utility function thus needs to be able to vary as well. We account for this by introducing a scaling factor $a$ as
 
 \begin{equation}
     U(x)=g(ax)^\frac{1}{r}-cax
@@ -636,9 +628,10 @@ introducing the desired food intake $z$ as the maximum of the function without c
 \begin{equation}
 U\left(x\right)=g\left(\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}x\right)^{\frac{1}{r}}-cx\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}    
 \end{equation}
-\subsection{Behaving according to treaties}
+\subsection{Behaving According to Treaties}
 
-Treaties are fundamentally built on the assumption that all agents behave truthfully. Introducing dishonesty to treaties would strap them of all their power, as there are two many possible falsities but no sufficient way of recognizing and no central authority to punish them. Hence, we do not consider deception: a decision shared by all agent teams. Since this means that an agent cannot act against any active treaties, the amount of food taken has to be chosen with care.
+Treaties are fundamentally built on the assumption that all agents behave truthfully. Introducing dishonesty to treaties would sap them of all their power, as there are too many possible falsities but no sufficient way of recognising them and no central authority to punish them. Hence, we do not consider deception. Since this means that an agent cannot act against any active treaties, the amount of food taken has to be chosen with care.
+
 We implemented a function to return the valid range of possible food intakes given a list of active treaties and accepted request messages, and use this both to check if a newly proposed treaty is compatible with previously accepted treaties and to \textit{legally} take food. We do this as in Algorithm \ref{code:treatyRange}.
 % \Cref does not seem to work with algorithm components
 
@@ -673,18 +666,17 @@ We implemented a function to return the valid range of possible food intakes giv
         \label{code:treatyRange}
 \end{algorithm}
 
-An agent then consumes the amount smaller or equal to the resulting upper-bound \textit{max} that maximizes his utility.
+An agent then consumes the amount less than or equal to the resulting upper-bound \textit{max} that maximises their utility.
 
 
 \subsection{Proposing Treaties}\label{proposing_treaties}
 
 
-Treaty proposals are fundamentally linked to each agent's social motive, given that they work to the benefit of collective utility. The terms of each treaty must be adhered to by both entities that have agreed to it, resulting in a situation where both agents will benefit the same amount. Aligning this with agent strategies, a true narcissistic agent, which would go so far as to behave with the intention of causing detriment to others, would not make any decisions that might benefit its neighbouring agents. As a result of this, the narcissistic agent would not propose any treaties, as even though it might reap the rewards of it, it will never offer other agents any assistance. On the other end of the spectrum, an altruistic agent, that always makes decisions based on maximising other agents' utility, would not behave in a way that might benefit itself. This too has the effect of an altruist never proposing any treaties as although it might offer aid to other agents it goes against its self-sacrificing nature.
+Treaty proposals are fundamentally linked to each agent's social motive, given that they work to the benefit of collective utility. The terms of each treaty must be adhered to by both entities that have agreed to it, resulting in a situation where both agents will benefit the same amount. Aligning this with agent strategies, a true narcissistic agent, which would go so far as to behave with the intention of causing detriment to others, would not make any decisions that might benefit its neighbouring agents. As a result of this, the narcissistic agent would not propose any treaties, as even though it might reap the rewards of a treaty, it will never offer other agents any assistance. On the other end of the spectrum, an altruistic agent that always makes decisions based on maximising other agents' utility, would not behave in a way that might benefit itself. This too has the effect of an altruist never proposing any treaties, as although it might offer aid to other agents, this would go against its self-sacrificing nature.
 
 The collectivist and selfish agents are therefore the two social motives that propose treaties. The collectivist agent wishes to maximise collective utility by forming agreements that will increase the chances of itself and its neighbours surviving and the selfish agent wishes to maximise its own survival chances as it knows that agreeing to a treaty will bring personal benefits.
 
 The possible treaties that could be proposed are set based on the different social motives. These were changed for testing purposes (see \Cref{simulation_results}), however, the basic structure is outlined below:
-
 \begin{itemize}
     \item Collectivist: If the agent's health is above the \textit{weakLevel}, leave 100\% of resources on the platform
     \item Selfish: If the agent's health is above the \textit{strongLevel}, leave 100\% of resources on the platform
