@@ -2,7 +2,7 @@
 
 \section{Need for Data}
 
-Data logging enables analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question: messaging frequency, food variation over time, agent death rates, etc.. Analysis also requires linking different simulation parameters with the data logged (e.g. the number of agents or the amount of food available). 
+Data logging allows for the analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question, such as messaging frequency, food variation over time or the agents' death rate, with analysis also requiring the linking of different simulation parameters with their logged data (e.g., the number of agents or the amount of food available). 
 
 It is therefore important to setup a logging framework that structures data effectively and scales efficiently for large simulations. The below subsections will introduce the simulation parameterisation, followed by the different logging strategies (dumps and structured), and concluding with the logging interface and the analysis dashboard.
 
@@ -23,7 +23,6 @@ First, it was important to enable an effective parameterisation of the simulatio
         \item Total days
         \item Reshuffle period
     \end{enumerate}
-\end{multicols}
 
 The configuration parameters are then written in a JSON file which can be parsed into a configuration object.
 
@@ -42,7 +41,7 @@ Following the configuration work, a general logger was set up. The general logge
 "level":"info","msg":"Reporting agent state","reporter":"agent"}
 \end{verbatim}
 
-The general log dumps are unstructured, but enable agent teams to directly log custom states from their agents and use those in e.g. evolutionary algorithms or machine learning training.
+The general log dumps are not structured, yet they enable agent teams to directly log custom states from their agents and use them, for example, in evolutionary algorithms or machine learning training.
 
 \section{Structured Logs}
 
