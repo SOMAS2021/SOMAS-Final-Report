@@ -382,4 +382,25 @@ The average age of agents, denoted by \Cref{Average-Age-as-Shuffle-Period-Decrea
 \label{subsec: E2-Conclusion}
 The change in reshuffle period and number of ticks per floor does not have a significant impact on the ability of the agents to self-organise. However, increasing the reshuffle period does increase the number of deaths and so would make reaching stability more difficult.
 
+\section{Experiment 3}
+\label{sec: Experiment 3}
+\subsection{Aims}
+\label{subsec: E3-Aims}
+The aim of this experiment is to analyse the average distribution of food on each floor of a 100 floor tower.
+The simulations will have a duration of 60 days and an initial food of 800. Two simulations are proposed to assess this: a tower consisting entirely of \texttt{randomAgent} and a tower consisting entirely of custom agents from the different teams, 1 to 7. The aim is to illustrate that the average food per floor decreases more slowly when the custom agents are assessed, showing that a sufficient level of self-organisation has been achieved to more effectively distribute food.
+
+\subsection{Results and Discussion}
+\label{subsec: E3-Results and Discussion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\linewidth]{images/SOMAS_price.pdf}
+    \caption{Average Food per Floor for Different Social Distributions}
+    \label{fig:priceLaw}
+\end{figure}
+
+By analysing the performance of the random agents in \Cref{fig:priceLaw}, A clear example of `Price's Law' can be seen, wherein the first 50\% of food is consumed by $\sqrt{\mathit{N}} = 10$ of the agents. This is heavily contrasted with the set of custom agents, where it is evident that the resources are maintained for longer. 
+
+\subsection{Conclusion}
+\label{subsec: E3-Conclusion}
+The results of this experiment point to an increase in social cohesion when the custom agents are implemented into the tower, allowing them globally to outperform a purely random strategy. This, coupled with the activeness of treaties, implies that the multi-agent system can sufficiently self-organise to maintain a fair and more uniform distribution of food for all agents involved in the system. 
 
