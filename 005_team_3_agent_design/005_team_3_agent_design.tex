@@ -2,12 +2,14 @@
 
 \section{The Agent}\label{sec:the_agent}
 Team 3’s agent design is based on the Theory of Reasoned Action (TRA) and its extension, the Theory of Planned Behaviour (TPB). The agents are designed to have a shiftable personality dependent on the three variables in Figure \ref{fig:TRA-diagram} that TPB  \cite{AJZEN1991179} links to the behaviours of an agent. These three variables, together with a social network, define its personality as a whole, \cite{victor} and influence the actions it will take.
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\linewidth]{005_team_3_agent_design/images/image1.jpg}
     \caption{TRA explanation.}
     \label{fig:TRA-diagram}
 \end{figure}
+
 The Theory of Reasoned Action was developed by Martin Fishbein in 1967 and was later improved by Icek Ajzen and Martin in 1980, with the Theory of Planned Behaviour. The TPB states that the behavioural intentions of individuals can be attributed to three interdependent factors: perceived behaviour control, the subjective norm, and the attitude of the individual, as shown in Figure \ref{fig:TRA-diagram}. It must be noted that the TPB is unable to accurately and consistently predict non-volitional behaviours of the individual. Therefore, TPB can only be applied to those actions for which a reason can be found. These are actions that occur as a reaction to others and that the individual has control over \cite{TRA}. This theory is applicable to agent decisions in the tower since the agent must make decisions in a reactionary manner, based on interactions with other agents.\par 
 In order to apply the TPB to the agents, we define three agent variables, each corresponding to one of the three components of the theory. Using this approach, we have defined the agent variables to be: 
 \begin{enumerate}
@@ -141,6 +143,7 @@ Both of the last treaties are proposed randomly by the agent, without a specific
 \subsection{Handling a Proposed Treaty}
 In our strategy, we have decided to perform complex evaluation of food treaties. To evaluate how risky a treaty is, the two key metrics that are included in treaties will be used. These are the minimum agent condition at which the treaty is activated, and the maximum food that the treaty allows an agent to take.\par
 Agents that are in a bad mood will not accept treaties that it needs to honour when it is in very low health, since it  has low confidence in the capabilities of other agents. However, when in a good mood agents will accept treaties that must be honoured even at low health. Morality is an indicator of the agent’s desire to perform actions that will benefit others, as opposed to just benefiting the agent itself. Therefore, very moral agents will accept treaties that involve consuming just enough food to survive, but not too little food that it dies or too much that it is too greedy. Similarly, very immoral agents will only accept treaties where it consumes more than enough food since it disregards the food needs of the other agents. The table below displays the mood and morality values that agents must satisfy to accept treaties with any given condition depending on the agent’s health, and the food the agent would have to leave according to the request of the treaty.
+
 \begin{table}[htb]
     \centering
     \resizebox{\textwidth}{!}{\begin{tabular}{|l|l|l|l|l|l|l|l|}
@@ -155,6 +158,7 @@ Agents that are in a bad mood will not accept treaties that it needs to honour w
     \end{tabular}}
     \caption{Treaty Acceptance.}
 \end{table}
+
 Treaties also have a specified duration and signature count, which are visible to any agent that wishes to sign the treaty. These are likely to affect an agent’s decision to accept a treaty and have been taken into account. If a treaty lasts longer than twice the reshuffle period, an agent deems it too far into the future to be able to predict what will happen and plans to reject the treaty. However, if a treaty has more than five signatures, we deem it to be a popular treaty. If the agent plans to reject the treaty as a result of any previous logic, the influence of peer pressure will cause the agent to reconsider accepting the treaty. Peer pressure is based on the concept of crowd suggestibility coined by Park, R. E.  in 1904 in his “Masse und Publikum”, \cite{Solr-413687}. The stubbornness of an agent is used as the likelihood to give in to peer pressure, so more stubborn agents are less likely to reconsider their response, and more likely to stick with their original decision.
 
 \section{Food Intake}\label{sec:food_intake}
@@ -169,12 +173,16 @@ The agent calculates the amount of food it decides to take in the following mann
     \item If the agent is not at critical health, a target HP is calculated, which is designed to make an agent's HP converge to 65 if run repeatedly. The food required to reach the target HP level is then calculated, and scaled up if the agent is immoral, or down if the agent is moral.
     \item If the agent is at critical health, the agent aims to escape this state by targeting the weak level HP. The morality of the agent will dictate if it takes just the food it needs from the platform, or more, or maybe even less. However, on the last day before an agent’s death, it must desire to take at least survival food from the platform. This logic is expressed in the diagram \ref{fig:food-diagram}.
 \end{enumerate}
+
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=0.5\linewidth]{005_team_3_agent_design/images/diagram1.jpg}
+    \includegraphics[width=0.85\linewidth]{005_team_3_agent_design/images/diagram1.jpg}
     \caption{Food calculation process.}
     \label{fig:food-diagram}
 \end{figure}
+
+To be more specific, an agents’ decision regarding how much food to eat and leave will fall into one of four possible categories:
+
 \begin{enumerate}
     \item If it has decided how much food to eat and leave and both conditions can be met the agent will eat. If meeting both conditions is impossible, there is not enough food on the platform, a decision that fulfils the value of how much food to leave will be taken, with the value of how much the agent eats ranging from all that it can to just what it needs to survive. 
     \item If the agent knows how much it wants to eat but not how much to leave it will attempt to eat the amount it has decided it wants.
@@ -192,6 +200,40 @@ The agent calculates the amount of food it decides to take in the following mann
         Utility                 & 0.009                 & 0.013                  & 0.034                 \\ \hline
     \end{tabular}
     \caption{Experimental results.}
+    \label{tab:InitalResults}
 \end{table}
-These experiments were run for 500 days, with 50 food for 10 agents. This means there was enough food for every agent to survive at critical level but not enough to satisfy all agents. For this reasons, agents need to communicate and self organise in order to decrease the amount of deaths in this strenuous circumstances.\par 
-The results indicate that the agents are capable of reducing their deaths significantly by following the research on group identity. As expected from this research,  classical game theory methods of selfishness are outperformed by more intricate methods of organisation in a collective, such as the one exposed by group identity.\par
+
+These experiments were run for 500 days, with 50 food for 10 agents and a reshuffle period of 7 days. Each experiment was run three times and the average taken. This means there was enough food for every agent to survive at critical level but not enough to keep them all out of critical condition. For this reason, agents need to communicate and self organise in order to decrease the amount of deaths in this strenuous circumstances.
+
+As shown in Table \ref{tab:InitalResults}, the results indicate that the agents are capable of significantly reducing their deaths compared to random agents. This difference arises due to the Team 3 agents’ increased communication capabilities via treaties and messages, allowing them to assume a group identity. Random agents take an approach which more closely embodies the selfish approach dictated by classical game theory. As is expected, this is outperformed by a higher degree of organisation in a collective, which successfully models group identity and collective human survival instinct.
+
+Figure \ref{fig:AvgDeaths} further shows how, even as the food in the platform changes, the Team 3 agent always outperforms the selfish and random agents.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\linewidth]{005_team_3_agent_design/images/Average_Deaths_of_Agents_Against_Total_Amount_of_Food_On_Platform.jpg}
+    \caption{Average deaths of agents against total amount of food on platform.}
+    \label{fig:AvgDeaths}
+\end{figure}
+
+In addition, we ran tests where the Team 3 agent was placed into the tower along with another teams’ agent. Five agents from Team 3 and five from the respective team in Figure \ref{fig:AgainstOtherTeams} were simulated for 500 days and 100 total food on the platform. In Figure \ref{fig:AgainstOtherTeams} you can see the cumulative deaths of both agent types.  
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.8\linewidth]{005_team_3_agent_design/images/Average_Deaths_When_Cooperating_With_Another_Agent_Type.jpg}
+    \caption{Average deaths when cooperating with another agent type.}
+    \label{fig:AgainstOtherTeams}
+\end{figure}
+
+This indicates that Team 3 agents work best with agents from Teams 5, 4, 2 and 7. Successful cooperation with multiple other agent types demonstrates the agent’s ability to adapt to different situations and work well with agents that are also capable of assuming a group identity, and creating a self-organising structure. This point is also illustrated by examining the large number of total deaths in a tower with random agents. Their ignorant and  unpredictable actions means that the Team 3 agents cannot adapt to their behaviour or form meaningful connections with them. Hence, the system cannot evolve, causing the deaths per time period to remain relatively constant, and the cumulative deaths to be high.
+
+Finally, we wanted to observe if the total number of agents in the tower had an effect on the outcome of the simulation, and whether fewer agents were able to communicate more effectively. This seemed to be the case, as proven by Figure \ref{fig:DeathsNoAgents}. The lower the total number of agents, the more meaningful connections they can make and the stronger the social network. This is reflected in the two-agent tower experiment, in which they successfully assumed a group identity with no deaths. This occurs because both agents agree to leave each other enough food to survive. The greater the number of agents that are in the tower, the harder it is for them to form a self-preserving social network. In this case, the importance that the agents place on the collective identity does not outweigh their desire to form instinctive, self-preservative characteristics.  
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.9\linewidth]{005_team_3_agent_design/images/Average_Deaths_Against_No._of_Agents_With_5_Food_Per_Agent_No_Title.jpg}
+    \caption{Average Deaths Against No. of Agents}
+    \label{fig:DeathsNoAgents}
+\end{figure}
+
+
