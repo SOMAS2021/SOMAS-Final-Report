@@ -2,11 +2,11 @@
 
 \section{Need for Data}
 
-Data logging enables analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question: messages frequency, food variation over time, agent deaths rate, etc.. Analysis also requires linking different simulation parameters with the data logged (e.g. the number of agents or the amount of food available). 
+Data logging enables analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question: messaging frequency, food variation over time, agent death rates, etc.. Analysis also requires linking different simulation parameters with the data logged (e.g. the number of agents or the amount of food available). 
 
-It is therefore important to setup a logging framework that structures data effectively and scales efficiently for large simulations. The below subsections will introduce the simulation parametrisation, followed by the different logging strategies (dumps and structured), and concluding with the logging interface and the analysis dashboard.
+It is therefore important to setup a logging framework that structures data effectively and scales efficiently for large simulations. The below subsections will introduce the simulation parameterisation, followed by the different logging strategies (dumps and structured), and concluding with the logging interface and the analysis dashboard.
 
-\section{Parametrisation}
+\section{Parameterisation}
 
 First, it was important to enable an effective parametrisation of the simulation. A configuration interface was therefore set to abstract variables from the simulation environment and a configuration object would subsequently be passed to the simulation environment instance to define the following simulation parameters:
 
