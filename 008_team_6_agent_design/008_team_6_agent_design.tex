@@ -21,7 +21,7 @@ Ultimately, we propose that this agent accurately parallels aspects of human nat
 
 \section{Specification of Agent Design}\label{agent-specification}
 
-All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such that all agents contain sufficient parameterisation to participate in the various communication methods \textit{c} $\in$ \textit{C}, resulting in a set of interactions defined by I = $< \mathit{A, C} >$. Each agent inherits from the \textit{baseAgent} structure and also contains the fields contained in Table \ref{tab:agentStruct}. We note only the most relevant fields for quantifying the agent have been included.
+All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such that all agents contain sufficient parameterisation to participate in the various communication methods \textit{c} $\in$ \textit{C}, resulting in a set of interactions defined by I = $< \mathit{A, C} >$. Each agent inherits from the \texttt{baseAgent} structure and also contains the fields contained in Table \ref{tab:agentStruct}. We note only the most relevant fields for quantifying the agent have been included.
 
 \begin{table}[H]
   \begin{center}
@@ -375,7 +375,7 @@ For this reason, we give a maximal range of trust from $-25$ to +25 with the ini
 
 \subsection{Causes for Trust Update}
 
-It is through continuous social interaction in the tower that agents will be able to form opinions of the other agents. For this agent, there is a specific set of interactions that will result in a opportunity for trust to update. These interactions impose a \textit{base} behavioural update, before scaling due to social motive (\Cref{sec:varTrust}).
+It is through continuous social interaction in the tower that agents will be able to form opinions of the other agents. For this agent, there is a specific set of interactions that will result in a opportunity for trust to update. These interactions impose a \textit{base} behavioural update, before scaling due to social motive (\Cref{sec:varTrust}). This behavioural update is defined as a relative change  to the current trust value. 
 
 \subsubsection{Treaties}
 
@@ -387,8 +387,8 @@ It is through continuous social interaction in the tower that agents will be abl
     \end{itemize}
     \item When an agent receives a treaty proposal: 
     \begin{itemize}
-        \item  If the treaty is evaluated as good: +2
-        \item   If the treaty is evaluated as bad: $-1$
+        \item  If the agent accepts the treaty: +2
+        \item   If the agent rejects the treaty: $-1$
     \end{itemize}
 \end{enumerate}
 
@@ -418,9 +418,9 @@ If an agent continually averages less than one unit of food per day, it makes th
 
 \subsection{Variations in Trust Update} \label{sec:varTrust}
 
-To maintain a strong sense of social cohesion, the trust assigned to another agent must be continually updated to reflect the ongoing exchange of information \cite{trustEEE}. Again, this agent implementation asserts that the different social motives will have different responses to positive and negative interactions, with the magnitude of the change in trust varying proportionally. This scaling is documented below.
+To maintain a strong sense of social cohesion, the trust assigned to another agent must be continually updated to reflect the ongoing exchange of information \cite{trustEEE}. Again, this agent implementation asserts that the different social motives will have different responses to positive and negative interactions, with the magnitude of the change in trust varying proportionally. This scaling is documented below. 
 
-In the case of a positive exchange, the scaling is as follows:
+In the case of a positive exchange, the scaling of the trust update is as follows:
 \begin{itemize}
     \item Narcissist: $\times 0$
     \item Selfish: $\times 1$
@@ -430,7 +430,7 @@ In the case of a positive exchange, the scaling is as follows:
 
 If the agent is currently acting as a narcissist it is impossible to increase its opinion of another agent. This agent must undergo considerable environmental change to update its behaviour towards the altruistic side of the spectrum to increase trust.
 
-Conversely, in the case of a negative exchange, the trust of another agent will \textit{decrease} as follows:
+Conversely, in the case of a negative exchange, the scaling of the trust update of another agent will \textit{decrease} as follows:
 \begin{itemize}
     \item Narcissist: $\times 4$
     \item Selfish: $\times 2$
