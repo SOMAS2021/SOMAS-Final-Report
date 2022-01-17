@@ -53,7 +53,7 @@ In this experiment the tower being used is highly heterogeneous, with 3 of each 
     \begin{tikzpicture}
         \begin{axis}[
             width=0.8\textwidth,
-            axis y line*=left,
+            % axis y line*=left,
             ymin=0,
             xmin=0,
             xlabel=Available Food Per Agent,
@@ -124,7 +124,7 @@ In this experiment the tower being used is highly heterogeneous, with 3 of each 
     \label{fig:team1-robustness-food-scarcity}
 \end{figure}
 
-\Cref{team1-robustness-food-scarcity} illustrates the change in the frequency of treaty proposal as the constraints from the economy of scarcity are levied. The experiment enforces that there is 100 food initially available on the platform, with the number of agents parameterised to allow for an average amount of food per agent. This simulation lasts 400 turns.
+\Cref{fig:team1-robustness-food-scarcity} illustrates the change in the frequency of treaty proposal as the constraints from the economy of scarcity are levied. The experiment enforces that there is 100 food initially available on the platform, with the number of agents parameterised to allow for an average amount of food per agent. This simulation lasts 400 turns.
 
 The general tendency for this system is that, as the availability of food rises (and hence the economy of scarcity becomes less constrictive), the rate of treaty proposal decreases. We propose that this experiment yields insight into the importance of treaties, demonstrating that agents in general rely heavily on treaty formation to self organise when survivability is hindered by a lack of resources. Contrarily, as the food availability reaches an abundance, we see the rate of treaty proposal tend to 0, suggesting that agents are able to survive without the need for treaties as they offer little utility.
 
@@ -135,7 +135,7 @@ We also assert that this graph details the implied benefit of signing treaties: 
     \begin{tikzpicture}
         \begin{axis}[
             width=0.8\textwidth,
-            axis y line*=left,
+            % axis y line*=left,
             ymin=0,
             xmin=0,
             xlabel=Available Food Per Agent,
@@ -182,7 +182,7 @@ We also assert that this graph details the implied benefit of signing treaties: 
     \label{fig:team1-robustness-food-scarcity-disruptive-agents}
 \end{figure}
 
-\Cref{team1-robustness-food-scarcity-disruptive-agents} shows how the number of deaths is affected when different disruptive agents are added. It shows that, as expected, the number of deaths is higher when disruptive agents are present. However, the effect of selfish agents and random agents seem to be similar which suggests that it it not the amount of food being taken by the agents that is disruptive, rather it is the fact that they do not communicate that causes a higher death rate. This makes it harder to self organise and makes it much harder to survive in the tower. 
+\Cref{fig:team1-robustness-food-scarcity-disruptive-agents} shows how the number of deaths is affected when different disruptive agents are added. It shows that, as expected, the number of deaths is higher when disruptive agents are present. However, the effect of selfish agents and random agents seem to be similar which suggests that it it not the amount of food being taken by the agents that is disruptive, rather it is the fact that they do not communicate that causes a higher death rate. This makes it harder to self organise and makes it much harder to survive in the tower. 
 And by making it harder to survive in the tower, the chances of reaching a stable system are also decreased when disruptive agents are added, the only system to stabilise with 10 food per agent was the one with no disruptive agents, all systems were stable with a tower of 20 food per agent.
 Interestingly
 \subsection{Conclusion}
@@ -193,7 +193,7 @@ This experiment shows the importance of treaties and communication for the survi
 \label{subsec: Experiment 2}
 \subsection{Aims}
 \label{subsec: E2-Aims}
-The aim of this experiment is to very the number of ticks per floor and reshuffle period and observe the effects of this on tower stability and ability to self organise.
+The aim of this experiment is to vary the number of ticks per floor and reshuffle period and observe the effects of this on tower stability and ability to self organise.
 \subsection{Results and Discussion}
 \label{subsec: E2-Results and Discussion}
 
@@ -203,10 +203,10 @@ The aim of this experiment is to very the number of ticks per floor and reshuffl
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                axis y line*=left,
+                % axis y line*=left,
                 ymin=0,
                 xmin=0,
-                xlabel=Shuffle Period (no. of days),
+                xlabel=Shuffle Period (number of days),
                 ylabel=Total Deaths,
                 ymajorgrids=true,
                 xmajorgrids=true,
@@ -238,7 +238,7 @@ The aim of this experiment is to very the number of ticks per floor and reshuffl
 
 For this reason, we propose that it is the rapid redistribution of agents throughout the tower, allowing them to experience varying levels of available food that accounts for the disparity in survival rate: if an agent is consistently assigned to a low floor, they have a low chance of being satisficed if all agents act individually. Having a rapid reshuffle period results in a higher probability of reaching a higher floor, allowing for the agent to replenish its health. 
 
-The average age of agents, denoted by \Cref{Average-Age-as-Shuffle-Period-Decreases}, can be see to follow the inverse trend to death rates which is as expected. This trend being, that the longer the reshuffle period the lower the average age of an agent at death. 
+The average age of agents, denoted by \Cref{fig:Average-Age-as-Shuffle-Period-Decreases}, can be see to follow the inverse trend to death rates which is as expected. This trend being, that the longer the reshuffle period the lower the average age of an agent at death. 
 \begin{figure}[H] %Average Age As Shuffle Period Decreases
     \centering
     \begin{minipage}{0.8\textwidth}
@@ -292,10 +292,10 @@ The average age of agents, denoted by \Cref{Average-Age-as-Shuffle-Period-Decrea
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                axis y line*=left,
+                % axis y line*=left,
                 ymin=0,
                 xmin=0,
-                xlabel=Shuffle Period (no. of days),
+                xlabel=Shuffle Period (number of days),
                 ylabel=Total Accepted Treaties,
                 ymajorgrids=true,
                 xmajorgrids=true,
@@ -337,7 +337,7 @@ The average age of agents, denoted by \Cref{Average-Age-as-Shuffle-Period-Decrea
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                axis y line*=left,
+                % axis y line*=left,
                 ymin=0,
                 xmin=0,
                 xlabel=Shuffle Period (no. of days),
