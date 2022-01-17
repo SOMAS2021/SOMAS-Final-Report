@@ -115,7 +115,7 @@ An important role of Team 1 was to design a mechanism for agents to talk amongst
 As a team, Team 1 emphasized the last point. The infrastructure should not force any behavior onto the agent as long as the behavior was honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API friendly, readable and hard to get wrong. This usually meant making providing basic override-able behaviors to be as unobtrusive as possible to team strategies. \newline
 The minimum default message had to have the following fields that are accessible to all the agents that receive it:
 \begin{itemize}
-    \item \textbf{\texttt{MessageType}}: Indicates one of 13 enumerated message types.
+    \item \textbf{\texttt{MessageType}}: Indicates the message type.
     \item \textbf{\texttt{SenderFloor}}: Returns the floor this message was sent from.
     \item \textbf{\texttt{TargetFloor}}: The floor the message is addressed to.
     \item \textbf{\texttt{ID}}: Each message sent is given a unique ID.
