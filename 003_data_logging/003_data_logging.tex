@@ -2,7 +2,7 @@
 
 \section{Why do we need data?}
 
-Data logging enables analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question: messages frequency, food variation over time, agent deaths rate, etc... Analysis also requires linking different simulation parameters with the data logged (e.g. the number of agents or the amount of food available). 
+Data logging enables analysis of how internal variables change with time during a simulation. One might be interested in different variables from the system in question: messages frequency, food variation over time, agent deaths rate, etc.. Analysis also requires linking different simulation parameters with the data logged (e.g. the number of agents or the amount of food available). 
 
 It is therefore important to setup a logging framework that structures data effectively and scales efficiently for large simulations. The below subsections will introduce the simulation parametrisation, followed by the different logging strategies (dumps and structured), and concluding with the logging interface and the analysis dashboard.
 
@@ -42,11 +42,11 @@ Following the configuration work, a general logger was setup. The general logger
 "level":"info","msg":"Reporting agent state","reporter":"agent"}
 \end{verbatim}
 
-The general log dumps are not structured yet they enable agent teams to directly log custom states from their agents and use those in e.g. evolutionary algorithms or machine learning training.
+The general log dumps are unstructured - yet they enable agent teams to directly log custom states from their agents and use those in e.g. evolutionary algorithms or machine learning training.
 
 \section{Structured logs}
 
-The general log generates huge amounts of data and therefore was ineffective for data analysis and drawing conclusions easily from different simulations. Therefore, structured logs had to be introduced, where particular data is captured optimally to generate lightweight, understandable logs. Following consultations with the agent teams and relating as fit to the problem, the following structured logs where included:
+The general log generates huge amounts of data and therefore was ineffective for data analysis and drawing conclusions easily from different simulations. Therefore, structured logs had to be introduced, where particular data is captured optimally to generate lightweight, understandable logs. After discussions with the agent teams and relating as fit to the problem, the following structured logs where included:
 
 \begin{enumerate}
     \item \textbf{Food}: food available on the platform and food taken by agents.
@@ -58,7 +58,7 @@ The general log generates huge amounts of data and therefore was ineffective for
 
 The agent state encapsulates by default the agent age, floor, HP, utility, and custom state (e.g. emotions or memory).
 
-In the general log, custom agents could pass all sorts of information and therefore the log schema could not determined at compile time (which would be required for a visualisation dashboard). Structured logs have a well defined schema which does not depend on custom agents. For example, a food log will always have this form:
+In the general log, custom agents could pass all sorts of information and therefore the log schema could not determined at compile time (which would be required for a visualisation dashboard). Structured logs have a well defined schema which does not depend on custom agents. For example, a food log will always take the following form:
 
 \begin{verbatim}
 {"day":2,"food":19,"level":"info","tick":222,"time":"2022-01-17T02:13:37Z"}
@@ -67,11 +67,11 @@ In the general log, custom agents could pass all sorts of information and theref
 {"day":3,"food":90,"level":"info","tick":322,"time":"2022-01-17T02:13:37Z"}
 \end{verbatim}
 
-With structured logs setup, it is now possible to bundle logging into an interface and connect it to a visualisation tool.
+With structured logs set up, it is now possible to bundle logging into an interface and connect it to a visualisation tool.
 
 \section{Logging interface}
 
-It was important to setup logging such as structured loggers could be easily extended with new loggers, while preserving the possibility to generate general logs. The following design has been adopted to encapsulate the simulation configuration and the loggers.
+It was important to set up logging such as structured loggers could be easily extended with new loggers, while preserving the ability to generate general logs. The following design has been adopted to encapsulate the simulation configuration and the loggers.
 
 \begin{figure}[htb]
     \centering
