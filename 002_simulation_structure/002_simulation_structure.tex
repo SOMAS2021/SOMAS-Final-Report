@@ -99,6 +99,7 @@ The platform is a parameter of the tower and stores the amount of food on the pl
 
 Base agent contains the core information of an agent, such as an agent's HP and floor. Base agent also contains the \lstinline$hpDecay()$ function as well as a function to calculate an individual agent's utility. 
 Custom agents are designed by each of the agent teams, where each one of them has a different strategy.
+
 %%%%%%%%
 %%%%%%%% Message Passing
 %%%%%%%%
@@ -106,38 +107,37 @@ Custom agents are designed by each of the agent teams, where each one of them ha
 \subsection{Primitive Messaging}
 An important role of Team 1 was to design a mechanism for agents to talk amongst each other in the simulation that would allow automated communication. The first step in this process was to design a system which would allow an agent to pass along a minimum viable message to their neighbours. These were the goals of communication in the MVP:
 \begin{itemize}
-    \item Agents could only talk to their immediate neighbors (+/- 1 floor).
+    \item Agents could only talk to their immediate neighbors ($\pm1$ floor).
     \item Agents should be given the ability to ignore communication.
-    \item Multiple agents could be “speaking” at a given tick.
-    \item One agent could send one message per tick.
-    \item \textbf{It is entirely an agent's discretion if/when/how they wish to react to a message as long as their behavior is not deceptive}
-\end{itemize}
-As a team, Team 1 emphasized the last point. The infrastructure should not force any behavior onto the agent as long as the behavior was honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API friendly, readable and hard to get wrong. This usually meant making providing basic override-able behaviors to be as unobtrusive as possible to team strategies. \newline
-The minimum default message had to have the following fields that are accessible to all the agents that receive it:
+    \item Multiple agents could be ``speaking'' in a given tick.
+    \item One agent can send one message per tick.
+    \item \textbf{It is entirely at an agent's discretion if/when/how they wish to react to a message as long as their behavior is not deceptive}
+
+As a team, Team 1 emphasized the last point. The infrastructure should not force any behavior onto the agent as long as the behavior was honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API readable and user-friendly. This meant providing basic override-able behaviors that were as unobtrusive as possible to team strategies. \newline
+The infrastructure should not force any behaviour onto an agent as long as the behaviour is honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behaviour while keeping the API readable and user-friendly. This usually meant providing basic override-able behaviours to be as unobtrusive as possible to team strategies. \newline
 \begin{itemize}
     \item \textbf{\texttt{MessageType}}: Indicates one of 13 enumerated message types.
     \item \textbf{\texttt{SenderFloor}}: Returns the floor this message was sent from.
-    \item \textbf{\texttt{TargetFloor}}: The floor the message is addressed to.
+    \item \textbf{\texttt{TargetFloor}}: Returns the floor the message is addressed to.
     \item \textbf{\texttt{ID}}: Each message sent is given a unique ID.
 \end{itemize}
 \vspace{\baselineskip}
-For the MVP, Team 1 constructed a system where for example in a scenario where Alice (currently at floor 10) wishes to send a message upward:
+For the MVP, Team 1 constructed a system in which, for example, when Alice (currently at floor 30) wishes to send a message upward:
 \begin{enumerate}
     \item At Tick 0, Alice would construct the message for Bob containing the following information:
         \begin{itemize}
             \item \textbf{Alice's ID}
             \item \textbf{Alice's current floor}: 30
-            \item \textbf{Message's target floor}: 31 \textit{Since Alice wants to message the floor above her}
+            \item \textbf{Message's target floor}: 29 \textit{Since Alice wants to message the floor above her}
             \item \textbf{Message Type} (to be elaborated on the Common Languages Section)
         \end{itemize}
     \item Still at Tick 0, Alice calls \texttt{SendMessage} which takes her message and passes it to the tower.
-    \item The tower acts as the communication authority, finding the agent who is on floor 31 at Tick 0 and inserts the message into the recipient agent's (Bob's) inbox.
+    \item The tower acts as the communication authority, finding the agent who is on floor 29 at Tick 0 and inserting the message into the recipient agent's (Bob's) inbox.
     \item At Tick 1, Bob may choose to call \texttt{ReceiveMessage} which would extract Alice's message (if Alice was the first or only agent to send him a message at Tick 0) and respond.
     \item If Bob has called \texttt{ReceiveMessage}, Alice's message is removed from Bob's inbox.
 \end{enumerate}
-With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is FIFO - If multiple messages were received or if there were outstanding messages from previous ticks, only the earliest one can be retrieved at a given tick.
-
-Additionally, ``receiving" does not necessarily imply ``reacting", an agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling ``receiving" and ``reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
+With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is a FIFO queue -- if multiple messages are received or if there are outstanding messages from previous ticks, only the earliest one can be retrieved in a given tick.
+Additionally, ``receiving" does not necessarily imply ``reacting". An agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling ``receiving" and ``reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
 Beyond the MVP, however, messages needed to have meaning. Because the process would be automated it was meaningless to send unstructured strings, how was an agent to understand ``Please only eat what you need to survive."? \newline
 A common language was necessary.
 
@@ -302,6 +302,7 @@ Option 3 also had some interesting implications. There were multiple possibiliti
 After some discussion, it was decided that for honest experiments breaking the chain without informing and message-tampering were disallowed while eavesdropping remained legal. \newline
 We set the default behavior of propagation to be ``dutifully pass the message if it was not addressed to your floor" on the infrastructure level. This was so agents who did not wish to eavesdrop or did not engage in intra-agent communication at all would not need to implement separate handlers for propagation. \newline
 With the completion of message propagation, communication mechanisms within the tower were finished.
+
 %%%%%%%%
 %%%%%%%% Health Modeling
 %%%%%%%%
