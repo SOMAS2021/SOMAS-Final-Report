@@ -75,7 +75,7 @@ The custom agent contains a pointer to its base agent and any parameters relevan
 
 The core parameters of an agent were abstracted out of the custom agent for two reasons:
 \begin{enumerate}
-    \item Custom agents cannot manipulate their own data or information, rather they can only request access through the mentioned `getter' functions, which either returns information or an error.
+    \item Custom agents cannot manipulate their own data or information, rather they can only request access through `getter' functions, which returns either information or an error.
     \item The tower struct has access to the base agents and can therefore influence the agent parameters as determined by the laws existing within the tower. Examples of this include floor reshuffling and health decay.
 \end{enumerate}
 
@@ -88,7 +88,7 @@ Deaths occur in the tower when an agent has not eaten enough food to stay alive 
     \item Replacing agents with the dominant agent type
 \end{enumerate}
 
-Our design chose to replace agents with the same agent type. While replacing agents with a random agent type would introduce an element of uncertainty, there made it difficult to analyse individual agent behaviours. It would have been interesting to experiment with replacing agents with the dominant agent type, however, this posed the question of defining what the most “dominant” agent would be. 
+Our design chose to replace agents with the same agent type. While replacing agents with a random agent type would introduce an element of uncertainty, this would have made it difficult to analyse individual agent behaviours. It would have been interesting to experiment with replacing agents with the dominant agent type, however, this posed the question of defining what the most ``dominant'' agent would be.
 
 \subsection{Infrastructure}
 
