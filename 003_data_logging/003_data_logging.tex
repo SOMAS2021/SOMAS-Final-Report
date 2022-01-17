@@ -8,7 +8,7 @@ It is therefore important to setup a logging framework that structures data effe
 
 \section{Parameterisation}
 
-First, it was important to enable an effective parametrisation of the simulation. A configuration interface was therefore set to abstract variables from the simulation environment and a configuration object would subsequently be passed to the simulation environment instance to define the following simulation parameters:
+First, it was important to enable an effective parameterisation of the simulation. A configuration interface was therefore set to abstract variables from the simulation environment and a configuration object is passed to the simulation environment instance to define the following simulation parameters:
 
 \begin{multicols}{2}
     \begin{enumerate}
@@ -25,9 +25,9 @@ First, it was important to enable an effective parametrisation of the simulation
     \end{enumerate}
 \end{multicols}
 
-The configuration parameters could then be written in a simple \texttt{json} file which would be parsed into a configuration object.
+The configuration parameters are then written in a JSON file which can be parsed into a configuration object.
 
-\section{General log dumps}
+\section{General Log Dumps}
 
 Following the configuration work, a general logger was set up. The general logger is effectively a single shared logger between the different instances in the system (simulation, tower, agents, etc...). Each instance appends by default an identifier to a log line in the general logger log file (named \texttt{main.json}). Here is an example below:
 
@@ -42,11 +42,11 @@ Following the configuration work, a general logger was set up. The general logge
 "level":"info","msg":"Reporting agent state","reporter":"agent"}
 \end{verbatim}
 
-The general log dumps are unstructured - yet they enable agent teams to directly log custom states from their agents and use those in e.g. evolutionary algorithms or machine learning training.
+The general log dumps are unstructured, but enable agent teams to directly log custom states from their agents and use those in e.g. evolutionary algorithms or machine learning training.
 
-\section{Structured logs}
+\section{Structured Logs}
 
-The general log generates huge amounts of data and therefore was ineffective for data analysis and drawing conclusions easily from different simulations. Therefore, structured logs had to be introduced, where particular data is captured optimally to generate lightweight, understandable logs. After discussions with the agent teams and relating as fit to the problem, the following structured logs where included:
+The general log generates huge amounts of data and therefore was ineffective for data analysis and drawing conclusions easily from different simulations. Therefore, structured logs had to be introduced, where particular data are captured optimally to generate lightweight, understandable logs. After discussions with agent teams, the following structured logs where included:
 
 \begin{enumerate}
     \item \textbf{Food}: food available on the platform and food taken by agents.
@@ -58,7 +58,7 @@ The general log generates huge amounts of data and therefore was ineffective for
 
 The agent state encapsulates by default the agent's age, floor, HP, utility, and custom state (e.g., emotions or memory).
 
-In the general log, custom agents could pass all sorts of information and therefore the log schema could not determined at compile time (which would be required for a visualisation dashboard). Structured logs have a well defined schema which does not depend on custom agents. For example, a food log will always take the following form:
+In the general log, custom agents could pass all sorts of information and therefore the log schema could not determined at compile time (which is required for a visualisation dashboard). Structured logs have a well-defined schema which does not depend on custom agents. For example, a food log will always take the following form:
 
 \begin{verbatim}
 {"day":2,"food":19,"level":"info","tick":222,"time":"2022-01-17T02:13:37Z"}
@@ -69,9 +69,9 @@ In the general log, custom agents could pass all sorts of information and theref
 
 With structured logs set up, it is now possible to bundle logging into an interface and connect it to a visualisation tool.
 
-\section{Logging interface}
+\section{Logging Interface}
 
-It was important to set up logging such as structured loggers could be easily extended with new loggers, while preserving the ability to generate general logs. The following design has been adopted to encapsulate the simulation configuration and the loggers.
+It was important to set up logging such that structured loggers could be easily extended with new loggers, while preserving the ability to generate general logs. The following design was adopted to encapsulate the simulation configuration and the loggers.
 
 \begin{figure}[htb]
     \centering
@@ -80,7 +80,7 @@ It was important to set up logging such as structured loggers could be easily ex
     \label{fig:design_logging}
 \end{figure}
 
-The entry point to the simulation dispatcher was then linked to both the CLI as well as a server (with HTTP listeners) to support a browser-based dashboard.
+The entry point to the simulation dispatcher is linked to both the command line interface as well as a server (with HTTP listeners) to support a browser-based dashboard.
 
 \section{Dashboard}
 
