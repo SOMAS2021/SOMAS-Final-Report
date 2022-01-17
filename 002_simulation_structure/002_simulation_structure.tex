@@ -137,7 +137,7 @@ For the MVP, Team 1 constructed a system where for example in a scenario where A
 \end{enumerate}
 With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is FIFO - If multiple messages were received or if there were outstanding messages from previous ticks, only the earliest one can be retrieved at a given tick.
 
-Additionally, "receiving" does not necessarily imply "reacting", an agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling "receiving" and "reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
+Additionally, ``receiving" does not necessarily imply ``reacting", an agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling ``receiving" and ``reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
 Beyond the MVP, however, messages needed to have meaning. Because the process would be automated it was meaningless to send unstructured strings, how was an agent to understand ``Please only eat what you need to survive."? \newline
 A common language was necessary.
 
@@ -201,7 +201,7 @@ From these basic categories 11 specific messages were developed that specified w
  \texttt{BoolResponse} & \texttt{ResponseMessage} & Message affirming or rejecting a request &  
 \end{longtable}
 \end{center}
-The distinction between "receiving" and "reacting" becomes important. Because we wanted to ensure that \textit{receiving} any of these message types did not mean that the recipient had to \textit{react}, the "reaction" was separated into an external function which the agent could optionally call after they extracted their message from the inbox. \newline
+The distinction between ``receiving" and ``reacting" becomes important. Because we wanted to ensure that \textit{receiving} any of these message types did not mean that the recipient had to \textit{react}, the ``reaction" was separated into an external function which the agent could optionally call after they extracted their message from the inbox. \newline
 The design works such that if Alice on Floor 11 wanted to ask Floor 12 to leave 10 food on the platform for her:
 \begin{enumerate}
     \item At Tick 0, Alice constructs a \texttt{RequestLeaveFoodMessage} with \texttt{Request} set to 10 addressed to Floor 12.
@@ -288,11 +288,11 @@ With the advent of treaties and the possibility of building relationships that o
 Multi-floor communication was a long-awaited feature among agent teams so there had already been many conversations about how best to achieve this. There were two main approaches.
 \begin{enumerate}
     \item \textbf{Shouting}: An agent could shout up or down a specified number of floors and every agent the in-between floors could also hear.
-    \item \textbf{Directed Shouting}: An agent could "shout" in such a way that only the agent on the targeted floor would hear but none of the agents in the in-between floors could.
+    \item \textbf{Directed Shouting}: An agent could shout in such a way that only the agent on the targeted floor would hear but none of the agents in the in-between floors could.
     \item \textbf{Propagating}: An agent could only speak to its immediate neighbour but they could instruct their neighbour to pass the message on to the target floor.
 \end{enumerate}
 Option 2 was eliminated quickly for its unreasonable premise, it was not clear conceptually how an agent could yell only to one recipient. \newline
-Option 1 required some limit on the number of floors you could yell across. Agent teams also suggested that shouting should not be a free action and should "cost" HP when engaged in often. Although interesting, it introduced unnecessary complexity and was eliminated. \newline
+Option 1 required some limit on the number of floors you could yell across. Agent teams also suggested that shouting should not be a free action and should ``cost" HP when engaged in often. Although interesting, it introduced unnecessary complexity and was eliminated. \newline
 Option 3 also had some interesting implications. There were multiple possibilities in how the in-between agents would behave:
 \begin{itemize}
     \item An in-between agent could break the propagation chain and not inform the original sender.
