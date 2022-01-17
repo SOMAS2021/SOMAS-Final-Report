@@ -39,16 +39,16 @@ For the MVP, Team 1 constructed a system where for example in a scenario where A
 With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is FIFO - If multiple messages were received or if there were outstanding messages from previous ticks, only the earliest one can be retrieved at a given tick.
 
 Additionally, "receiving" does not necessarily imply "reacting", an agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling "receiving" and "reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
-Beyond the MVP, however, messages needed to have meaning. Because the process would be automated it was meaningless to send unstructured strings, how was an agent to understand "Please only eat what you need to survive."? \newline
+Beyond the MVP, however, messages needed to have meaning. Because the process would be automated it was meaningless to send unstructured strings, how was an agent to understand \textquotedblleft Please only eat what you need to survive. \textquotedblright ? \newline
 A common language was necessary.
 
 \subsection{Common Language}
 To design the common language, Team 1 surveyed the agent teams asking for what they would like to talk to other agents about. We collected suggestions and found that communication indicated one of four possibilities:
 \begin{enumerate}
-    \item An agent could be \textit{asking} another agent for information. \textit{"How much food is on the platform when it gets to you?" or "How much food did you take?"}
-    \item An agent could be \textit{stating} something about its state or environment. \textit{"I am in critical (health) condition" or "There is no more food left on the platform"}
-    \item An agent could be \textit{request} something from another agent. \textit{"Please leave 10 food on the platform for me."}
-    \item An agent could be \textit{responding} to another agent's request. \textit{"Yes." or "No."}
+    \item An agent could be \textit{asking} another agent for information. \textquotedblleft How much food is on the platform when it gets to you? \textquotedblright or \textquotedblleft How much food did you take? \textquotedblright
+    \item An agent could be \textit{stating} something about its state or environment. \textquotedblleft I am in critical (health) condition \textquotedblright or \textquotedblleft There is no more food left on the platform \textquotedblright
+    \item An agent could be \textit{request} something from another agent. \textquotedblleft Please leave 10 food on the platform for me. \textquotedblright
+    \item An agent could be \textit{responding} to another agent's request. \textquotedblleft Yes \textquotedblright or \textquotedblleft No. \textquotedblright
 \end{enumerate}
 These categories solidified into four basic messages - \texttt{Ask}, \texttt{State}, \texttt{Request}, and \texttt{Response}. \newline
 In addition, \texttt{Ask} and \texttt{Request} are messages that expect a response. A \texttt{State} message could be a response to an \texttt{Ask} but also could be an unprompted announcement while \texttt{Response} must be responding to some pre-existing \texttt{Request}. \newline 
@@ -201,6 +201,6 @@ Option 3 also had some interesting implications. There were multiple possibiliti
     \item An in-between agent could eavesdrop on the message being passed.
 \end{itemize}
 After some discussion, it was decided that for honest experiments breaking the chain without informing and message-tampering were disallowed while eavesdropping remained legal. \newline
-We set the default behavior of propagation to be \textit{"dutifully pass the message if it was not addressed to your floor"} on the infrastructure level. This was so agents who did not wish to eavesdrop or did not engage in intra-agent communication at all would not need to implement separate handlers for propagation. \newline
+We set the default behavior of propagation to be ``dutifully pass the message if it was not addressed to your floor`` on the infrastructure level. This was so agents who did not wish to eavesdrop or did not engage in intra-agent communication at all would not need to implement separate handlers for propagation. \newline
 With the completion of message propagation, communication mechanisms within the tower were finished.
 \end{document}
