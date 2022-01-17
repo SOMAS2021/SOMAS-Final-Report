@@ -157,7 +157,7 @@ While Team 1 did not want to force agent teams into any behaviors, we wanted to 
  \hline
  \textbf{Message \newline Category} & \textbf{Reply \newline Category} & \textbf{Body Functions} & \textbf{Description} \\ [0.5ex] 
  \hline\hline
- \texttt{AskMessage} & \texttt{StateMessage} &  \texttt{Reply}: Returns appropriate statement & Inquires something about a neighboring agent's state. \\
+ \texttt{AskMessage} & \texttt{StateMessage} &  \texttt{Reply}: Returns the appropriate statement & Inquires something about a neighboring agent's state. \\
  \hline
  \texttt{StateMessage} & N/A & \texttt{Statement}: Returns the value of statement. \textit{e.g. a StateHP message of 5HP would return 5.} & Announces something about an agent's state or environment. \\ 
  \hline
@@ -192,16 +192,16 @@ From these basic categories 11 specific messages were developed that specified w
  \texttt{StateIntendedFoodIntake} & \texttt{StateMessage} & States how much food the agent is planning to take &  
  \\
  \hline
- \texttt{RequestLeaveFood} & \texttt{RequestMessage} & Requests that an agent (presumably above) you leaves a certain amount of food on the platform & \texttt{BoolResponse}
+ \texttt{RequestLeaveFood} & \texttt{RequestMessage} & Requests that an agent (presumably above you) leaves a certain amount of food on the platform & \texttt{BoolResponse}
  \\
  \hline
- \texttt{RequestTakeFood} & \texttt{RequestMessage} & Requests that an agent (presumably above) you takes a certain amount of food on the platform & \texttt{BoolResponse}
+ \texttt{RequestTakeFood} & \texttt{RequestMessage} & Requests that an agent (presumably above you) takes a certain amount of food on the platform & \texttt{BoolResponse}
  \\
  \hline
  \texttt{BoolResponse} & \texttt{ResponseMessage} & Message affirming or rejecting a request &  
 \end{longtable}
 \end{center}
-The distinction between ``receiving" and ``reacting" becomes important. Because we wanted to ensure that \textit{receiving} any of these message types did not mean that the recipient had to \textit{react}, the ``reaction" was separated into an external function which the agent could optionally call after they extracted their message from the inbox. \newline
+The distinction between ``receiving" and ``reacting" becomes important. We wanted to ensure that \textit{receiving} any of these message types did not mean that the recipient had to \textit{react}. For that reason, the ``reaction" was separated into an external function which the agent could optionally call after they extracted their message from the inbox. \newline
 The design works such that if Alice on Floor 10 wanted to ask Floor 10 to leave 10 food on the platform for her:
 \begin{enumerate}
     \item At Tick 0, Alice constructs a \texttt{RequestLeaveFoodMessage} with \texttt{Request} set to 10 addressed to Floor 12.
@@ -280,8 +280,8 @@ The treaties-relay-design and the inaccuracy of the signature count is illustrat
     \item Tick 3: Alice also receives Carol's affirmation, she increments her local \texttt{SignatureCount} to 4, making her the only person with access to the correct signature numbers.
     \item Tick \texttt{n}: In some future tick post-reshuffle where Alice, Bob and Carol are no longer neighbours, the three of them and whoever else signed copies of the treaty (if Carol or Bob further propogated the treaty) are bound to the agreement that if they are not in critical condition, they would leave 40 food)
 \end{enumerate}
-Although we discussed several approaches for keeping an accurate state of the \texttt{SignatureCount}, they required too much communication overhead which could be detrimental to strategies since messages were capped at one per tick. Agent teams opposed the idea of removing the field altogether so an inaccurate but potentially useful \texttt{SignatureCount} was kept. \newline
-Because the honest run of the experiment required that no agent would break their treaties, by default agents would reject treaties. This default was expected to be overridden by any agent team who wanted to communicate with other agents so this introduced difficulties in how to ensure that treaties that had been signed were followed. There were suggestions for a technical solution however ultimately that was too restrictive for agent strategies as it would require Team 1 to somehow conditionally override agent behavior depending on if they had an active treaty or not which was technically difficult but also extremely limiting for the agents. Ultimately it was decided that the honesty would be maintained through thorough a combination of readable agent code and thorough PR (pull request) reviews from Team 1 as treaty-strategies were implemented. \newline
+Although we discussed several approaches for keeping an accurate state of the \texttt{SignatureCount}, they required too much communication overhead which could be detrimental to strategies since message sending is capped at one per tick. Agent teams opposed the idea of removing the field altogether so an inaccurate but potentially useful \texttt{SignatureCount} was kept. \newline
+Because the honest run of the experiment requires that no agent breaks their treaties, the base agent rejects treaties by default. This default was expected to be overridden by any agent team who wanted to communicate with other agents, so this introduced difficulties in how to ensure that treaties that had been signed were followed. There were suggestions for a technical solution however ultimately that was too restrictive for agent strategies as it would require Team 1 to somehow conditionally override agent behaviour depending on if they had an active treaty or not. Ultimately it was decided that the honesty would be maintained through a combination of readable agent code and thorough code reviews from Team 1 as treaty strategies were implemented. \newline
 With the advent of treaties and the possibility of building relationships that outlived a reshuffle, it was time to extend communications beyond immediate neighbors to possibly tower-wide.
 
 \subsection{Message Propagation}
@@ -291,7 +291,7 @@ Multi-floor communication was a long-awaited feature among agent teams so there 
     \item \textbf{Propagating}: An agent could only speak to its immediate neighbour but they could instruct their neighbour to pass the message on to the target floor.
 \end{enumerate}
 Option 1 required some limit on the number of floors you could yell across. Agent teams also suggested that shouting should not be a free action and should ``cost" HP when engaged in often. Although interesting, it introduced unnecessary complexity and was discarded. \newline
-Option 3 also had some interesting implications. There were multiple possibilities in how the in-between agents would behave:
+Option 2 also had some interesting implications. There were multiple possibilities in how the in-between agents would behave:
 \begin{itemize}
     \item An in-between agent could break the propagation chain and not inform the original sender.
     \item An in-between agent could tamper with the message before passing it on.
