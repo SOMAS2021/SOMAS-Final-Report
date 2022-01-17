@@ -84,7 +84,7 @@ Firstly, we identified what observations are needed to determine the condition o
 
 The first three observations served to fulfil the first aim of the task, as they could effectively reflect the health condition of our agent. The last observation was used to assess the impact of the action of our agent on the neighbouring agent, which is useful for the second aim of the task. Subsequently, we found the resolution of each observation by trial and error. Having a high resolution, the agent would be able to perceive tiny changes within the environment at the cost of increased number of states, and thus slowing the learning process. Having a low resolution, the agent would not be able to adapt to changes in the environment effectively and promptly. Finally, the state space of our agent is defined by ten state intervals for agent’s HP (0 – 9, 10 – 19, …, 80 – 89, 90 – Max HP), ten state intervals for the food on platform (0 – 9, 10 – 19, …, 80 – 89, 90 – Max food), four states for Days at critical (0, 1, 2, 3), and eleven state intervals for neighbouring agent’s HP (-1, 0 – 9, …, 80 – 89, 90 – Max HP), with an additional unknown state represented by –1, as the neighbouring agent might refuse to share such information. Table below illustrates the state space definition.
 
-\begin{table}
+\begin{table}[h]
 \centering
 
 \begin{adjustbox}{width=\columnwidth,center}

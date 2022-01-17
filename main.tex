@@ -10,7 +10,7 @@
 \usepackage{longtable}
 \usepackage{cleveref} \Crefformat{figure}{#2Fig.~#1#3} % makes referencing customizable (e.g. \Cref{}). See: https://texblog.org/2013/05/06/cleveref-a-clever-way-to-reference-in-latex/)
 \usepackage[nottoc, notlof, notlot]{tocbibind}  % includes bibliography in table of contents (TOC)
-\usepackage[square]{natbib} % sets reference style
+\usepackage[numbers]{natbib} % sets reference style
 \usepackage{graphicx} % required to include images
 \usepackage[svgnames]{xcolor}
 \usepackage{tikz}
@@ -140,7 +140,6 @@ Co-operative survival games refer to a subset of political choice games wherein 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{000_introduction/000_introduction}
-\input{001_organisation_structure/001_organisation_structure}
 \input{002_simulation_structure/002_simulation_structure}
 \input{003_data_logging/003_data_logging}
 \input{004_team_2_agent_design/004_team_2_agent_design}
@@ -161,7 +160,7 @@ Co-operative survival games refer to a subset of political choice games wherein 
 \newpage
 \nocite{*}
 \bibliography{references} 
-\bibliographystyle{IEEEtranN}
+\bibliographystyle{unsrtnat}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        Document End                           %
