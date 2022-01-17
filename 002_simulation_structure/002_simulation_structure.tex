@@ -105,17 +105,16 @@ Custom agents are designed by each of the agent teams, where each one of them ha
 %%%%%%%%
 \section{Message Passing}\label{message_passing}
 \subsection{Primitive Messaging}
-An important role of Team 1 was to design a mechanism for agents to talk amongst each other in the simulation that would allow automated communication. The first step in this process was to design a system which would allow an agent to pass along a minimum viable message to their neighbours. These were the goals of communication in the MVP:
+For agents to talk amongst each other in the simulation, the first step was to design a system which would allow an agent to pass along a minimum viable message to their neighbours. These were the goals of communication in the MVP:
 \begin{itemize}
-    \item Agents could only talk to their immediate neighbors ($\pm1$ floor).
+    \item Agents may only talk to their immediate neighbors ($\pm1$ floor).
     \item Agents should be given the ability to ignore communication.
     \item Multiple agents could be ``speaking'' in a given tick.
     \item One agent can send one message per tick.
     \item \textbf{It is entirely at an agent's discretion if/when/how they wish to react to a message as long as their behavior is not deceptive}
 \end{itemize}
 
-As a team, Team 1 emphasized the last point. The infrastructure should not force any behavior onto the agent as long as the behavior was honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API readable and user-friendly. This meant providing basic override-able behaviors that were as unobtrusive as possible to team strategies. \newline
-The infrastructure should not force any behaviour onto an agent as long as the behaviour is honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behaviour while keeping the API readable and user-friendly. This usually meant providing basic override-able behaviours to be as unobtrusive as possible to team strategies. \newline
+The infrastructure should not force any behaviour onto the agent as long as the behaviour is honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API readable and user-friendly. This meant providing basic override-able behaviours that were as unobtrusive as possible to team strategies. \newline
 \begin{itemize}
     \item \textbf{\texttt{MessageType}}: Indicates one of 13 enumerated message types.
     \item \textbf{\texttt{SenderFloor}}: Returns the floor this message was sent from.
@@ -187,10 +186,10 @@ From these basic categories 11 specific messages were developed that specified w
  \hline
  \texttt{StateHP} & \texttt{StateMessage} & States how much HP an agent has &   \\
  \hline
- \texttt{StateFoodOnPlatform} & \texttt{StateMessage} & States how food is on the platform when it arrives to the agent &  
+ \texttt{StateFoodOnPlatform} & \texttt{StateMessage} & States how much food is on the platform when it arrives to the agent &  
  \\
  \hline
- \texttt{StateIntendedFoodIntake} & \texttt{StateMessage} & States how food the agent is planning to take &  
+ \texttt{StateIntendedFoodIntake} & \texttt{StateMessage} & States how much food the agent is planning to take &  
  \\
  \hline
  \texttt{RequestLeaveFood} & \texttt{RequestMessage} & Requests that an agent (presumably above) you leaves a certain amount of food on the platform & \texttt{BoolResponse}
@@ -203,7 +202,7 @@ From these basic categories 11 specific messages were developed that specified w
 \end{longtable}
 \end{center}
 The distinction between ``receiving" and ``reacting" becomes important. Because we wanted to ensure that \textit{receiving} any of these message types did not mean that the recipient had to \textit{react}, the ``reaction" was separated into an external function which the agent could optionally call after they extracted their message from the inbox. \newline
-The design works such that if Alice on Floor 11 wanted to ask Floor 12 to leave 10 food on the platform for her:
+The design works such that if Alice on Floor 10 wanted to ask Floor 10 to leave 10 food on the platform for her:
 \begin{enumerate}
     \item At Tick 0, Alice constructs a \texttt{RequestLeaveFoodMessage} with \texttt{Request} set to 10 addressed to Floor 12.
     \item At Tick 0, Alice sends the message.
@@ -255,7 +254,7 @@ The aforementioned treaty \textit{“Please leave 40 food on the platform if you
         RequestType = LeaveAmountFood \newline
         RequestOp = EQ \newline
         RequestValue = 40 \newline}
-In addition to the language components the treaties included a \texttt{SignatureCount} which tracked an estimate of how many agents had signed the treaty thus far. This number was not an accurate, it only vaguely indicates whether or not a treaty is popular. 
+In addition to the language components the treaties included a \texttt{SignatureCount} which tracked an estimate of how many agents had signed the treaty thus far. This number is not an accurate estimation, it only vaguely indicates whether or not a treaty is popular. 
 The introduction of treaties also necessitated the creation of one more message category as well as a message sub-type. 
 \begin{center}
 \begin{tabular}{p{3cm}p{3cm}p{5cm}p{3.5cm}}
@@ -273,9 +272,9 @@ The introduction of treaties also necessitated the creation of one more message 
 The treaties-relay-design and the inaccuracy of the signature count is illustrated if Alice, still on Floor 10, wanted to propose the treaty \textit{“Please leave 40 food on the platform if you are not in critical condition”} to her neighbours downstairs and upstairs it would work as follows:
 \begin{enumerate}
     \item Tick 0: Alice constructs the treaty, embeds it within a \texttt{ProposeTreatyMessage} and sends it upward (as she can only send one message per tick). Alice's treaty begins with a \texttt{SignatureCount} of 1 (since she implicitly signed it by proposing).
-    \item Tick 1: Treaty arrives on the 11th Floor in Bob's (previously empty) inbox and he chooses to respond positively and signs. On Bob's local copy of the treaty, the \texttt{SignatureCount} has incremented to 2 but not on Alice's. Bob replies through \texttt{Reply} and sends the  \texttt{TreatyResponse} downstairs.
-    \item Tick 1: Meanwhile, Alice also sends the treaty downward to Floor 9.
-    \item Tick 2: Treaty arrives on the 9th Floor in Carol's (previously empty) inbox and she also chooses to respond positively. \newline
+    \item Tick 1: Treaty arrives on the 9th Floor in Bob's (previously empty) inbox and he chooses to respond positively and signs. On Bob's local copy of the treaty, the \texttt{SignatureCount} has incremented to 2 but not on Alice's. Bob replies through \texttt{Reply} and sends the  \texttt{TreatyResponse} downstairs.
+    \item Tick 1: Meanwhile, Alice also sends the treaty downward to Floor 11.
+    \item Tick 2: Treaty arrives on the 11th Floor in Carol's (previously empty) inbox and she also chooses to respond positively. \newline
     Here, Carol's local copy of the treaty has a \texttt{SignatureCount} of 2 not 3 despite the fact she is the third person to sign.
     \item Tick 2: Meanwhile, Alice has received Bob's affirmation. Knowing that he signed it, she increments her copy of the treaty.
     \item Tick 3: Alice also receives Carol's affirmation, she increments her local \texttt{SignatureCount} to 4, making her the only person with access to the correct signature numbers.
@@ -286,14 +285,12 @@ Because the honest run of the experiment required that no agent would break thei
 With the advent of treaties and the possibility of building relationships that outlived a reshuffle, it was time to extend communications beyond immediate neighbors to possibly tower-wide.
 
 \subsection{Message Propagation}
-Multi-floor communication was a long-awaited feature among agent teams so there had already been many conversations about how best to achieve this. There were two main approaches.
+Multi-floor communication was a long-awaited feature among agent teams so there had already been many conversations about how best to achieve this. There were two main approaches:
 \begin{enumerate}
-    \item \textbf{Shouting}: An agent could shout up or down a specified number of floors and every agent the in-between floors could also hear.
-    \item \textbf{Directed Shouting}: An agent could shout in such a way that only the agent on the targeted floor would hear but none of the agents in the in-between floors could.
+    \item \textbf{Shouting}: An agent could shout up or down a specified number of floors and every agent on floors in between would also hear the message.
     \item \textbf{Propagating}: An agent could only speak to its immediate neighbour but they could instruct their neighbour to pass the message on to the target floor.
 \end{enumerate}
-Option 2 was eliminated quickly for its unreasonable premise, it was not clear conceptually how an agent could yell only to one recipient. \newline
-Option 1 required some limit on the number of floors you could yell across. Agent teams also suggested that shouting should not be a free action and should ``cost" HP when engaged in often. Although interesting, it introduced unnecessary complexity and was eliminated. \newline
+Option 1 required some limit on the number of floors you could yell across. Agent teams also suggested that shouting should not be a free action and should ``cost" HP when engaged in often. Although interesting, it introduced unnecessary complexity and was discarded. \newline
 Option 3 also had some interesting implications. There were multiple possibilities in how the in-between agents would behave:
 \begin{itemize}
     \item An in-between agent could break the propagation chain and not inform the original sender.
