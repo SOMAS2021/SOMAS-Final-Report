@@ -20,10 +20,10 @@ Before the effect of the parameters on stability can be measured, we must first 
 Stability is defined in the book as:  “In all cases, the stable system is characterised by the fact that after a displacement we can assign some bound to the subsequent movement of the representative (equilibrium) point.”
 The features of a system's stability as given by \cite{Ashby1960} are as follows:
 \begin{itemize}
-    \item Stability refers to some aspect of a system, not the system itself.
-    \item A stable system is brought back to a state of equilibrium when it is displaced.
-    \item Stability is a property of the whole system.
-    \item Presence of stability implies some coordination of actions of the parts.
+    \item Stability refers to some aspect of a system not the system itself
+    \item A stable system is brought back to a state of equilibrium when it is displaced
+    \item Stability is a property of the whole system
+    \item Presence of stability implies some coordination of action of the parts
 \end{itemize}
  
 In the case of the tower as a system, the death rate is considered to be the equilibrium point and the displacement being the addition of agents to the tower since, before the introduction of the agents, there is no movement in any of the parameters of the system. The equilibrium point being a death rate of zero. 
@@ -35,14 +35,14 @@ The tower can therefore be considered stable if:
     \item The death rate stays at zero until the end of the simulation
 \end{itemize}
  
-This definition of tower stability also has the four features mentioned above and in the book.
+This definition of tower stability also has the 4 features mentioned above and in the book.
 
 \section{Experiment 1}
 \label{sec: Experiment 1}
 \subsection{Aims}
 \label{subsec: E1-Aims}
 The aim of this experiment is to observe the impact of the addition of disruptive agents on the tower. 
-We keep an equal number of each team’s agents in the tower. Selfish agents and random agents are then added. The food per agent on the platform (food scarcity) is also varied. This allows us to observe the effect of food scarcity on stability and the effect of the addition of these disruptive agents on tower stability. Of course, we expect that as food becomes more scarce and as more disruptive agents are added, the total number of deaths will increase and stability will be more difficult to achieve.
+We keep an equal number of each team’s agents in the tower. Selfish agents and random agents are then added. The food per agent on the platform (food scarcity) is also varied. This allows us to observe the effect of food scarcity on stability and the effect of the addition of these disruptive agents on tower stability. Of course, we expect as food becomes more scarce and as more disruptive agents are added, that the total number of deaths will increase and that stability will be more difficult to achieve.
 
 In this experiment the tower being used is highly heterogeneous, with 3 of each team agent type being added to it. Three random agents, three selfish agents or three of both or none of either will then be added to to the tower.
 \subsection{Results and Discussion}
@@ -53,7 +53,7 @@ In this experiment the tower being used is highly heterogeneous, with 3 of each 
     \begin{tikzpicture}
         \begin{axis}[
             width=0.8\textwidth,
-            % axis y line*=left,
+            axis y line*=left,
             ymin=0,
             xmin=0,
             xlabel=Available Food Per Agent,
@@ -124,7 +124,7 @@ In this experiment the tower being used is highly heterogeneous, with 3 of each 
     \label{fig:team1-robustness-food-scarcity}
 \end{figure}
 
-\Cref{fig:team1-robustness-food-scarcity} illustrates the change in the frequency of treaty proposal as the constraints from the economy of scarcity are levied. The experiment enforces that there is 100 food initially available on the platform, with the number of agents parameterised to allow for an average amount of food per agent. This simulation lasts 400 turns.
+\Cref{team1-robustness-food-scarcity} illustrates the change in the frequency of treaty proposal as the constraints from the economy of scarcity are levied. The experiment enforces that there is 100 food initially available on the platform, with the number of agents parameterised to allow for an average amount of food per agent. This simulation lasts 400 turns.
 
 The general tendency for this system is that, as the availability of food rises (and hence the economy of scarcity becomes less constrictive), the rate of treaty proposal decreases. We propose that this experiment yields insight into the importance of treaties, demonstrating that agents in general rely heavily on treaty formation to self organise when survivability is hindered by a lack of resources. Contrarily, as the food availability reaches an abundance, we see the rate of treaty proposal tend to 0, suggesting that agents are able to survive without the need for treaties as they offer little utility.
 
@@ -135,7 +135,7 @@ We also assert that this graph details the implied benefit of signing treaties: 
     \begin{tikzpicture}
         \begin{axis}[
             width=0.8\textwidth,
-            % axis y line*=left,
+            axis y line*=left,
             ymin=0,
             xmin=0,
             xlabel=Available Food Per Agent,
@@ -182,18 +182,18 @@ We also assert that this graph details the implied benefit of signing treaties: 
     \label{fig:team1-robustness-food-scarcity-disruptive-agents}
 \end{figure}
 
-\Cref{fig:team1-robustness-food-scarcity-disruptive-agents} shows how the number of deaths is affected when different disruptive agents are added. It shows that, as expected, the number of deaths is higher when disruptive agents are present. However, the effect of selfish agents and random agents seem to be similar which suggests that it it not the amount of food being taken by the agents that is disruptive, rather it is the fact that they do not communicate that causes a higher death rate. This makes it harder to self organise and makes it much harder to survive in the tower. 
+\Cref{team1-robustness-food-scarcity-disruptive-agents} shows how the number of deaths is affected when different disruptive agents are added. It shows that, as expected, the number of deaths is higher when disruptive agents are present. However, the effect of selfish agents and random agents seem to be similar which suggests that it it not the amount of food being taken by the agents that is disruptive, rather it is the fact that they do not communicate that causes a higher death rate. This makes it harder to self organise and makes it much harder to survive in the tower. 
 And by making it harder to survive in the tower, the chances of reaching a stable system are also decreased when disruptive agents are added, the only system to stabilise with 10 food per agent was the one with no disruptive agents, all systems were stable with a tower of 20 food per agent.
 Interestingly
 \subsection{Conclusion}
 \label{subsec: E1-Conclusion}
-This experiment shows the importance of treaties and communication for the survival of the agents in the tower. This implies that self organisation is a key factor in the ability of the tower to reach a stable state.
+This experiment shows the importance of treaties and communication for the survival of the agents in the tower.And so this shows that self organisation is a key factor in the ability of the tower to reach a stable state.
 
 \section{Experiment 2}
 \label{subsec: Experiment 2}
 \subsection{Aims}
 \label{subsec: E2-Aims}
-The aim of this experiment is to vary the number of ticks per floor and reshuffle period and observe the effects of this on tower stability and ability to self organise.
+The aim of this experiment is to very the number of ticks per floor and reshuffle period and observe the effects of this on tower stability and ability to self organise.
 \subsection{Results and Discussion}
 \label{subsec: E2-Results and Discussion}
 
@@ -203,10 +203,10 @@ The aim of this experiment is to vary the number of ticks per floor and reshuffl
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                % axis y line*=left,
+                axis y line*=left,
                 ymin=0,
                 xmin=0,
-                xlabel=Shuffle Period (number of days),
+                xlabel=Shuffle Period (no. of days),
                 ylabel=Total Deaths,
                 ymajorgrids=true,
                 xmajorgrids=true,
@@ -235,10 +235,15 @@ The aim of this experiment is to vary the number of ticks per floor and reshuffl
     \label{fig:Number-of-Deaths-As-Shuffle-Period-Decreases}
 \end{figure}
 
+\Cref{fig:Number-of-Deaths-As-Shuffle-Period-Decreases} investigates the correlation between the global deaths in the tower and the time between reshuffle periods.
+
+A clear positive correlation emerges in this experiment, strongly supporting that the longer the periods between reshuffling, the more total deaths there are in the tower.
+
+Similarly, we can see that the frequency of interaction (defined by the number of ticks per floor) has no overall impact on the death rate, suggesting that the quantity of communication is not the key factor in explaining these results. Furthermore, through propagation of treaties, we assert that the social network can still be formed effectively, even with increasing reshuffle periods.
 
 For this reason, we propose that it is the rapid redistribution of agents throughout the tower, allowing them to experience varying levels of available food that accounts for the disparity in survival rate: if an agent is consistently assigned to a low floor, they have a low chance of being satisficed if all agents act individually. Having a rapid reshuffle period results in a higher probability of reaching a higher floor, allowing for the agent to replenish its health. 
 
-The average age of agents, denoted by \Cref{fig:Average-Age-as-Shuffle-Period-Decreases}, can be see to follow the inverse trend to death rates which is as expected. This trend being, that the longer the reshuffle period the lower the average age of an agent at death. 
+The average age of agents, denoted by \Cref{Average-Age-as-Shuffle-Period-Decreases}, can be see to follow the inverse trend to death rates which is as expected. This trend being, that the longer the reshuffle period the lower the average age of an agent at death. 
 \begin{figure}[H] %Average Age As Shuffle Period Decreases
     \centering
     \begin{minipage}{0.8\textwidth}
@@ -292,10 +297,10 @@ The average age of agents, denoted by \Cref{fig:Average-Age-as-Shuffle-Period-De
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                % axis y line*=left,
+                axis y line*=left,
                 ymin=0,
                 xmin=0,
-                xlabel=Shuffle Period (number of days),
+                xlabel=Shuffle Period (no. of days),
                 ylabel=Total Accepted Treaties,
                 ymajorgrids=true,
                 xmajorgrids=true,
@@ -337,7 +342,7 @@ The average age of agents, denoted by \Cref{fig:Average-Age-as-Shuffle-Period-De
         \begin{tikzpicture}
             \begin{axis}[
                 width=\textwidth,
-                % axis y line*=left,
+                axis y line*=left,
                 ymin=0,
                 xmin=0,
                 xlabel=Shuffle Period (no. of days),
