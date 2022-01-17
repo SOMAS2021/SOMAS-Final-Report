@@ -84,3 +84,22 @@ The entry point to the simulation dispatcher was then linked to both the CLI as 
 
 \section{Dashboard}
 
+With the logging interface, it was now possible to connect to the simulation entry point via a frontend and create simulations or visualise results. By design, the frontend had to support the following features:
+
+\begin{enumerate}
+    \item \textbf{Manage simulations}: easily navigate between different simulations
+    \item \textbf{Create a simulation}: configure and run a new simulation
+    \item \textbf{Numerical results}: display numerical outcomes such as total deaths or average utility
+    \item \textbf{Graphical results}: display outcomes such as message types per agent type or food available per floor
+\end{enumerate}
+
+To encapsulate all these features, the dashboard was designed with the following structure:
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\linewidth]{003_data_logging/images/design.png}
+    \caption{Diagram showing the frontend design}
+    \label{fig:design_ui}
+\end{figure}
+
+The "new simulation" button pops a configuration form where the user is able to fill in the different simulation parameters. The navigation area allows the user to switch between existing simulation results. Finally, numerical cards and different graph types have been included to visualise the results. The final frontend implementation can be tested online on \href{https://somas-2021-568r2.ondigitalocean.app}{https://somas-2021-568r2.ondigitalocean.app} or locally by following the guidelines on the \href{https://github.com/SOMAS2021/SOMAS2021#building-locally}{github repo}.
