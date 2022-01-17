@@ -6,7 +6,6 @@ This repository includes the following elements:
 - A main file containing the used packages, the layout and the main document  itself, where every chapter is included using the command `\input{folder_name/name_of_chapter}`
 - A folder for every chapter. The name of every folder begins with the chapter number. Inside every folder, a TeX file and another folder named "images"
 - The file "latex_guidelines.md", which contains additional guidelines regarding the use of LaTeX (figures, notations, ...)
-    - >TODO: Create latex_guidelines.md (see [Issue #7](https://github.com/SOMAS2021/SOMAS-Final-Report/issues/7))
 
 ## GitHub Guidelines
 
@@ -14,7 +13,6 @@ The following guidelines apply to this GitHub repository:
 
 - Commits should be made to a separate branch and merged to main via a PR.
 - PRs must be reviewed by someone in the editor team.
-  - >TODO: Define who will be in the editor team.
 - Do not approve your own pull requests.
 - Pull requests have a pipeline which compiles the PDF. You can see the compiled document in the PR by going to `Checks` and then `Artifacts`
 
