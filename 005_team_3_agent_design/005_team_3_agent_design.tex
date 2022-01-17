@@ -192,6 +192,39 @@ The agent calculates the amount of food it decides to take in the following mann
         Utility                 & 0.009                 & 0.013                  & 0.034                 \\ \hline
     \end{tabular}
     \caption{Experimental results.}
+    \label{tab:InitalResults}
 \end{table}
-These experiments were run for 500 days, with 50 food for 10 agents. This means there was enough food for every agent to survive at critical level but not enough to satisfy all agents. For this reasons, agents need to communicate and self organise in order to decrease the amount of deaths in this strenuous circumstances.\par 
-The results indicate that the agents are capable of reducing their deaths significantly by following the research on group identity. As expected from this research,  classical game theory methods of selfishness are outperformed by more intricate methods of organisation in a collective, such as the one exposed by group identity.\par
+These experiments were run for 500 days, with 50 food for 10 agents and a reshuffle period of 7 days. Each experiment was run 3 times and the average taken. This means there was enough food for every agent to survive at critical level but not enough to keep them all out of critical condition. For this reasons, agents need to communicate and self organise in order to decrease the amount of deaths in this strenuous circumstances.
+
+As you can see in \ref{tab:InitalResults}, the results indicate that the agents are capable of  significantly reducing their deaths compared to random agents. This difference arises due to the Team 3 agents’ increased communication capabilities via treaties and messages, allowing them to assume a group identity. Random agents take an approach which more closely embodies the selfish approach dictated by classical game theory. As is expected, this is outperformed by a higher degree of organisation in a collective, which successfully models group identity and collective human survival instinct.
+
+\ref{fig:AvgDeaths} further shows how, even as the food in the platform changes, team 3’s agent always outperforms the selfish and random agents.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\linewidth]{005_team_3_agent_design/images/Average_Deaths_of_Agents_Against_Total_Amount_of_Food_On_Platform.jpg}
+    \caption{Average deaths of agents against total amount of food on platform.}
+    \label{fig:AvgDeaths}
+\end{figure}
+
+In addition, we ran tests where our agent was placed into the tower along with another teams’ agent. Five agents from team 3 and five from the respective team in \ref{fig:AgainstOtherTeams} were simulated for 500 days and 100 total food on the platform. In \ref{fig:AgainstOtherTeams} you can see the cumulative deaths of both agent types.  
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\linewidth]{005_team_3_agent_design/images/Average_Deaths_When_Cooperating_With_Another_Agent_Type.jpg}
+    \caption{Average deaths when cooperating with another agent type.}
+    \label{fig:AgainstOtherTeams}
+\end{figure}
+
+This indicates that team 3 agents work best with agents from teams 5, 4, 2 and 7. Successful cooperation with multiple other agent types demonstrates our agent’s ability to adapt to different situations and work well with agents that are also capable of assuming a group identity, and creating a self-organising structure. This point is also illustrated by examining the large number of  total deaths in a tower with random agents. Their ignorant and  unpredictable actions means that the team 3 agents cannot adapt to their behaviour or form meaningful connections with them. Hence, the system cannot evolve, causing the deaths per time period to remain relatively constant, and the cumulative deaths to be high.
+
+Finally, we wanted to observe if the total number of agents in the tower had an effect on the outcome of the simulation, and whether fewer agents were able to communicate more effectively. This seemed to be the case, as proven by \ref{fig:DeathsNoAgents}. The lower the total number of agents, the more meaningful connections they can make and the stronger the social network. This is reflected in the two-agent tower data point, in which they successfully assume a group identity with no deaths. This occurs because both agents agree to leave each other enough food to survive. The greater the number of agents that are in the tower, the more difficult it is for them to form a self-preserving social network.In this case, the importance that the agents place on the collective identity does not outweigh their desire to form instinctive, self-preservative characteristics.  
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.6\linewidth]{005_team_3_agent_design/images/Average_Deaths_Against_No._of_Agents_With_5_Food_Per_Agent_No_Title.jpg}
+    \caption{Average Deaths Against No. of Agents}
+    \label{fig:DeathsNoAgents}
+\end{figure}
+
+
