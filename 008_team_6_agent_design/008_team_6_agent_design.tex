@@ -29,13 +29,13 @@ All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such
       \textbf{Parameter} & \textbf{Range}\\
       \hline
       \texttt{BaseBehaviour} & \textit{N} $\in$ [0,10]\\
-     texttt{Stubbornness} & \textit{N} $\in$ [0,1]\\
-      texttt{MaxBehaviourSwing} & \textit{N} $\in$ [0,10]\\
-      texttt{ParamWeights} & \{ HPWeight:\textit{N}, FloorWeight:\textit{N} \} \\
-      texttt{FloorDiscount} & \textit{N} $\in$ [0,1]\\
-      texttt{MaxBehaviour} & \textit{N} = 10\\
-      texttt{PrevFoodDiscount} & \textit{N} $\in$ [0,1]\\
-      texttt{MaxTrust} & \textit{N} = 25\\
+        \texttt{Stubbornness} & \textit{N} $\in$ [0,1]\\
+      \texttt{MaxBehaviourSwing} & \textit{N} $\in$ [0,10]\\
+      \texttt{ParamWeights} & \{ \texttt{HPWeight}:\textit{N}, \texttt{FloorWeight}:\textit{N} \} \\
+      \texttt{FloorDiscount} & \textit{N} $\in$ [0,1]\\
+      \texttt{MaxBehaviour} & \textit{N} = 10\\
+      \texttt{PrevFoodDiscount} & \textit{N} $\in$ [0,1]\\
+      \texttt{MaxTrust} & \textit{N} = 25\\
     \end{tabular}
     \caption{Parameters held in the \texttt{Config} data structure}
     \label{tab:agentConfig}
@@ -48,16 +48,16 @@ All agents \textit{i} $\in$ \textit{A} are implemented as a data structure, such
     \begin{tabular}{c|c}
       \textbf{Parameter} & \textbf{Range}\\
       \hline
-      texttt{BaseAgentRef} & texttt{*baseAgent}\\
-      texttt{Config} & texttt{config}\{\} (see \Cref{tab:agentConfig})\\
-      texttt{CurrBehaviour} & \textit{N}\\
-      texttt{MaxFloorGuess} & \textit{N}\\
-      texttt{AverageFoodIntake} & \textit{N}\\
-      texttt{ShortTermMemory} & [\textit{N}]\\
-      texttt{LongTermMemory} & [\textit{N}]\\
-      texttt{ProposedTreaties} & [\textit{Treaty}] \\
-      texttt{TrustTeams} & map\{ \textit{UUID}, \textit{N} \} \\
-      texttt{Neighbours} & \{ above:\textit{UUID}, below:\textit{UUID} \} \\
+      \texttt{BaseAgentRef} & \texttt{*baseAgent}\\
+      \texttt{Config} & texttt{config}\{\} (see \Cref{tab:agentConfig})\\
+      \texttt{CurrBehaviour} & \textit{N}\\
+      \texttt{MaxFloorGuess} & \textit{N}\\
+      \texttt{AverageFoodIntake} & \textit{N}\\
+      \texttt{ShortTermMemory} & [\textit{N}]\\
+      \texttt{LongTermMemory} & [\textit{N}]\\
+      \texttt{ProposedTreaties} & [\texttt{Treaty}] \\
+      \texttt{TrustTeams} & map\{ \textit{UUID}, \textit{N} \} \\
+      \texttt{Neighbours} & \{ \texttt{above}:\textit{UUID}, \texttt{below}:\textit{UUID} \} \\
     \end{tabular}
     \caption{Parameters held in the \texttt{Agent} data structure}
     \label{tab:agentStruct}
@@ -152,25 +152,25 @@ In addition, we use sufficient boundary conditions to ensure that the individual
 
 Based on the mapping of social motives from 0.0 to 10.0, a lower floor (i.e., greater floor number) and a lower HP push the social motive variable to be higher. The weights are hence chosen to reflect these correlations (initialised as 0.3 resp. 0.7), along with the relevant feature transformations (\Cref{sec:featTran}) applied to these factors.
 
-This weighted sum represents the prediction of the agent's next social motive, titled \texttt{nextBehaviourPrediction} in \Cref{fig:socialMotives}. We therefore calculate:
+This weighted sum represents the prediction of the agent's next social motive, named \texttt{nextBeha- viourPrediction} in \Cref{fig:socialMotives}. We therefore calculate:
 
 \begin{equation}
-    \mathit{behaviourUpdate = nextBehaviourPrediction - currentBehaviour}
+    \texttt{behaviourUpdate} = \texttt{nextBehaviourPrediction} - \texttt{currentBehaviour}
 \end{equation}
 
 
 For the first iteration, \texttt{currentBehaviour} = \texttt{baseBehaviour} as presented in \Cref{fig:socialMotives}.
 
 \subsection{Willingness to Change}
-Although the above encapsulates an essential human characteristic, the ability to change, another important element, the willingness to change, is missing. Through this next layer of complexity, we attempt to quantify how resistant an agent is to altering its behaviour. This concept brings forth more freedom for modelling different human characteristics and realistic situations. For example, it is now possible to distinguish between an agent that is initially an altruist, but may then become selfish as the supply of food diminishes, and an agent that is a “true altruist”, which retains the same social motive throughout. Similarly, this is extended to the distinction between a true narcissist agent that never changes, and a narcissist agent that may, during the game, witness others' suffering whilst itself has an abundance of food and therefore steer towards a more collectivist behaviour.
+Although the above encapsulates an essential human characteristic (the ability to change), another important element, the willingness to change, is missing. Through this next layer of complexity, we attempt to quantify how resistant an agent is to altering its behaviour. This concept brings forth more freedom for modelling different human characteristics and realistic situations. For example, it is now possible to distinguish between an agent that is initially an altruist, but may then become selfish as the supply of food diminishes, and an agent that is a “true altruist”, which retains the same social motive throughout. Similarly, this is extended to the distinction between a true narcissist agent that never changes, and a narcissist agent that may, during the game, witness others' suffering whilst itself has an abundance of food and therefore steer towards a more collectivist behaviour.
 
 To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \texttt{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number is used to scale the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \texttt{scaledUpdate} and \texttt{newBehaviour} as shown below.
 
 
 \begin{equation}
     \begin{gathered}
-    \mathit{scaledUpdate = behaviourUpdate \cdot (1-stubbornness)} \\
-    \mathit{newBehaviour = currentBehaviour + scaledUpdate}
+    \texttt{scaledUpdate} = \texttt{behaviourUpdate} \cdot (1-\texttt{stubbornness}) \\
+    \texttt{newBehaviour} = \texttt{currentBehaviour} + \texttt{scaledUpdate}
     \end{gathered}
 \end{equation}
 
@@ -180,13 +180,13 @@ Again, \texttt{currentBehaviour} = \texttt{baseBehaviour} for the first iteratio
 \subsection{Bounding Change}
 The agent we propose is currently assigned an initial social motive and is then able to change throughout the duration of the game. The ease with which it changes is also quantified through its willingness to change. This brought forth the possibility that even though an agent might be stubborn/resistant to change, it is still, given a long enough period, able to go from a narcissist to an altruist. This, considered to be unrealistic, lead to the final addition of complexity concerning the prevention of extreme changes in social motive. Prior to the start of the game, we define how far an agent can steer away from their `genetic' or `natural' initial state.
 
-Bounding social motive change is modelled through the addition of the parameter \texttt{maxBehaviourSwing}. This parameter allows for the definition of the maximum and minimum values of the allowed social motive for an agent, thus defining a range:
+Bounding social motive change is modelled through the addition of the parameter \texttt{maxBehaviour- Swing}. This parameter allows for the definition of the maximum and minimum values of the allowed social motive for an agent, thus defining a range:
 
 \vspace{0.2cm}
 \begin{equation}
     \begin{gathered}
-    \mathit{max = baseBehaviour + maxBehaviourSwing}  \\
-    \mathit{min = baseBehaviour - maxBehaviourSwing}
+    \texttt{max} = \texttt{baseBehaviour} + \texttt{maxBehaviourSwing}  \\
+    \texttt{min} = \texttt{baseBehaviour} - \texttt{maxBehaviourSwing}
     \end{gathered}
 \end{equation}
 \vspace{0.2cm}
@@ -242,7 +242,7 @@ With the agent's behavioural theory defined, its corresponding strategy can be e
 An altruistic agent will always take 0 food, as it is only concerned for the well-being of others with a total disregard for itself.
 
 \subsubsection{Collectivist}
-A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical region, and will die if it spends \texttt{N = maxCritical} days in this zone without consuming the minimum required units of food to return to the \texttt{WeakLevel}. The collectivist agent, having entered the Critical region, will consume food on a randomly assigned day within the allowable period to leave the Critical region. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
+A collectivist agent will consume just enough food to survive, and consume no food when not in danger of dying. Based on the implemented health function, the agent is only in danger of dying when in the Critical region, and will die if it spends $N=\texttt{maxCritical}$ days in this zone without consuming the minimum required units of food to return to the \texttt{WeakLevel}. The collectivist agent, having entered the Critical region, will consume food on a randomly assigned day within the allowable period to leave the Critical region. The day of consumption is randomised to avoid the case of all agents needing to consume food on the same day, as there is not enough food on the platform to satisfice every agent in the tower at one time.
 
 % \begin{verbatim}
 % case "Collectivist": // Only eat when in critical zone randomly before expiry
@@ -570,71 +570,58 @@ We choose the parameters for each social motive accordingly, with greediness $g$
     \label{fig:utilities}
 \end{figure}
 
-
 \subsection{Short and Long Term Trade-Off}
+As mentioned in \Cref{sec:forecasting}, the futures an agent should expect in the short (on the current level) and long term (throughout the tower) differ: the longer the duration of a treaty, the more the long-term benefit should matter. By using the short and long term memory of food received each day, an agent can separately estimate the resources it can expect to gain on the current floor and how much it can expect to gain (on average) across all future reassignment periods.
 
-As mentioned in \Cref{sec:forecasting}, the futures the agent should expect in the short (on the current level) and long term (throughout the tower) differ. The longer the duration of a treaty, the more the long-term benefit should matter. By using the short and long term memory of food received each day, the agent can separately estimate the resources it can expect to gain on the current floor and how much it can expect to gain (on average) across all future reassignment periods.
+By calculating the length of the average reassignment period, the agents can estimate the number of days remaining on the current floor. The agents subsequently use the proportion of estimated days before the next reshuffle period in order to weight how much they should focus on the short term. 
 
-By calculating the length of the average reassignment period, the agents can estimate the number of days remaining on the current floor. We use the proportion of estimated days before the next reshuffling period to the duration of the treaty in order to weigh how much an agent should focus on the short term. Let $b_\text{short}$ and $b_\text{long}$ be the estimated long and short term benefit of a treaty, respectively. Also, let the estimated days remaining on the current level be given by $d_\text{current}$ and the duration of a treaty by $d_\text{treaty}$. The total benefit $b_\text{tot}$ is given by
-
+Let $b_\mathit{short}$ and $b_\mathit{long}$ be the estimated short and long term benefit of a treaty, respectively. Also, let the estimated days remaining on the current level be given by $d_\mathit{current}$ and the duration of a treaty by $d_\mathit{treaty}$. The total benefit, $b_\mathit{tot}$ is given by
 \begin{equation}
-b_\text{tot} = d\times b_\text{short} + (1-d)\times b_\text{long}    
+b_\mathit{tot} = d\times b_\mathit{short} + (1-d)\times b_\mathit{long}
 \label{eq:shortlongweight}
 \end{equation}
-
-where $d = \frac{d_\text{current}}{d_\text{treaty}}$.
-
-The following examples show how this plays out.
-
+where:
+\begin{equation}
+    d = \frac{d_\mathit{current}}{d_\mathit{treaty}}
+\end{equation}
+We supply the following example to illustrate this behaviour:
 \begin{itemize}
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 8\Rightarrow d=100\%$ (treaty expires before leaving the current floor)
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 20\Rightarrow d=50\%$
-    \item $d_\text{current} = 10$, $d_\text{treaty} = 100\Rightarrow d = 10\%$
+    \item $d_\mathit{current} = 10$, $d_\mathit{treaty} = 8 \Rightarrow d=100\%$ (treaty expires before leaving the current floor)
+    \item $d_\mathit{current} = 10$, $d_\mathit{treaty} = 20 \Rightarrow d=50\%$
+    \item $d_\mathit{current} = 10$, $d_\mathit{treaty} = 100 \Rightarrow d = 10\%$
 \end{itemize}
-
-
 \subsubsection{Survival Instinct}
-
-When one is doing well, the above weighting between the long and short term benefits is sensible. However, if one is struggling to stay alive, survival instincts kick in. Consequently, the agents ignore the expected long-term utility all together when their health is on a critical level.
-
+With a constant supply of food, the above weighting between the long and short term benefits is sensible, however if an agent is struggling to stay alive, it must redefine the way it weights these variables. Consequently, agents ignore the expected long-term utility altogether when their health is on a critical level.
 \subsection{Implementation}
-
-How agents rate treaties closely follows the theoretical steps from above. Every day, the agent stores the amount of food received in two arrays, one for the short and one for the long term. The short-term array is reset after every reshuffling period. When a new treaty is proposed, the agent performs the following steps to conclude whether to sign this new treaty or not:
+How agents rate treaties closely follows the theoretical steps from above. Each day, the agent stores the amount of food received in two arrays, one for both the short and long term, with the short-term array reset after each reshuffling period. When a new treaty is proposed, the agent performs the following steps to conclude whether to sign this new treaty or not:
 \begin{enumerate}
-    \item Check if the trust in the proposer agent is high enough.
-    \item Check if the treaty is compatible with treaties that the agent signed already.
-    \item Calculate the expected short- and long-term utility using the memory of food received in the past according to \Cref{eq:expectedUtility}. The utility function used depends on their current social motive.
-    \item Amplify the utility if it is negative in accordance with loss-aversion.
-    \item Estimate the amount of food it can take under the treaty, i.e., the difference between the average amount of food it received in the past and the amount of food it needs to leave in order to comply with the treaty, and calculate the utility of taking that amount of food.
-    \item Compute the estimated short-term and long-term benefit of signing the treaty as $U(\text{sign}) - U(\text{don’t sign})$.
-    \item Choose whether to focus on the long-term or short-term benefit according to \Cref{eq:shortlongweight}.
-    \item Sign the treaty if its overall benefit is positive.
+    \item Check if the trust in the \texttt{proposer} agent is high enough
+    \item Check if the treaty is compatible with treaties that the agent signed already
+    \item Calculate the expected short- and long-term utility according to \Cref{eq:expectedUtility} using the memory of food received in the past. The utility function used depends on its current social motive.
+    \item Amplifie the utility if it is negative in accordance with loss-aversion.
+    \item Estimate the amount of food it can take under the treaty (i.e., the difference between the average amount of food it received in the past and the amount of food it needs to leave in order to comply with the treaty) and calculates the utility of taking that amount of food.
+    \item Compute the estimated short- and long-term benefits of signing the treaty as $U(\text{sign}) - U(\text{don’t sign})$.
+    \item Choose to focus on the long-term or short-term benefit according to \Cref{eq:shortlongweight}
+    \item Sign the treaty if its overall benefit is positive
 \end{enumerate}
-
-The amount of food that the “collectivist” and “selfish” agents would need to consume in order to maximise utility varies depending on the current health level. The peak of its total utility function thus needs to be able to vary as well. We account for this by introducing a scaling factor $a$ as
-
+The amount of food that the collectivist and selfish agents would need to consume in order to maximise utility varies depending on the current health level. The peak of its total utility function thus needs to be able to vary, too. We account for this by introducing a scaling factor $a$ as
 \begin{equation}
     U(x)=g(ax)^\frac{1}{r}-cax
 \end{equation}
-
 where
-
 \begin{equation}
     a=\frac{1}{z}\left(\frac{cr}{g}\right)^\frac{r}{1-r}
 \end{equation}
-
-introducing the desired food intake $z$ as the maximum of the function without changing the general properties of the function, leading to:
-
+We then introduce the desired food intake $z$ as the maximum of the function, without changing its general properties. This leads to
 \begin{equation}
-U\left(x\right)=g\left(\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}x\right)^{\frac{1}{r}}-cx\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}    
+U\left(x\right)=g\left(\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}x\right)^{\frac{1}{r}}-cx\frac{1}{z}\left(\frac{cr}{g}\right)^{\frac{r}{1-r}}
 \end{equation}
 \subsection{Behaving According to Treaties}
+Treaties are fundamentally built on the assumption that all agents behave truthfully. Introducing dishonesty to treaties would strap them of their power, as there are two many possible falsities but no sufficient way of recognising and no central authority to punish them. Hence, we do not consider deception: a decision shared by all agent teams. Since this means that an agent cannot act against any active treaties, the amount of food taken has to be chosen with care.
 
-Treaties are fundamentally built on the assumption that all agents behave truthfully. Introducing dishonesty to treaties would sap them of all their power, as there are too many possible falsities but no sufficient way of recognising them and no central authority to punish them. Hence, we do not consider deception. Since this means that an agent cannot act against any active treaties, the amount of food taken has to be chosen with care.
+We implement a function to return the valid range of possible food intakes given a list of active treaties and accepted request messages and use this both to check if a newly proposed treaty is compatible with previously accepted treaties and to \textit{legally} take food. We do this as in Algorithm \ref{code:treatyRange}. An agent then consumes the quantity smaller or equal to the resulting upper-bound \texttt{max} that maximises its utility.
 
-We implemented a function to return the valid range of possible food intakes given a list of active treaties and accepted request messages, and use this both to check if a newly proposed treaty is compatible with previously accepted treaties and to \textit{legally} take food. We do this as in Algorithm \ref{code:treatyRange}.
 % \Cref does not seem to work with algorithm components
-
  \begin{algorithm}
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
@@ -647,26 +634,23 @@ We implemented a function to return the valid range of possible food intakes giv
         {
         \uIf{\textup{agent state} $\in$ $t$ \textup{condition}}{
             takeAmount $\gets$ convert $t$ request value
-            
             \uIf{\textup{takeAmount} $\leq$ \textup{max}}{
                 max $\gets$ takeAmount
             }
-
         }
         \BlankLine
         \uIf{\textup{neighbour requested to leave food}}{
             takeAmount $\gets$ convert $t$ request value
-            
             \uIf{\textup{takeAmount} $\leq$ \textup{max}}{
                 max $\gets$ takeAmount
             }
-        }            
+        }
         }
         \caption{Function to ensure that an agent never breaks any accepted treaties.}
         \label{code:treatyRange}
 \end{algorithm}
 
-An agent then consumes the amount less than or equal to the resulting upper-bound \textit{max} that maximises their utility.
+
 
 
 \subsection{Proposing Treaties}\label{proposing_treaties}
@@ -931,7 +915,7 @@ The goal of these experiments is to evaluate if a society comprised solely of co
     \label{fig:res_D}%
 \end{figure}
 
-The analysis of experiment D1 can be done as follows: during the first days in the tower, the agents will agree on collectivist treaties as introduced in \Cref{proposing_treaties}. As time progresses and their health decreases, some agents change their social motive from collectivist to selfish (\Cref{fig:res_D} (a)). However, once their health falls below the \textit{weakLevel}, the treaties the agents signed whilst being collectivist no longer apply. This is because, as explained in \Cref{proposing_treaties}, the treaties proposed by collectivists only hold under the condition \textit{currentHP} $>$ \textit{WeakLevel}. Therefore, the selfish agents, now unconstrained, consume more food than what a collectivist agent normally would. This wastes utility, ultimately leading to a large number of deaths at the end of day 10 (\Cref{fig:res_D} (b)). This result is similar to the one discussed in \Cref{simulation_C}.
+The analysis of experiment D1 can be done as follows: during the first days in the tower, the agents will agree on collectivist treaties as introduced in \Cref{proposing_treaties}. As time progresses and their health decreases, some agents change their social motive from collectivist to selfish (\Cref{fig:res_D} (a)). However, once their health falls below the \texttt{WeakLevel}, the treaties the agents signed whilst being collectivist no longer apply. This is because, as explained in \Cref{proposing_treaties}, the treaties proposed by collectivists only hold under the condition \texttt{currentHP} $>$ \texttt{WeakLevel}. Therefore, the selfish agents, now unconstrained, consume more food than what a collectivist agent normally would. This wastes utility, ultimately leading to a large number of deaths at the end of day 10 (\Cref{fig:res_D} (b)). This result is similar to the one discussed in \Cref{simulation_C}.
 
 The waste of common pool resources can also be visualised in \Cref{fig:res_D} (c), where the global utility becomes negative on day 10 (how long agents can survive without eating).
 
