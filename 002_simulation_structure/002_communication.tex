@@ -4,13 +4,13 @@
 
 \begin{document}
 
-\section{Primitive Messaging}
+\subsection{Primitive Messaging}
 An important role of Team 1 was to design a mechanism for agents to talk amongst each other in the simulation that would allow automated communication. The first step in this process was to design a system which would allow an agent to pass along a minimum viable message to their neighbours. These were the goals of communication in the MVP:
 \begin{itemize}
-    \item Agents could only talk to their immediate neighbors (+/- 1 floor)
-    \item Agents should be given the ability to ignore communication
-    \item Multiple agents could be “speaking” at a given tick
-    \item One agent could send one message per tick
+    \item Agents could only talk to their immediate neighbors (+/- 1 floor).
+    \item Agents should be given the ability to ignore communication.
+    \item Multiple agents could be “speaking” at a given tick.
+    \item One agent could send one message per tick.
     \item \textbf{It is entirely an agent's discretion if/when/how they wish to react to a message as long as their behavior is not deceptive}
 \end{itemize}
 As a team, Team 1 emphasized the last point. The infrastructure should not force any behavior onto the agent as long as the behavior was honest. The basic philosophy of the communication infrastructure was to dictate as little as possible about the agent's behavior while keeping the API friendly, readable and hard to get wrong. This usually meant making providing basic override-able behaviors to be as unobtrusive as possible to team strategies. \newline
@@ -22,7 +22,7 @@ The minimum default message had to have the following fields that are accessible
     \item \textbf{\texttt{ID}}: Each message sent is given a unique ID.
 \end{itemize}
 \vspace{\baselineskip}
-For the MVP, Team 1 constructed a system where for example in a scenario where Alice (currently at floor 10) wishes to a message upward:
+For the MVP, Team 1 constructed a system where for example in a scenario where Alice (currently at floor 10) wishes to send a message upward:
 \begin{enumerate}
     \item At Tick 0, Alice would construct the message for Bob containing the following information:
         \begin{itemize}
@@ -36,12 +36,13 @@ For the MVP, Team 1 constructed a system where for example in a scenario where A
     \item At Tick 1, Bob may choose to call \texttt{ReceiveMessage} which would extract Alice's message (if Alice was the first or only agent to send him a message at Tick 0) and respond.
     \item If Bob has called \texttt{ReceiveMessage}, Alice's message is removed from Bob's inbox.
 \end{enumerate}
-With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is FIFO - If multiple messages were received or if there were outstanding messages from previous ticks, only the earliest one can be retrieved at a given tick. \newline
+With this implementation, each agent is responsible for calling \texttt{ReceiveMessage} once per tick to receive any messages. The inbox is FIFO - If multiple messages were received or if there were outstanding messages from previous ticks, only the earliest one can be retrieved at a given tick.
+
 Additionally, "receiving" does not necessarily imply "reacting", an agent is capable of receiving a message and not responding to it at all without the sender's knowledge. Decoupling "receiving" and "reacting" gave agent teams the freedom to ignore messages entirely (metaphorically covering their ears in the tower and refusing to listen to anybody), to listen to messages and do nothing about them, or to actively listen and react. \newline
 Beyond the MVP, however, messages needed to have meaning. Because the process would be automated it was meaningless to send unstructured strings, how was an agent to understand "Please only eat what you need to survive."? \newline
 A common language was necessary.
 
-\section{Common Language}
+\subsection{Common Language}
 To design the common language, Team 1 surveyed the agent teams asking for what they would like to talk to other agents about. We collected suggestions and found that communication indicated one of four possibilities:
 \begin{enumerate}
     \item An agent could be \textit{asking} another agent for information. \textit{"How much food is on the platform when it gets to you?" or "How much food did you take?"}
@@ -113,7 +114,7 @@ The design works such that if Alice on Floor 11 wanted to ask Floor 12 to leave 
 The system so far provided a solid mechanism for agents to communicate to their neighbours, to gather information and to request help in times of crisis (potentially building trust or temporary relationships). However, it was contingent on communicating agents being on consecutive floors, any relationships built through this kind of communication could only last for a reshuffle period unless the agent implemented a specific kind of internal memory structure. Additionally, the communication was still relatively rudimentary. Alice's request for 10 food could be rejected by Bob because his HP is critical and he will starve immediately without food, but the current system only allows Bob to either accept or refuse Alice's request without communicating anything about his own state. This could potentially worsen his relationship with Alice, had Alice known that Bob was in a critical state perhaps her trust to him would not degrade because of this rejection. \newline 
 For more nuanced, long-lasting communication, treaties and message propagation were needed.
 
-\section{Treaties}
+\subsection{Treaties}
 Treaties are formalized agreements between agents who agreed to a set of conditions and corresponding requests. An example treaty might be \textit{“Please leave 40 food on the platform if you are not in critical condition”}. In an honest run of the experiment deception was disallowed and it was ensured that if an agent agreed to a treaty, they would be be bound to uphold it. \newline
 This required designing an internal mini-language for how treaties should be written and understood. It was decided that a treaty consisted of 6 language components:
 \begin{center}
@@ -184,7 +185,7 @@ Although we discussed several approaches for keeping an accurate state of the \t
 Because the honest run of the experiment required that no agent would break their treaties, by default agents would reject treaties. This default was expected to be overridden by any agent team who wanted to communicate with other agents so this introduced difficulties in how to ensure that treaties that had been signed were followed. There were suggestions for a technical solution however ultimately that was too restrictive for agent strategies as it would require Team 1 to somehow conditionally override agent behavior depending on if they had an active treaty or not which was technically difficult but also extremely limiting for the agents. Ultimately it was decided that the honesty would be maintained through thorough a combination of readable agent code and thorough PR (pull request) reviews from Team 1 as treaty-strategies were implemented. \newline
 With the advent of treaties and the possibility of building relationships that outlived a reshuffle, it was time to extend communications beyond immediate neighbors to possibly tower-wide.
 
-\section{Message Propagation}
+\subsection{Message Propagation}
 Multi-floor communication was a long-awaited feature among agent teams so there had already been many conversations about how best to achieve this. There were two main approaches.
 \begin{enumerate}
     \item \textbf{Shouting}: An agent could shout up or down a specified number of floors and every agent the in-between floors could also hear.
