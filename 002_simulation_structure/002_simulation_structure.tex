@@ -65,7 +65,7 @@ Based on our initial observations and constraints, possible implementations were
 
 \subsection{Ticks and Timing Details}
 
-Discrete time in the simulation is represented by ticks, the smallest unit of time. During each tick all agents can perform an action such as eat or send a message. This means that the amount of ticks per day restricts the communication between the agents. Moreover, given that messages can only be passed from one floor to one below or above on each tick, we can conclude that certain messages will never get to their recipient. The number of ticks per day is set in the initialisation of the simulation and it is the product of the ticks per floor and the number of floors.
+Discrete time in the simulation is represented by ticks. During each tick, all agents can perform an action such as `eat' or `send a message'. This means that the number of ticks per day restricts the communication between the agents. Moreover, given that messages can only be passed from one floor to one below or above on each tick, we can conclude that certain messages will never get to their receiver. The number of ticks per day is set in the initialisation of the simulation and is the product of the ticks per floor and the number of floors.
 
 \subsection{Agent Configuration}
 
