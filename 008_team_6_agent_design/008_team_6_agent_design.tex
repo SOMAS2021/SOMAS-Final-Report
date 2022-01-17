@@ -161,7 +161,7 @@ This weighted sum represents the prediction of the agent's next social motive, n
 
 For the first iteration, \texttt{currentBehaviour} = \texttt{baseBehaviour} as presented in \Cref{fig:socialMotives}.
 
-\subsection{Willingness to Change}
+\subsection{Willingness to Change}\label{willingness_to_change}
 Although the above encapsulates an essential human characteristic (the ability to change), another important element, the willingness to change, is missing. Through this next layer of complexity, we attempt to quantify how resistant an agent is to altering its behaviour. This concept brings forth more freedom for modelling different human characteristics and realistic situations. For example, it is now possible to distinguish between an agent that is initially an altruist, but may then become selfish as the supply of food diminishes, and an agent that is a “true altruist”, which retains the same social motive throughout. Similarly, this is extended to the distinction between a true narcissist agent that never changes, and a narcissist agent that may, during the game, witness others' suffering whilst itself has an abundance of food and therefore steer towards a more collectivist behaviour.
 
 To represent the willingness of an agent to change its social motive, an additional parameter, labelled as \texttt{stubbornness}, is introduced and instantiated as a number between 0.0 and 1.0. This number is used to scale the behaviour update. This operation is similar to a step-size, and reflects how easy it is for the social motive to change. We therefore calculate the \texttt{scaledUpdate} and \texttt{newBehaviour} as shown below.
@@ -191,7 +191,7 @@ Bounding social motive change is modelled through the addition of the parameter 
 \end{equation}
 \vspace{0.2cm}
 
-If the change as defined in Step 3 results in a \texttt{newBehaviour} outside this range, then this is automatically capped off at the edges. Naturally, this also holds for the spectrum edges $[0,10]$.
+If the change as defined in \Cref{willingness_to_change} results in a \texttt{newBehaviour} outside this range, then this is automatically capped off at the edges. Naturally, this also holds for the spectrum edges $[0,10]$.
 
 
 
