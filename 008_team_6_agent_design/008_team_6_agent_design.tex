@@ -824,7 +824,7 @@ This set of simulations builds on top of the framework set by (B), instead inves
 
 This treaty restricts the amount of food its members can take when their health drops below the \textit{weakLevel}:
 
-If \texttt{currentHP} $<$ \texttt{WeakLevel}, take $\leq$ 2 food.\footnote{To implement this treaty, we create a new treaty type, in addition to the existing set \ToDo{cite corresponding section}. We cite the need for this treaty as it not in general being possible to formulate a request to \texttt{take} a maximum amount with a corresponding \texttt{LeaveAmountFood} or \texttt{LeavePercentFood} treaty. The special case ``take 0'' food can be expressed as ``leave 100\% of the food'', but there is in general no such equivalence that holds across the whole tower.}
+If \texttt{currentHP} $<$ \texttt{WeakLevel}, take $\leq$ 2 food.\footnote{To implement this treaty, we create a new treaty type, in addition to the existing set proposed by the infrastructure team. We see the need for this treaty as it is in general not possible to formulate a request to \texttt{take} a maximum amount with a corresponding \texttt{LeaveAmountFood} or \texttt{LeavePercentFood} treaty. The special case ``take 0'' food can be expressed as ``leave 100\% of the food'', but there is in general no such equivalence that holds across the whole tower.}
 
 
 \begin{figure}[htb]
@@ -864,11 +864,11 @@ To explain these rather counter-intuitive results, we offer the following hypoth
 
 If the agent's health is less than the \texttt{healthyLevel}, the agent takes enough food to reach the \texttt{healthyLevel}.
 
-However, this leads to a lot of wasted resources at this critical health level. Notably, each food intake greater than 2 will not offer additional utility to agents whose health falls below the \textit{weakLevel}: any food intake greater than or equal to 2 upgrades the agents health to the \textit{weakLevel}. The resources would have been used in a better way if the selfish agents, which initially signed the treaty as collectivists, would have been able to eat once their health had just risen above the \textit{weakLevel}.
+However, this leads to a lot of wasted resources at this critical health level. Notably, each food intake greater than 2 will not offer additional utility to agents whose health falls below the \texttt{WeakLevel}: any food intake greater than or equal to 2 upgrades the agents health to the \textit{weakLevel}. The resources would have been used in a better way if the selfish agents, which initially signed the treaty as collectivists, would have been able to eat once their health had just risen above the \textit{weakLevel}.
 
 This waste of common resources induced by agents following the collectivist treaty is arguably due to a poor treaty design. This experiment clearly shows that treaties might also have negative effect on the global utility, although they were originally thought to improve it.
 
-To contrast this results, we can propose a more effective treaty. As explained above, simulation C3 introduced a treaty that applies when the agents HP is below the \texttt{weakLevel}. As can be seen in \Cref{fig:res_C} (h) and (i), this treaty allows the total amount of death to be lower, and the global utility to be higher. This shows that well designed treaties can have a positive impact on the system. However, the treaty specification is not a trivial and straight-forward task, that can even be counter-intuitive.
+To contrast this results, we can propose a more effective treaty. As explained above, simulation C3 introduced a treaty that applies when the agents HP is below the \texttt{WeakLevel}. As can be seen in \Cref{fig:res_C} (h) and (i), this treaty allows the total amount of death to be lower, and the global utility to be higher. This shows that well designed treaties can have a positive impact on the system. However, the treaty specification is not a trivial and straight-forward task, that can even be counter-intuitive.
 
 % ------------------
 
