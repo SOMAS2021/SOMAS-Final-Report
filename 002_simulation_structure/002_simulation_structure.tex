@@ -1,23 +1,104 @@
 \chapter{Simulation Structure}\label{simulation_structure}
+%%%%%%%%
+%%%%%%%% Scenario and Simulator
+%%%%%%%%
+\section{Scenario and Simulator}\label{scenario_and_simulator}
+
+\subsection{Context}
+
+The Platform presents an environment consisting of people subjected to a life within a tower. This tower has a predefined set of laws that closely control the people’s lives, and it is ultimately up to these individuals to act however they suppose is correct.
+ 
+The tower is made up of multiple floors with one agent per floor, starting with Floor 1 at the top and increasing downwards. Above Floor 1, there is a kitchen which produces a fixed amount of food per day.
+The floor on which people are based is random, and periodically reshuffles with a fixed frequency. At the beginning of each day a platform begins moving down the tower, starting from the top floor where it is loaded with food and stopping for a constant time at each floor. Over a period of time, there is enough food on the platform to minimally satisfice the agents, but not maximally satisfy them all.
+ 
+The people exist with limited knowledge of tower; they must eat enough within a period to survive and can communicate with other individuals on local floors. They know which floor they are on, but do not know how many floors there are in the tower nor how much food there is at the beginning of each day. Additionally, the people in the tower do not explicitly know how often the reshuffle period is. Finally, when a person dies, they are immediately replaced.
+
+The scenario presented above is heavily influenced by \textit{`El Hoyo'}\citep{elhoyo2019} (translating directly to `The Hole') a Spanish film released in 2019.
+
+\subsection{Assumptions}
+
+
+There are several assumptions from the given context and, for the implementation in this project, are described in this section.
+
+\begin{enumerate}
+    \item  Pre-existing knowledge -- people exist in the tower with a level of knowledge of their environment; this reduces the amount of learning required before action can take place. Pre-existing ideologies are included in this: people have their ways of interacting with others, views on socialising and the like, perhaps acquired from a life before the tower.
+     Basic concepts such as consuming food to increase health are known.
+      \item  Taking food -- people are allowed to take as much food from the platform as they are able to eat. They cannot preserve food to eat on separate days. Additionally, the utility of the food taken decreases exponentially (each unit of food has a decreasing improvement to HP) -- representing the law of diminishing returns.
+      \item An honest environment -- people are assumed to be truthful: direct deceit does not exist. There are very specific conditions in which deceit is permitted, these will be discussed alongside the introduction of the relevant features, but is related to breaking agreements in times of extreme need.
+
+\end{enumerate}
+
+\subsection{Observations \& Understanding}
+
+An initial observation of the context immediately presents the concept of a `world', i.e., the tower, and `agents', i.e.,  the people. These agents interact with one another and the tower, within constraints, and must be able to react and evolve their behaviour to maximise their utility and survival.
+ 
+ 
+Within the tower there exists a food allocation problem, which is directly related to the survival of agents and forms the core incentive for self-organisation. With a lack of organisation, the tower society would fall victim to the tragedy of the commons -- the common pool resource would deplete, and the overall well-being of society would suffer for the gain of a few individuals. Hence, the crux of this project is a collective action resource management problem, and agents must be equipped with sufficient capabilities and information.
+ 
+The aforementioned capabilities can be split into two sections: those related to the tower and those related to the agent interactions.
+ 
+Within the tower, agent abilities are listed below:
+\begin{enumerate}
+    \item View Food on Platform -- the agent cannot view the amount of food on the platform unless it is on the agent’s floor or the floor immediately below the agent.
+    \item Food Consumption -- agents cannot preserve food. Agents can only eat food from the platform when it is on the agent's floor.
+    \item Time Details -- agents do not have explicit access to timed parameters (reshuffle period, day length, time of platform on each floor etc.), however, can use memory to calculate these.
+    \item Food Details -- agents do not know the food on the platform at the beginning of each day.
+
+    \item Health Details -- agents do know their current health level and the utility they are receiving from food, as well as how long they can go without food before dying.
+    
+\end{enumerate}
+
+Agents are also able to communicate with each other:
+\begin{enumerate}
+    \item Agents should be able to converse with one another and share information.
+    \item Agents should be able to form agreements which must be followed.
+    \item Agents should be able to differentiate between any new agents that appear locally.
+    \item The communication must be limited to single agent interactions and single messages cannot travel past a defined, local distance. 
+\end{enumerate}
 
 %%%%%%%%
-%%%%%%%% Simulation Environment
+%%%%%%%%System Design
 %%%%%%%%
-\section{Simulation Environment}\label{simulation_environment}
-Goes over the backend design
+\section{System Design}\label{system_design}
 
-%%%%%%%%
-%%%%%%%% Simulation Flow
-%%%%%%%%
-\section{Simulation Flow}\label{simulation_flow}
-The order in which events happen
-Need a nice diagram for this
+Based on our initial observations and constraints, possible implementations were explored early on in the design process. Our design process evolved from designing for the simple use case of allowing simple agents to eat food and communicate with primitive messages, to scaling this up to accommodate multiple agents on multiple floors.
 
-%%%%%%%%
-%%%%%%%% Message Passing
-%%%%%%%%
-\section{Message Passing}\label{message_passing}
-Need a nice diagram for this
+\subsection{Ticks and Timing Details}
+
+Discrete time in the simulation is represented by ticks. During each tick, all agents can perform an action such as `eat' or `send a message'. This means that the number of ticks per day restricts the communication between the agents. Moreover, given that messages can only be passed from one floor to one below or above on each tick, we can conclude that certain messages will never get to their receiver. The number of ticks per day is set in the initialisation of the simulation and is the product of the ticks per floor and the number of floors.
+
+\subsection{Agent Configuration}
+
+Agent structures are separated into two different aspects: a base agent and a custom agent, both of which are required to represent a single agent.
+The base agent component contains the core information of an agent, including its Health Points, Floor and UUID\footnote{UUID -- Universally Unique Identifier}, as well as a pointer to the tower structure. 
+The custom agent contains a pointer to its base agent and any parameters relevant to the specific agent behaviour; this varies between agent types and was implemented by agent teams.
+
+The core parameters of an agent were abstracted out of the custom agent for two reasons:
+\begin{enumerate}
+    \item Custom agents cannot manipulate their own data or information, rather they can only request access through `getter' functions, which returns either information or an error.
+    \item The tower struct has access to the base agents and can therefore influence the agent parameters as determined by the laws existing within the tower. Examples of this include floor reshuffling and health decay.
+\end{enumerate}
+
+\subsection{Death and Replacement}
+
+Deaths occur in the tower when an agent has not eaten enough food to stay alive over a certain duration. The nature of replacement in the tower could be of several types:
+\begin{enumerate}
+    \item Replacing agents with random agent type
+    \item Replacing agents with the same agent type
+    \item Replacing agents with the dominant agent type
+\end{enumerate}
+
+Our design chose to replace agents with the same agent type. While replacing agents with a random agent type would introduce an element of uncertainty, this would have made it difficult to analyse individual agent behaviours. It would have been interesting to experiment with replacing agents with the dominant agent type, however, this posed the question of defining what the most ``dominant'' agent would be.
+
+\subsection{Infrastructure}
+
+Our implementation began with considering the structure of the system given the scenario we had identified. The key required components include a tower that contains agents, with a discrete-time system.
+The simulation package holds the state of the tower, base agents, and their corresponding custom agents. The simulation package that creates the world and constructs agents inside a simulation environment. It is the simulation that calls the tower and agent functions to progress the simulation.
+The tower is the overall `world' which stores information in its state such as the list of agents, platform level, food available, and tick count. The tower is responsible for updating the platform, reshuffling agents, and replacing dead agents.
+The platform is a parameter of the tower and stores the amount of food on the platform and its current floor. It goes down one floor at a predefined tick rate (e.g., every 10 ticks) and it is reset (fill the platform with food and set its floor to 1) at the end of each day.
+
+Base agent contains the core information of an agent, such as an agent's HP and floor. Base agent also contains the \lstinline$hpDecay()$ function as well as a function to calculate an individual agent's utility. 
+Custom agents are designed by each of the agent teams, where each one of them has a different strategy.
 
 %%%%%%%%
 %%%%%%%% Health Modeling
@@ -159,3 +240,30 @@ Finally, we use \eqref{utility_per_agent} to compute an average global utility, 
 \begin{equation}\label{utility_eq}
     \mathit{U}=\frac{\sum_i^N u_i}{N}=\frac{\mathit{SW}}{N}
 \end{equation}
+
+\section{Technology Stack}
+
+Our technology stack was chosen in the initial meetings of the project, where the individuals were able to propose languages for the frontend and backend, with the backend language used to implement infrastructure and agents. The proposed languages for the backend were:
+\begin{enumerate}
+    \item Python: A widely used, general purpose programming language with an emphasis on code readability. The language was familiar to a large percentage of the class as a result of having used it in previous projects. 
+    \item Go: A less well known language, Go was attractive to the class due to its easy-to-learn nature and easy implementation of concurrency which would be useful in running multiple agents. However, it was unfamiliar to the majority of the class.
+    \item C++: A general purpose OOP language, C++ was familiar to a portion of the cohort having studied it in their first year. However, it is not as easy to learn as Go or Python, so this was considered a disadvantage.
+\end{enumerate}
+
+After an in-depth review, a vote was cast and Go was the clear preference. Overall, Go was chosen due to its advantages in implementing concurrency and its easy-to-learn nature. In addition to this, the packages in Go would make the code more scalable and readable.
+
+React and Typescript were chosen as the frontend language. They were chosen primarily by the infrastructure team, as this decision would not affect those teams working on agent development. 
+
+%%%%%%%%
+%%%%%%%% Simulation Flow
+%%%%%%%%
+% \section{Simulation Flow}\label{simulation_flow}
+% The order in which events happen
+% Need a nice diagram for this
+
+
+% %%%%%%%%
+% %%%%%%%% Message Passing
+% %%%%%%%%
+% \section{Message Passing}\label{message_passing}
+% Need a nice diagram for this
